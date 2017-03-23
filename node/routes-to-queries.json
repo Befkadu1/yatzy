@@ -1,0 +1,8 @@
+{
+  "read-lorem": "SELECT * FROM lorems WHERE id = ?",
+  "read-lorems": "SELECT * FROM lorems",
+  "read-ipsums": "SELECT * FROM ipsums",
+  "read-lorems-ipsums": "SELECT lorems.*, ipsums.blabla AS ipsum FROM lorems LEFT JOIN ipsums ON ipsums.lorem = lorems.id",
+  "read-lorem-ipsums": "SELECT lorems.*, ipsums.blabla AS ipsum FROM lorems JOIN ipsums ON ipsums.lorem = lorems.id AND lorems.id = ?",
+  "write-ipsum": "INSERT INTO ipsums SET ?"
+}

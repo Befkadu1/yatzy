@@ -1,7 +1,7 @@
 
 // Examples on various routes via node backend (queries) to mysql
 
-$.ajax({
+/*$.ajax({
     type: 'POST',
     url: '/queries/read-lorem',
     data: JSON.stringify([1]),
@@ -49,5 +49,12 @@ $.ajax({
     url: '/queries/read-lorems-ipsums'
 }).done(function(data){
   console.log('reading all the the lorems-ipsums left joins', data);
-});
+});*/
 
+$(start);
+
+function start() {
+  $('body').append(displayScoreBoard());  
+  //$('#page-content').append(article(arrArticles[arrArticles.length -1]));
+
+}

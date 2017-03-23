@@ -54,7 +54,9 @@ $.ajax({
 $(start);
 
 function start() {
-  $('body').append(displayScoreBoard());  
+  $('body').append(displayScoreBoard()); 
+  let scoreBoard = new ScoreBoard('Joel');
+  let scoreBoard2 = new ScoreBoard('Ramona');
   //$('#page-content').append(article(arrArticles[arrArticles.length -1]));
 
 }

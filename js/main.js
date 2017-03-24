@@ -53,10 +53,11 @@ $.ajax({
 
 $(start);
 
-function start() {
-  $('body').append(displayScoreBoard()); 
+function start(){
+  $('body').append(displayScoreBoard());
   let scoreBoard = new ScoreBoard('Joel');
-  let scoreBoard2 = new ScoreBoard('Ramona');
-  //$('#page-content').append(article(arrArticles[arrArticles.length -1]));
-
+  let scoreBoard2 = new ScoreBoard('Olle');
+  let scoreBoard3 = new ScoreBoard('Pelle');
+  scoreBoard.setPoints('twos', 4);
+  scoreBoard2.setPoints('threes', 5);
 }

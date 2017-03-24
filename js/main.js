@@ -47,7 +47,7 @@ function start(){
   $('body').prepend(displayNavbar());
   $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
   $('.scoreboard-container').append(displayScoreBoard());
-  $('.page-content').append('<div class="dice-container col-xs-2 col-md-push-2" />');
+  $('.page-content').append('<div class="dice-container col-xs-4 col-sm-2 col-xs-push-2" />');
 
   
   for(let i = 0; i < 5; i++){

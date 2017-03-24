@@ -55,6 +55,7 @@ $(start);
 
 function start(){
   $('body').append(displayScoreBoard());
+  $('body').append(displayThrowButton());
   let scoreBoard = new ScoreBoard('Joel');
   let scoreBoard2 = new ScoreBoard('Olle');
   let scoreBoard3 = new ScoreBoard('Pelle');

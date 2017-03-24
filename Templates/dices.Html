@@ -1,14 +1,14 @@
-  function displayDices(){ return `
+  function displayDices(dices){ return `
   <div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">Roll the dices</h3>
   </div>
   <div class="panel-body">
-    <div class = "dice">1<!-- random function --></div>
-    <div class = "dice">2</div>
-    <div class = "dice">3</div>
-    <div class = "dice">4</div>
-    <div class = "dice">5</div>
+    <div class = "dice" id="1">${dices[0].value}</div>
+    <div class = "dice" id="2">${dices[1].value}</div>
+    <div class = "dice" id="3">${dices[2].value}</div>
+    <div class = "dice" id="4">${dices[3].value}</div>
+    <div class = "dice" id="5">${dices[4].value}</div>
   </div>
 </div>
 `};

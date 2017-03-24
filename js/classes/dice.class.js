@@ -6,11 +6,11 @@ class Dice {
 		this.locked = locked;
 	}
 
-	set value(value){
+	/*set value(value){
        this.value = value;
 	}
 	set locked(locking){
 		this.locked = locking;
-	}
+	}*/
        
 }

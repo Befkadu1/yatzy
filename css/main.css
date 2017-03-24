@@ -9,3 +9,7 @@ td, th {
     text-align: left;
     padding: 8px;
 }
+
+.locked{
+	background: red;
+}

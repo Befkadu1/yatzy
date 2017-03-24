@@ -39,6 +39,8 @@ $.ajax({
   console.log('reading all the the lorems-ipsums left joins', data);
 });*/
 
+let dices = [];
+
 $(start);
 
 function start(){
@@ -46,7 +48,14 @@ function start(){
   $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
   $('.scoreboard-container').append(displayScoreBoard());
   $('.page-content').append('<div class="dice-container col-xs-6" />');
-  $('.dice-container').append(displayDices());
+
+  
+  for(let i = 0; i < 5; i++){
+    dices.push(new Dice(i+1, i+1));
+  }
+  console.log('dices',dices);
+
+  $('.dice-container').append(displayDices(dices));
   $('.dice-container').append(displayThrowButton());
 
   let scoreBoard = new ScoreBoard('Joel');
@@ -55,3 +64,21 @@ function start(){
   scoreBoard.setPoints('twos', 4);
   scoreBoard2.setPoints('threes', 5);
 }
+
+$(document).on('click', '.dice', function(){
+  if(dices[this.id - 1].locked){
+    dices[this.id - 1].locked = false;
+  }else{
+    dices[this.id - 1].locked = true;
+  }
+
+  $(this).toggleClass('locked');
+
+});
+
+
+
+
+
+
+

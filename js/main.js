@@ -1,6 +1,4 @@
 
-// Examples on various routes via node backend (queries) to mysql
-
 /*$.ajax({
     type: 'POST',
     url: '/queries/read-lorem',
@@ -9,27 +7,17 @@
 }).done(function(data){
   console.log('reading the lorems row with id 1', data);
 });
+=======
+$(start);
+>>>>>>> 8b804e511a4e4bfa83b6f75f7c1fa5cc99a250eb
 
 
-$.ajax({
-  type: 'POST',
-  url:'/queries/read-lorem-ipsums',
-  contentType: "application/json",
-  data: JSON.stringify([2]),
-  contentType: "application/json"
-}).done(function(data){
-  console.log('reading the lorem-ipsums full joins with lorem id 2', data);
-});
+function start(){
 
-$.ajax({
-    type: 'POST',
-    url: '/queries/write-ipsum',
-    data: JSON.stringify({"blabla": "hejhuj", "lorem": 20}),
-    contentType: "application/json"
-}).done(function(result){
-  console.log('writing an ipsums row', result);
-});
+$('body').append(displayNavbar());
+$('body').append(displayDices());
 
+<<<<<<< HEAD
 $.ajax({
     type: 'GET',
     url: '/queries/read-lorems'
@@ -54,8 +42,13 @@ $.ajax({
 $(start);
 
 function start(){
-  $('body').append(displayScoreBoard());
-  $('body').append(displayThrowButton());
+  $('body').prepend(displayNavbar());
+  $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
+  $('.scoreboard-container').append(displayScoreBoard());
+  $('.page-content').append('<div class="dice-container col-xs-6" />');
+  $('.dice-container').append(displayDices());
+  $('.dice-container').append(displayThrowButton());
+
   let scoreBoard = new ScoreBoard('Joel');
   let scoreBoard2 = new ScoreBoard('Olle');
   let scoreBoard3 = new ScoreBoard('Pelle');

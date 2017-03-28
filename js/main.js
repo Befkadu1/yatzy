@@ -40,6 +40,8 @@ $.ajax({
 });*/
 
 let dices = [];
+let scoreBoards = [];
+let turn = 0;
 
 $(start);
 
@@ -61,11 +63,11 @@ function start(){
   $('.dice-container').append(displayDices(dices));
   $('.dice-container').append(displayThrowButton());
 
-  let scoreBoard = new ScoreBoard('Joel');
-  let scoreBoard2 = new ScoreBoard('Olle');
-  let scoreBoard3 = new ScoreBoard('Pelle');
-  scoreBoard.setPoints('twos', 4);
-  scoreBoard2.setPoints('threes', 5);
+  scoreBoards[0] = new ScoreBoard('Joel');
+  scoreBoards[1] = new ScoreBoard('Olle');
+  scoreBoards[2] = new ScoreBoard('Pelle');
+  scoreBoards[0].setPoints('twos', 4);
+  scoreBoards[1].setPoints('threes', 6);
 }
 
 $(document).on('click', '.dice', function(){
@@ -86,6 +88,7 @@ $(document).on('click', '.dice', function(){
 
 });
 
+$(document).on('click', `tr td`, function(){
 function throwDices(){
   for (var i = 0; i < dices.length; i++) {
     if (dices[i].locked == false) {
@@ -96,12 +99,39 @@ function throwDices(){
       $('.diceGroup').remove();
       $('.testing').append(displayDices(dices));
 
+  console.log($(this).text());
     }
     else{
       console.log("This dice is locked!");
     }
   }
 }
+
+  var row = $(this).parent().attr('class');
+  console.log(row);
+
+  // Selectorn är ex. '.ones .Joel' och används för att kolla
+  // om rätt cell är tom, inte den cellen man klickar på 
+  if($('.' + row + ' .' + scoreBoards[turn].playerName).text() == ''){
+    switch(row){
+      case 'ones': 
+        scoreBoards[turn].calcOnes(dices);
+        break;
+      case 'twos': 
+        scoreBoards[turn].calcTwos(dices);
+        break;
+      case 'threes': 
+        scoreBoards[turn].calcThrees(dices);
+        break;
+      case 'chance':
+        scoreBoards[turn].calcChance(dices);
+        break;
+      default:
+        console.log('Default');
+    }
+  }
+});
+
 
 
 

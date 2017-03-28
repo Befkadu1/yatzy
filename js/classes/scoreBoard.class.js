@@ -31,6 +31,25 @@ class ScoreBoard {
 		}
 	}
 
+	calcOnes(dices){
+		let sum = 0;
+		for(let dice of dices){
+			sum += dice.value;
+		}
+		console.log('Sum of dices: ' + sum);
+	}
+
+	calcChance(dices){
+		let sum = 0;
+		for(let dice of dices){
+			sum += dice.value;
+		}
+		console.log('Sum of dices: ' + sum);
+		this.setPoints('chance', sum);
+	}
+
+
+
 	// Kan användas för att uppdatera DOM:en så att den skriver ut aktuella värden
 	updateScores(){
 		for(let prop in this){
@@ -44,6 +63,13 @@ class ScoreBoard {
 		this[prop] = val;
 		$(`.${this.playerName}.${prop}-cell`).append(this[prop]);
 	}
+
+
+
+
+
+
+
 }
 
 

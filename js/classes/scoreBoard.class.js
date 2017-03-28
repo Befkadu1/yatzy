@@ -29,49 +29,23 @@ class ScoreBoard {
 				$('.' + prop).append(`<td class="${this.playerName} ${prop}-cell">${this[prop]}</td>`);
 			}
 		}
-
-
-		$(document).on('click', `tr td.${this.playerName}`, function(){
-
-			console.log($(this).text());
-
-			var row = $(this).parent().attr('class');
-			console.log(row);
-
-			if($(this).text() == ''){
-
-				return row;
-
-				
-				
-				/*switch(row){
-					case 'ones': 
-						this.calcOnes();
-						break;
-					case 'twos': 
-						this.calcTwos();
-						break;
-					case 'threes': 
-						this.calcThrees();
-						break;
-					default:
-						console.log('Default');
-
-				}
-*/
-
-			}
-
-	  
-		});
-
-
 	}
 
+	calcOnes(dices){
+		let sum = 0;
+		for(let dice of dices){
+			sum += dice.value;
+		}
+		console.log('Sum of dices: ' + sum);
+	}
 
-
-	 calcOnes(){
-		console.log('ETTOR');
+	calcChance(dices){
+		let sum = 0;
+		for(let dice of dices){
+			sum += dice.value;
+		}
+		console.log('Sum of dices: ' + sum);
+		this.setPoints('chance', sum);
 	}
 
 

@@ -85,7 +85,9 @@ $(document).on('click', `tr td`, function(){
   var row = $(this).parent().attr('class');
   console.log(row);
 
-  if($(this).text() == ''){
+  // Selectorn är ex. '.ones .Joel' och används för att kolla
+  // om rätt cell är tom, inte den cellen man klickar på 
+  if($('.' + row + ' .' + scoreBoards[turn].playerName).text() == ''){
     switch(row){
       case 'ones': 
         scoreBoards[turn].calcOnes(dices);

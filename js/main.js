@@ -144,6 +144,9 @@ $(document).on('click', `tr td`, function(){
         //scoreBoards[turn].calcOnesToSixes(dices,6);
         scoreBoards[turn].setPoints('sixes',scoreBoards[turn].calcOnesToSixes(dices,6));
         break;
+        case 'onePair':
+        scoreBoards[turn].setPoints('onePair',scoreBoards[turn].calcPair(dices));
+        break;
       case 'threeOfAKind':
         scoreBoards[turn].calcXOfAKind(dices, 3);
         break;

@@ -85,6 +85,61 @@ class ScoreBoard {
 		this.setPoints('chance', sum);
 	}
 
+	calcPair(dices){
+		var count1 = 0;
+		var count2 = 0;
+		var count3 = 0;
+		var count4 = 0;
+		var count5 = 0;
+		var count6 = 0;
+		var sum = 0;
+
+		for (let  dice of dices) {
+			if (dice.value === 1) {
+				count1++;
+			}
+				else if (dice.value === 2) {
+				count2++;
+			}
+				else if (dice.value === 3) {
+				count3++;
+			}
+				else if (dice.value === 4) {
+				count4++;
+			}
+				else if (dice.value === 5) {
+				count5++;
+			}
+				else if (dice.value === 6) {
+				count6++;
+			}
+
+		}
+		if (count6 >= 2) {
+			sum = 12;
+		}
+		else if (count5 >= 2) {
+			sum = 10;
+		}
+		else if (count4 >= 2){
+			sum = 8;
+		}
+		else if (count3 >= 2) {
+            sum = 6;
+		}
+		else if (count2 >= 2) {
+			sum = 4;
+		}
+		else if (count1 >= 2) {
+			sum = 2;
+		}
+		console.log(count1,'..',count2,'..',count3,'..',count4,'..',count5,'..',count6);
+      console.log('Sum of pair ' + sum);
+      this.setPoints('onePair', sum);
+
+
+	}
+
 
 	// Kan användas för att uppdatera DOM:en så att den skriver ut aktuella värden
 	updateScores(){

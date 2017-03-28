@@ -1,14 +1,9 @@
   function displayDices(dices){ return `
-  <div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Roll the dices</h3>
+  <div class="panel-body diceGroup">
+    <div class = "dice ${dices[0].lockedClass}" id="1">${dices[0].symbol}</div>
+    <div class = "dice ${dices[1].lockedClass}" id="2">${dices[1].symbol}</div>
+    <div class = "dice ${dices[2].lockedClass}" id="3">${dices[2].symbol}</div>
+    <div class = "dice ${dices[3].lockedClass}" id="4">${dices[3].symbol}</div>
+    <div class = "dice ${dices[4].lockedClass}" id="5">${dices[4].symbol}</div>
   </div>
-  <div class="panel-body">
-    <div class = "dice" id="1">${dices[0].symbol}</div>
-    <div class = "dice" id="2">${dices[1].symbol}</div>
-    <div class = "dice" id="3">${dices[2].symbol}</div>
-    <div class = "dice" id="4">${dices[3].symbol}</div>
-    <div class = "dice" id="5">${dices[4].symbol}</div>
-  </div>
-</div>
 `};

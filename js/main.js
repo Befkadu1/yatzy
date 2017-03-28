@@ -70,6 +70,27 @@ function start(){
   scoreBoards[1].setPoints('threes', 6);
 }
 
+
+$(document).on('click', '.throwButton', function(){
+  for (var i = 0; i < dices.length; i++) {
+    if (dices[i].locked == false) {
+      var randthrow = Math.floor( (Math.random() *6) +1 );
+      dices[i].val = randthrow;
+      dices[i].setClass(dices[i].locked)
+      console.log(dices[i].value);
+      $('.diceGroup').remove();
+      $('.testing').append(displayDices(dices));
+
+  console.log($(this).text());
+    }
+    else{
+      console.log("This dice is locked!");
+    }
+  }
+});
+
+
+
 $(document).on('click', '.dice', function(){
 
   if(dices[this.id - 1].locked){
@@ -88,24 +109,9 @@ $(document).on('click', '.dice', function(){
 
 });
 
-$(document).on('click', `tr td`, function(){
-function throwDices(){
-  for (var i = 0; i < dices.length; i++) {
-    if (dices[i].locked == false) {
-      var randthrow = Math.floor( (Math.random() *6) +1 );
-      dices[i].val = randthrow;
-      dices[i].setClass(dices[i].locked)
-      console.log(dices[i].value);
-      $('.diceGroup').remove();
-      $('.testing').append(displayDices(dices));
 
-  console.log($(this).text());
-    }
-    else{
-      console.log("This dice is locked!");
-    }
-  }
-}
+$(document).on('click', `tr td`, function(){
+
 
   var row = $(this).parent().attr('class');
   console.log(row);

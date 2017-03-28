@@ -66,7 +66,7 @@ function start(){
   scoreBoards[0] = new ScoreBoard('Joel');
   scoreBoards[1] = new ScoreBoard('Olle');
   scoreBoards[2] = new ScoreBoard('Pelle');
-  scoreBoards[0].setPoints('twos', 4);
+  //scoreBoards[0].setPoints('twos', 4);
   scoreBoards[1].setPoints('threes', 6);
 }
 
@@ -121,14 +121,31 @@ $(document).on('click', `tr td`, function(){
   if($('.' + row + ' .' + scoreBoards[turn].playerName).text() == ''){
     switch(row){
       case 'ones': 
-        scoreBoards[turn].calcOnes(dices);
+        //scoreBoards[turn].calcOnesToSixes(dices,1);
+        scoreBoards[turn].setPoints('ones',scoreBoards[turn].calcOnesToSixes(dices,1));
         break;
       case 'twos': 
-        scoreBoards[turn].calcTwos(dices);
+        //scoreBoards[turn].calcOnesToSixes(dices,2);
+        scoreBoards[turn].setPoints('twos',scoreBoards[turn].calcOnesToSixes(dices,2));
         break;
       case 'threes': 
-        scoreBoards[turn].calcThrees(dices);
+        //scoreBoards[turn].calcOnesToSixes(dices,3);
+        scoreBoards[turn].setPoints('threes',scoreBoards[turn].calcOnesToSixes(dices,3));
         break;
+      case 'fours': 
+        //scoreBoards[turn].calcOnesToSixes(dices,4);
+        scoreBoards[turn].setPoints('fours',scoreBoards[turn].calcOnesToSixes(dices,4));
+        break;      
+      case 'fives': 
+        //scoreBoards[turn].calcOnesToSixes(dices,5);
+        scoreBoards[turn].setPoints('fives',scoreBoards[turn].calcOnesToSixes(dices,5));
+        break;
+      case 'sixes': 
+        //scoreBoards[turn].calcOnesToSixes(dices,6);
+        scoreBoards[turn].setPoints('sixes',scoreBoards[turn].calcOnesToSixes(dices,6));
+        break;
+
+
       case 'chance':
         scoreBoards[turn].calcChance(dices);
         break;

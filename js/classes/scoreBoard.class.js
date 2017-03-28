@@ -31,11 +31,15 @@ class ScoreBoard {
 		}
 	}
 
-	calcOnes(dices){
+	calcOnesToSixes(dices, number){
 		let sum = 0;
 		for(let dice of dices){
-			sum += dice.value;
+			if(dice.value=== number)
+			  {			  	
+			  	sum += dice.value;
+			  }
 		}
+		return sum;
 		console.log('Sum of dices: ' + sum);
 	}
 
@@ -82,7 +86,6 @@ class ScoreBoard {
 	}
 
 
-
 	// Kan användas för att uppdatera DOM:en så att den skriver ut aktuella värden
 	updateScores(){
 		for(let prop in this){
@@ -93,10 +96,9 @@ class ScoreBoard {
 	// Tar in värdet och propertyn som ska uppdateras
 	// Uppdaterar både objektet och DOM:en
 	setPoints(prop, val){
-		this[prop] = val;
+		this[prop] = val;		
 		$(`.${this.playerName}.${prop}-cell`).append(this[prop]);
 	}
-
 
 
 

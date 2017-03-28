@@ -129,6 +129,9 @@ $(document).on('click', `tr td`, function(){
       case 'threes': 
         scoreBoards[turn].calcThrees(dices);
         break;
+      case 'threeOfAKind':
+        scoreBoards[turn].calcThreeOfAKind(dices);
+        break;
       case 'chance':
         scoreBoards[turn].calcChance(dices);
         break;

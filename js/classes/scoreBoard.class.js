@@ -39,6 +39,22 @@ class ScoreBoard {
 		console.log('Sum of dices: ' + sum);
 	}
 
+	calcThreeOfAKind(dices){
+		let amountOfUnique = [0,0,0,0,0,0,0];
+		let sum = 0;
+		for(let dice of dices){
+			console.log('amount before',amountOfUnique[dice.value]);
+			amountOfUnique[dice.value] += 1;
+			console.log('amount after', amountOfUnique[dice.value]);
+		}
+		for(let val of amountOfUnique){
+			if(val >= 3){
+				sum = amountOfUnique.indexOf(val) * 3;
+			}
+		}
+		this.setPoints('threeOfAKind', sum);
+	}
+
 	calcChance(dices){
 		let sum = 0;
 		for(let dice of dices){

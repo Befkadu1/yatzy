@@ -47,7 +47,10 @@ function start(){
   $('body').prepend(displayNavbar());
   $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
   $('.scoreboard-container').append(displayScoreBoard());
-  $('.page-content').append('<div class="dice-container col-xs-2 col-md-push-2" />');
+  $('.page-content').append(`<div class="dice-container col-xs-2 col-md-push-2">  <div class="panel panel-primary ">
+    <div class="panel-heading">
+    <h3 class="panel-title">Roll the dices</h3>
+    </div><div class = testing></div></div></div>`);
 
   
   for(let i = 0; i < 5; i++){
@@ -66,15 +69,39 @@ function start(){
 }
 
 $(document).on('click', '.dice', function(){
+
   if(dices[this.id - 1].locked){
     dices[this.id - 1].locked = false;
+    dices[this.id -1].setClass(dices[this.id -1].locked);
+     $('.diceGroup').remove();
+      $('.testing').append(displayDices(dices));
   }else{
     dices[this.id - 1].locked = true;
+    dices[this.id -1].setClass(dices[this.id -1].locked);
+     $('.diceGroup').remove();
+      $('.testing').append(displayDices(dices));
   }
 
   $(this).toggleClass('locked');
 
 });
+
+function throwDices(){
+  for (var i = 0; i < dices.length; i++) {
+    if (dices[i].locked == false) {
+      var randthrow = Math.floor( (Math.random() *6) +1 );
+      dices[i].val = randthrow;
+      dices[i].setClass(dices[i].locked)
+      console.log(dices[i].value);
+      $('.diceGroup').remove();
+      $('.testing').append(displayDices(dices));
+
+    }
+    else{
+      console.log("This dice is locked!");
+    }
+  }
+}
 
 
 

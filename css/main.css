@@ -10,9 +10,10 @@ td, th {
     padding: 8px;
 }
 
-.locked{
+.locked,.thisLocked{
 	background: red;
 }
+
 
 .dice{
 	font-size: 72px;

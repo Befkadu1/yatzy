@@ -66,8 +66,8 @@ function start(){
   scoreBoards[0] = new ScoreBoard('Joel');
   scoreBoards[1] = new ScoreBoard('Olle');
   scoreBoards[2] = new ScoreBoard('Pelle');
-  scoreBoards[0].setPoints('twos', 4);
-  scoreBoards[1].setPoints('threes', 6);
+  // scoreBoards[0].setPoints('twos', 4);
+  // scoreBoards[1].setPoints('threes', 6);
 }
 
 
@@ -130,7 +130,13 @@ $(document).on('click', `tr td`, function(){
         scoreBoards[turn].calcThrees(dices);
         break;
       case 'threeOfAKind':
-        scoreBoards[turn].calcThreeOfAKind(dices);
+        scoreBoards[turn].calcXOfAKind(dices, 3);
+        break;
+      case 'fourOfAKind':
+        scoreBoards[turn].calcXOfAKind(dices, 4);
+        break;
+      case 'yatzy':
+        scoreBoards[turn].calcXOfAKind(dices, 5);
         break;
       case 'chance':
         scoreBoards[turn].calcChance(dices);

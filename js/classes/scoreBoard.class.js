@@ -39,20 +39,37 @@ class ScoreBoard {
 		console.log('Sum of dices: ' + sum);
 	}
 
-	calcThreeOfAKind(dices){
-		let amountOfUnique = [0,0,0,0,0,0,0];
+	calcXOfAKind(dices, val){
+		let amountOfUnique = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0]];
 		let sum = 0;
+		let prop = '';
 		for(let dice of dices){
-			console.log('amount before',amountOfUnique[dice.value]);
-			amountOfUnique[dice.value] += 1;
-			console.log('amount after', amountOfUnique[dice.value]);
+			amountOfUnique[dice.value - 1][1] += 1;
 		}
-		for(let val of amountOfUnique){
-			if(val >= 3){
-				sum = amountOfUnique.indexOf(val) * 3;
+		for(let points of amountOfUnique){
+			if(points[1] >= val){
+				if(val !== 5){
+					sum = (amountOfUnique.indexOf(points) + 1) * val;
+				}else if(val === 5){
+					sum = 50;
+				}
+				
 			}
 		}
-		this.setPoints('threeOfAKind', sum);
+		switch(val){
+			case 3:
+				prop = 'threeOfAKind';
+				break;
+			case 4:
+				prop = 'fourOfAKind';
+				break;
+			case 5:
+				prop = 'yatzy'
+				break;
+			default:
+				console.log('Sorry, something went wrong.')
+		}
+		this.setPoints(prop, sum);
 	}
 
 	calcChance(dices){

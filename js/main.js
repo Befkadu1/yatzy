@@ -156,6 +156,13 @@ $(document).on('click', `tr td`, function(){
         case 'fullHouse':
         scoreBoards[turn].setPoints('fullHouse',scoreBoards[turn].calcFullHouse(dices,3,2));
         break;
+      case 'smallStraight':
+        scoreBoards[turn].calcSmallStraight(dices);
+        break;
+
+      case 'largeStraight':
+        scoreBoards[turn].calcLargeStraight(dices);
+        break;
       case 'chance':
         scoreBoards[turn].calcChance(dices);
         break;

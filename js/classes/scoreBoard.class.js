@@ -138,10 +138,62 @@ class ScoreBoard {
       console.log('Sum of pair ' + sum);
       this.setPoints('onePair', sum);
 
+	}
+
+
+	calcSmallStraight(dices){
+		var count1 = 0;
+		var count2 = 0;
+		var count3 = 0;
+		var count4 = 0;
+		var count5 = 0;
+		var count6 = 0;
+		var sum = 0;
+
+		for (let  dice of dices) {
+			if (dice.value === 1) {
+				count1++;
+			}
+				else if (dice.value === 2) {
+				count2++;
+			}
+				else if (dice.value === 3) {
+				count3++;
+			}
+				else if (dice.value === 4) {
+				count4++;
+			}
+				else if (dice.value === 5) {
+				count5++;
+			}
+				else if (dice.value === 6) {
+				count6++;
+			}
+
+		}
+
+		if(count1 === 1 && count2 === 1 && count3 ===1 && count4 === 1 && count5 === 1){
+			sum = 15;
+		}
+	
+		else{
+			sum = 0;
+		}
+		console.log('Summan av lilla stegen ' + sum);
+		this.setPoints('smallStraight', sum);
+
 
 	}
 
 	calcFullHouse(dices,valOne,valTwo){
+	calcLargeStraight(dices){
+		var count1 = 0;
+		var count2 = 0;
+		var count3 = 0;
+		var count4 = 0;
+		var count5 = 0;
+		var count6 = 0;
+		var sum = 0;
 
 		let amountOfUniques = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0]];
 		var sumOne = 0;
@@ -176,6 +228,42 @@ class ScoreBoard {
 		//set the points 0 if there is no full house or the score if you have a fullHouse	
 		this.setPoints('fullHouse',sum);
 	}
+
+
+			for(let Dice of dices){
+				if(Dice.value === 2){
+					count1++;
+			}				
+				else if (Dice.value === 3) {
+				count2++;
+			}
+				else if (Dice.value === 4) {
+				count3++;
+			}
+				else if (Dice.value === 5) {
+				count4++;
+			}
+				else if (Dice.value === 6) {
+				count5++;
+			}
+				else if(Dice.value === 1){
+					count6++;
+			}
+			}
+			if(count1 === 1 && count2 === 1 && count3 === 1 && count4 === 1 && count5 === 1 && count6 === 0){
+				sum = 20;
+				console.log('sum of  LargeStraight', sum);
+				
+
+			}
+			else{
+				sum = 0;
+			}
+			this.setPoints('largeStraight', sum);
+
+	}
+
+
 
 
 	// Kan användas för att uppdatera DOM:en så att den skriver ut aktuella värden

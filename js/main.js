@@ -153,6 +153,9 @@ $(document).on('click', `tr td`, function(){
       case 'fourOfAKind':
         scoreBoards[turn].calcXOfAKind(dices, 4);
         break;
+        case 'fullHouse':
+        scoreBoards[turn].setPoints('fullHouse',scoreBoards[turn].calcFullHouse(dices,3,2));
+        break;
       case 'chance':
         scoreBoards[turn].calcChance(dices);
         break;

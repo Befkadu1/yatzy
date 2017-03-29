@@ -1,24 +1,24 @@
 class ScoreBoard {
 	constructor(playerName){
 		this.playerName = playerName;
-		this.ones = '';
-		this.twos = '';
-		this.threes = '';
-		this.fours = '';
-		this.fives = '';
-		this.sixes = '';
-		this.sum = '';
-		this.bonus = '';
-		this.onePair = '';
-		this.twoPairs = '';
-		this.threeOfAKind = '';
-		this.fourOfAKind = '';
-		this.smallStraight = '';
-		this.largeStraight = '';
-		this.fullHouse = '';
-		this.chance = '';
-		this.yatzy = '';
-		this.total = '';
+		this.ones = 0;
+		this.twos = 0;
+		this.threes = 0;
+		this.fours = 0;
+		this.fives = 0;
+		this.sixes = 0;
+		this.sum = 0;
+		this.bonus = 0;
+		this.onePair = 0;
+		this.twoPairs = 0;
+		this.threeOfAKind = 0;
+		this.fourOfAKind = 0;
+		this.smallStraight = 0;
+		this.largeStraight = 0;
+		this.fullHouse = 0;
+		this.chance = 0;
+		this.yatzy = 0;
+		this.total = 0;
 
 		// Skriver ut kolumn för den akuella spelaren
 		$('table.table').prepend(`<col class="${this.playerName}-board" />`);
@@ -26,7 +26,7 @@ class ScoreBoard {
 			if(prop === 'playerName'){
 				$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);
 			}else{
-				$('.' + prop).append(`<td class="${this.playerName} ${prop}-cell">${this[prop]}</td>`);
+				$('.' + prop).append(`<td class="${this.playerName} ${prop}-cell"></td>`);
 			}
 		}
 	}
@@ -41,6 +41,12 @@ class ScoreBoard {
 		}
 		return sum;
 		console.log('Sum of dices: ' + sum);
+	}
+
+	calcSumOfOnesToSixes(){
+		let sum = 0;
+		sum = this.ones + this.twos + this.threes + this.fours + this.fives + this.sixes;
+		this.setPoints('sum', sum);
 	}
 
 	calcXOfAKind(dices, val){
@@ -152,7 +158,7 @@ class ScoreBoard {
 	// Uppdaterar både objektet och DOM:en
 	setPoints(prop, val){
 		this[prop] = val;		
-		$(`.${this.playerName}.${prop}-cell`).append(this[prop]);
+		$(`.${this.playerName}.${prop}-cell`).html(this[prop]);
 	}
 
 

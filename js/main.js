@@ -123,26 +123,32 @@ $(document).on('click', `tr td`, function(){
       case 'ones': 
         //scoreBoards[turn].calcOnesToSixes(dices,1);
         scoreBoards[turn].setPoints('ones',scoreBoards[turn].calcOnesToSixes(dices,1));
+        scoreBoards[turn].calcSumOfOnesToSixes();
         break;
       case 'twos': 
         //scoreBoards[turn].calcOnesToSixes(dices,2);
         scoreBoards[turn].setPoints('twos',scoreBoards[turn].calcOnesToSixes(dices,2));
+        scoreBoards[turn].calcSumOfOnesToSixes();
         break;
       case 'threes': 
         //scoreBoards[turn].calcOnesToSixes(dices,3);
         scoreBoards[turn].setPoints('threes',scoreBoards[turn].calcOnesToSixes(dices,3));
+        scoreBoards[turn].calcSumOfOnesToSixes();
         break;
       case 'fours': 
         //scoreBoards[turn].calcOnesToSixes(dices,4);
         scoreBoards[turn].setPoints('fours',scoreBoards[turn].calcOnesToSixes(dices,4));
+        scoreBoards[turn].calcSumOfOnesToSixes();
         break;      
       case 'fives': 
         //scoreBoards[turn].calcOnesToSixes(dices,5);
         scoreBoards[turn].setPoints('fives',scoreBoards[turn].calcOnesToSixes(dices,5));
+        scoreBoards[turn].calcSumOfOnesToSixes();
         break;
       case 'sixes': 
         //scoreBoards[turn].calcOnesToSixes(dices,6);
         scoreBoards[turn].setPoints('sixes',scoreBoards[turn].calcOnesToSixes(dices,6));
+        scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'onePair':
         scoreBoards[turn].setPoints('onePair',scoreBoards[turn].calcPair(dices));

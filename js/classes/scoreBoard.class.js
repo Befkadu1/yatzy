@@ -33,9 +33,19 @@ class ScoreBoard {
 	}
 
 	calcTotalPoints(){
-		//let sum = this.onePair + this.threeOfAKind + this.fourOfAKind + this.smallStraight + this.largeStraight + this.fullHouse + this.chance + this.yatzy;
-		let sum = this.onePair;
-		console.log('Summan: ' + sum);
+
+		
+		let sum = this.sum + this.onePair + this.threeOfAKind + this.fourOfAKind + this.smallStraight + this.largeStraight + this.fullHouse + this.chance + this.yatzy;
+
+		if(this.bonus < 50){
+			this.bonus = 0;
+			console.log('Bonus är: ' + this.bonus)
+		}
+		console.log('Summan 1: ' + sum);
+		sum+=this.bonus;
+		//let sum = 0;
+		//sum = this.onePair;
+		console.log('Summan 2: ' + sum);
 		this.setPoints('total', sum);
 
 	}
@@ -164,6 +174,7 @@ class ScoreBoard {
 		console.log(count1,'..',count2,'..',count3,'..',count4,'..',count5,'..',count6);
       console.log('Sum of pair ' + sum);
       this.setPoints('onePair', sum);
+      return sum;
 
 	}
 
@@ -245,7 +256,8 @@ class ScoreBoard {
 			sum = sumOne + sumTwo;
 		}
 		//set the points 0 if there is no full house or the score if you have a fullHouse	
-		this.setPoints('fullHouse',sum);
+		//this.setPoints('fullHouse',sum);
+		return sum;
 	}
 	calcLargeStraight(dices){
 		let count1 = 0;

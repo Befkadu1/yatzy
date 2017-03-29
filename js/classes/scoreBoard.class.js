@@ -186,14 +186,6 @@ class ScoreBoard {
 	}
 
 	calcFullHouse(dices,valOne,valTwo){
-	calcLargeStraight(dices){
-		var count1 = 0;
-		var count2 = 0;
-		var count3 = 0;
-		var count4 = 0;
-		var count5 = 0;
-		var count6 = 0;
-		var sum = 0;
 
 		let amountOfUniques = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0]];
 		var sumOne = 0;
@@ -228,6 +220,14 @@ class ScoreBoard {
 		//set the points 0 if there is no full house or the score if you have a fullHouse	
 		this.setPoints('fullHouse',sum);
 	}
+	calcLargeStraight(dices){
+		var count1 = 0;
+		var count2 = 0;
+		var count3 = 0;
+		var count4 = 0;
+		var count5 = 0;
+		var count6 = 0;
+		var sum = 0;
 
 
 			for(let Dice of dices){

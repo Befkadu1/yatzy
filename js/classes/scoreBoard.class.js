@@ -174,9 +174,36 @@ class ScoreBoard {
 		console.log(count1,'..',count2,'..',count3,'..',count4,'..',count5,'..',count6);
       console.log('Sum of pair ' + sum);
       this.setPoints('onePair', sum);
-      return sum;
+      return [count1,count2,count3,count4,count5,count6];
 
 	}
+
+	//A 2 pair function
+   calcTwoPairs(dices){
+   	var sum = 0;
+   	var count = 0;
+
+   	var totalSum =0;
+
+   	//call calcPair() function to see which numbers are a pair
+   	var twoPairsArray = this.calcPair(dices);
+   
+   	for(var i = 0; i<twoPairsArray.length; i++){
+   		if(twoPairsArray[i]>=2 && twoPairsArray[i]< 4){
+   			console.log("i", (i+1));
+   			sum += (i+1)*2;
+   			++count;
+
+   			if(count>1){
+   				totalSum = sum;
+   			}
+        }
+        else if (twoPairsArray[i]>=4){
+           totalSum = (i+1)*4;
+        }
+   	}
+   	return totalSum;
+   }
 
 
 	calcSmallStraight(dices){

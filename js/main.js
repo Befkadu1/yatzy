@@ -179,7 +179,10 @@ $(document).on('click', `tr td`, function(){
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'onePair':
-        scoreBoards[turn].setPoints('onePair',scoreBoards[turn].calcPair(dices));
+        scoreBoards[turn].calcPair(dices);
+        break;  
+        case 'twoPairs': 
+        scoreBoards[turn].setPoints('twoPairs',scoreBoards[turn].calcTwoPairs(dices));
         break;
         case 'threeOfAKind':
         scoreBoards[turn].calcXOfAKind(dices, 3);

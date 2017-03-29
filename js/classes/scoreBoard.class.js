@@ -35,7 +35,7 @@ class ScoreBoard {
 	calcTotalPoints(){
 
 		
-		let sum = this.sum + this.onePair + this.threeOfAKind + this.fourOfAKind + this.smallStraight + this.largeStraight + this.fullHouse + this.chance + this.yatzy;
+		let sum = this.sum + this.onePair + this.twoPairs + this.threeOfAKind + this.fourOfAKind + this.smallStraight + this.largeStraight + this.fullHouse + this.chance + this.yatzy;
 
 		if(this.bonus < 50){
 			this.bonus = 0;

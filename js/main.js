@@ -61,7 +61,7 @@ function start(){
   }
   console.log('dices',dices);
 
-  $('.dice-container').append(displayDices(dices));
+  newRound();
   $('.dice-container').append(displayThrowButton());
 
   scoreBoards[0] = new ScoreBoard('Joel');
@@ -70,15 +70,28 @@ function start(){
   // scoreBoards[0].setPoints('twos', 4);
   // scoreBoards[1].setPoints('threes', 6);
 }
+function newRound(){
+     for (var i = 0; i < dices.length; i++) {
+      var randthrow = Math.floor( (Math.random() *6) +1 );
+        dices[i].val = randthrow;
+        console.log(dices[i].value);
+        dices[i].locked = false;
+        dices[i].setClass(dices[i.locked]);
+        $('.diceGroup').remove();
+        $('.testing').append(displayDices(dices));
+        console.log($(this).text());
 
 
+     }
+     numberOfThrows++;
+}
 $(document).on('click', '.throwButton', function(){
   if(numberOfThrows < 3){
     for (var i = 0; i < dices.length; i++) {
       if (dices[i].locked == false) {
         var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
-        dices[i].setClass(dices[i].locked)
+        dices[i].setClass(dices[i.locked]);
         console.log(dices[i].value);
         $('.diceGroup').remove();
         $('.testing').append(displayDices(dices));
@@ -187,6 +200,7 @@ $(document).on('click', `tr td`, function(){
       }
       numberOfThrows = 0;
       document.getElementById("throwingButton").disabled = false;
+      newRound();
     }
   });
 

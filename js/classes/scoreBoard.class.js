@@ -123,14 +123,13 @@ class ScoreBoard {
 		this.setPoints('chance', sum);
 	}
 
-	calcPair(dices){
+	calcForPair(dices){
 		let count1 = 0;
 		let count2 = 0;
 		let count3 = 0;
 		let count4 = 0;
 		let count5 = 0;
 		let count6 = 0;
-		let sum = 0;
 
 		for (let  dice of dices) {
 			if (dice.value === 1) {
@@ -153,29 +152,34 @@ class ScoreBoard {
 			}
 
 		}
-		if (count6 >= 2) {
+		return [count1, count2, count3, count4, count5, count6];
+	}
+
+	calcPair(dices){
+		let counts = this.calcForPair(dices);
+		let sum = 0;
+
+		if (counts[5] >= 2) {
 			sum = 12;
 		}
-		else if (count5 >= 2) {
+		else if (counts[4] >= 2) {
 			sum = 10;
 		}
-		else if (count4 >= 2){
+		else if (counts[3] >= 2){
 			sum = 8;
 		}
-		else if (count3 >= 2) {
+		else if (counts[2] >= 2) {
             sum = 6;
 		}
-		else if (count2 >= 2) {
+		else if (counts[1] >= 2) {
 			sum = 4;
 		}
-		else if (count1 >= 2) {
+		else if (counts[0] >= 2) {
 			sum = 2;
 		}
-		console.log(count1,'..',count2,'..',count3,'..',count4,'..',count5,'..',count6);
+		//console.log(count1,'..',count2,'..',count3,'..',count4,'..',count5,'..',count6);
       console.log('Sum of pair ' + sum);
       this.setPoints('onePair', sum);
-      return [count1,count2,count3,count4,count5,count6];
-
 	}
 
 	//A 2 pair function
@@ -186,7 +190,7 @@ class ScoreBoard {
    	var totalSum =0;
 
    	//call calcPair() function to see which numbers are a pair
-   	var twoPairsArray = this.calcPair(dices);
+   	var twoPairsArray = this.calcForPair(dices);
    
    	for(var i = 0; i<twoPairsArray.length; i++){
    		if(twoPairsArray[i]>=2 && twoPairsArray[i]< 4){

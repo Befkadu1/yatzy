@@ -29,6 +29,7 @@ class ScoreBoard {
 				$('.' + prop).append(`<td class="${this.playerName} ${prop}-cell"></td>`);
 			}
 		}
+		this.calcBonus(0);
 	}
 
 	calcOnesToSixes(dices, number){
@@ -47,6 +48,17 @@ class ScoreBoard {
 		let sum = 0;
 		sum = this.ones + this.twos + this.threes + this.fours + this.fives + this.sixes;
 		this.setPoints('sum', sum);
+		this.calcBonus(sum);
+	}
+
+	calcBonus(sum){
+		let bonus = -63;
+		if(sum > 62){
+			bonus = 50;
+		}else{
+			bonus += sum;
+		}
+		this.setPoints('bonus', bonus);
 	}
 
 	calcXOfAKind(dices, val){

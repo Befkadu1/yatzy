@@ -159,6 +159,10 @@ $(document).on('click', `tr td`, function(){
       case 'fourOfAKind':
         scoreBoards[turn].calcXOfAKind(dices, 4);
         break;
+      case 'smallStraight':
+        scoreBoards[turn].calcSmallStraight(dices);
+        break;
+
       case 'largeStraight':
         scoreBoards[turn].calcLargeStraight(dices);
         break;

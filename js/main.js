@@ -157,6 +157,9 @@ $(document).on('click', `tr td`, function(){
         scoreBoards[turn].calcSmallStraight(dices);
         break;
 
+      case 'largeStraight':
+        scoreBoards[turn].calcLargeStraight(dices);
+        break;
       case 'chance':
         scoreBoards[turn].calcChance(dices);
         break;

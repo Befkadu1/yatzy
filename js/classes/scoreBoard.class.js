@@ -184,6 +184,49 @@ class ScoreBoard {
 
 	}
 
+	calcLargeStraight(dices){
+		var count1 = 0;
+		var count2 = 0;
+		var count3 = 0;
+		var count4 = 0;
+		var count5 = 0;
+		var count6 = 0;
+		var sum = 0;
+
+			for(let Dice of dices){
+				if(Dice.value === 2){
+					count1++;
+			}				
+				else if (Dice.value === 3) {
+				count2++;
+			}
+				else if (Dice.value === 4) {
+				count3++;
+			}
+				else if (Dice.value === 5) {
+				count4++;
+			}
+				else if (Dice.value === 6) {
+				count5++;
+			}
+				else if(Dice.value === 1){
+					count6++;
+			}
+			}
+			if(count1 === 1 && count2 === 1 && count3 === 1 && count4 === 1 && count5 === 1 && count6 === 0){
+				sum = 20;
+				console.log('sum of  LargeStraight', sum);
+				
+
+			}
+			else{
+				sum = 0;
+			}
+			this.setPoints('largeStraight', sum);
+
+	}
+
+
 
 
 	// Kan användas för att uppdatera DOM:en så att den skriver ut aktuella värden

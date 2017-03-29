@@ -215,6 +215,7 @@ $(document).on('click', `tr td`, function(){
       numberOfThrows = 0;
       document.getElementById("throwingButton").disabled = false;
       newRound();
+      scoreBoards[turn].calcTotalPoints();
     }
   });
 

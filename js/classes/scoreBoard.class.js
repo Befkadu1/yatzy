@@ -32,10 +32,19 @@ class ScoreBoard {
 		this.calcBonus(0);
 	}
 
+	calcTotalPoints(){
+		//let sum = this.onePair + this.threeOfAKind + this.fourOfAKind + this.smallStraight + this.largeStraight + this.fullHouse + this.chance + this.yatzy;
+		let sum = this.onePair;
+		console.log('Summan: ' + sum);
+		this.setPoints('total', sum);
+
+	}
+
+
 	calcOnesToSixes(dices, number){
 		let sum = 0;
 		for(let dice of dices){
-			if(dice.value=== number)
+			if(dice.value === number)
 			  {			  	
 			  	sum += dice.value;
 			  }
@@ -105,18 +114,18 @@ class ScoreBoard {
 	}
 
 	calcPair(dices){
-		var count1 = 0;
-		var count2 = 0;
-		var count3 = 0;
-		var count4 = 0;
-		var count5 = 0;
-		var count6 = 0;
-		var sum = 0;
+		let count1 = 0;
+		let count2 = 0;
+		let count3 = 0;
+		let count4 = 0;
+		let count5 = 0;
+		let count6 = 0;
+		let sum = 0;
 
 		for (let  dice of dices) {
 			if (dice.value === 1) {
-				count1++;
-			}
+				count1++;}
+				
 				else if (dice.value === 2) {
 				count2++;
 			}
@@ -160,13 +169,13 @@ class ScoreBoard {
 
 
 	calcSmallStraight(dices){
-		var count1 = 0;
-		var count2 = 0;
-		var count3 = 0;
-		var count4 = 0;
-		var count5 = 0;
-		var count6 = 0;
-		var sum = 0;
+		let count1 = 0;
+		let count2 = 0;
+		let count3 = 0;
+		let count4 = 0;
+		let count5 = 0;
+		let count6 = 0;
+		let sum = 0;
 
 		for (let  dice of dices) {
 			if (dice.value === 1) {
@@ -239,13 +248,13 @@ class ScoreBoard {
 		this.setPoints('fullHouse',sum);
 	}
 	calcLargeStraight(dices){
-		var count1 = 0;
-		var count2 = 0;
-		var count3 = 0;
-		var count4 = 0;
-		var count5 = 0;
-		var count6 = 0;
-		var sum = 0;
+		let count1 = 0;
+		let count2 = 0;
+		let count3 = 0;
+		let count4 = 0;
+		let count5 = 0;
+		let count6 = 0;
+		let sum = 0;
 
 
 			for(let Dice of dices){

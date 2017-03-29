@@ -69,6 +69,7 @@ function start(){
   scoreBoards[2] = new ScoreBoard('Pelle');
   // scoreBoards[0].setPoints('twos', 4);
   // scoreBoards[1].setPoints('threes', 6);
+
 }
 
 
@@ -188,7 +189,11 @@ $(document).on('click', `tr td`, function(){
         case 'yatzy':
         scoreBoards[turn].calcXOfAKind(dices, 5);
         break;
-        default:
+      case 'total':
+        scoreBoards[turn].calcTotalPoints();
+  
+        break;
+      default:
         console.log('Default');
       }
       numberOfThrows = 0;

@@ -137,8 +137,53 @@ class ScoreBoard {
       console.log('Sum of pair ' + sum);
       this.setPoints('onePair', sum);
 
+	}
+
+
+	calcSmallStraight(dices){
+		var count1 = 0;
+		var count2 = 0;
+		var count3 = 0;
+		var count4 = 0;
+		var count5 = 0;
+		var count6 = 0;
+		var sum = 0;
+
+		for (let  dice of dices) {
+			if (dice.value === 1) {
+				count1++;
+			}
+				else if (dice.value === 2) {
+				count2++;
+			}
+				else if (dice.value === 3) {
+				count3++;
+			}
+				else if (dice.value === 4) {
+				count4++;
+			}
+				else if (dice.value === 5) {
+				count5++;
+			}
+				else if (dice.value === 6) {
+				count6++;
+			}
+
+		}
+
+		if(count1 === 1 && count2 === 1 && count3 ===1 && count4 === 1 && count5 === 1){
+			sum = 15;
+		}
+	
+		else{
+			sum = 0;
+		}
+		console.log('Summan av lilla stegen ' + sum);
+		this.setPoints('smallStraight', sum);
+
 
 	}
+
 
 
 	// Kan användas för att uppdatera DOM:en så att den skriver ut aktuella värden

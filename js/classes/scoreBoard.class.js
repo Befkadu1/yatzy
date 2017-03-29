@@ -78,6 +78,7 @@ class ScoreBoard {
 				
 			}
 		}
+		console.log(amountOfUnique);
 		switch(val){
 			case 3:
 				prop = 'threeOfAKind';
@@ -202,6 +203,41 @@ class ScoreBoard {
 
 	}
 
+	calcFullHouse(dices,valOne,valTwo){
+
+		let amountOfUniques = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0]];
+		var sumOne = 0;
+		var sumTwo = 0;
+		var sum = 0;
+		// Checks how many of each value there is
+		for(let dice of dices){
+			amountOfUniques[dice.value - 1][1] += 1;
+		}
+		//First loops to see if there is three of any kind if there is it takes that value * 3
+		for(let points of amountOfUniques){
+			if(points[1] === valOne){
+				sumOne = (amountOfUniques.indexOf(points) + 1) * valOne;
+                //If the first one went through it checks here if any value has exactly 
+                //2 of a kind and then calculates it
+				for(let points of amountOfUniques){
+					if(points[1] === valTwo){
+						sumTwo += (amountOfUniques.indexOf(points) + 1) * valTwo;
+					}
+					//if there is no 2 of a kind sets second sum to 0
+					else if (sumTwo === 0){
+						sumTwo = 0;
+					}
+				}
+			}
+		}
+		// checks if there were any pair in the second loop, if it aint there isnt a full house
+		// and it wont calc the sum
+		if(sumTwo > 0){
+			sum = sumOne + sumTwo;
+		}
+		//set the points 0 if there is no full house or the score if you have a fullHouse	
+		this.setPoints('fullHouse',sum);
+	}
 	calcLargeStraight(dices){
 		var count1 = 0;
 		var count2 = 0;
@@ -210,6 +246,7 @@ class ScoreBoard {
 		var count5 = 0;
 		var count6 = 0;
 		var sum = 0;
+
 
 			for(let Dice of dices){
 				if(Dice.value === 2){

@@ -42,6 +42,7 @@ $.ajax({
 let dices = [];
 let scoreBoards = [];
 let turn = 0;
+var numberOfThrows = 0;
 
 $(start);
 
@@ -72,21 +73,34 @@ function start(){
 
 
 $(document).on('click', '.throwButton', function(){
-  for (var i = 0; i < dices.length; i++) {
-    if (dices[i].locked == false) {
-      var randthrow = Math.floor( (Math.random() *6) +1 );
-      dices[i].val = randthrow;
-      dices[i].setClass(dices[i].locked)
-      console.log(dices[i].value);
-      $('.diceGroup').remove();
-      $('.testing').append(displayDices(dices));
+  if(numberOfThrows < 3){
+    for (var i = 0; i < dices.length; i++) {
+      if (dices[i].locked == false) {
+        var randthrow = Math.floor( (Math.random() *6) +1 );
+        dices[i].val = randthrow;
+        dices[i].setClass(dices[i].locked)
+        console.log(dices[i].value);
+        $('.diceGroup').remove();
+        $('.testing').append(displayDices(dices));
 
-  console.log($(this).text());
-    }
-    else{
-      console.log("This dice is locked!");
+        console.log($(this).text());
+      }
+      else{
+        console.log("This dice is locked!");
+      }
     }
   }
+  else{
+    console.log('You have already rolled three times')
+  }
+  if(numberOfThrows < 3){
+    numberOfThrows++;
+    console.log(numberOfThrows,'Många kast har du gjort');
+    if (numberOfThrows === 3){
+      document.getElementById("throwingButton").disabled = true;
+    }
+  }
+
 });
 
 
@@ -96,13 +110,13 @@ $(document).on('click', '.dice', function(){
   if(dices[this.id - 1].locked){
     dices[this.id - 1].locked = false;
     dices[this.id -1].setClass(dices[this.id -1].locked);
-     $('.diceGroup').remove();
-      $('.testing').append(displayDices(dices));
+    $('.diceGroup').remove();
+    $('.testing').append(displayDices(dices));
   }else{
     dices[this.id - 1].locked = true;
     dices[this.id -1].setClass(dices[this.id -1].locked);
-     $('.diceGroup').remove();
-      $('.testing').append(displayDices(dices));
+    $('.diceGroup').remove();
+    $('.testing').append(displayDices(dices));
   }
 
   $(this).toggleClass('locked');
@@ -125,27 +139,27 @@ $(document).on('click', `tr td`, function(){
         scoreBoards[turn].setPoints('ones',scoreBoards[turn].calcOnesToSixes(dices,1));
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
-      case 'twos': 
+        case 'twos': 
         //scoreBoards[turn].calcOnesToSixes(dices,2);
         scoreBoards[turn].setPoints('twos',scoreBoards[turn].calcOnesToSixes(dices,2));
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
-      case 'threes': 
+        case 'threes': 
         //scoreBoards[turn].calcOnesToSixes(dices,3);
         scoreBoards[turn].setPoints('threes',scoreBoards[turn].calcOnesToSixes(dices,3));
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
-      case 'fours': 
+        case 'fours': 
         //scoreBoards[turn].calcOnesToSixes(dices,4);
         scoreBoards[turn].setPoints('fours',scoreBoards[turn].calcOnesToSixes(dices,4));
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;      
-      case 'fives': 
+        case 'fives': 
         //scoreBoards[turn].calcOnesToSixes(dices,5);
         scoreBoards[turn].setPoints('fives',scoreBoards[turn].calcOnesToSixes(dices,5));
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
-      case 'sixes': 
+        case 'sixes': 
         //scoreBoards[turn].calcOnesToSixes(dices,6);
         scoreBoards[turn].setPoints('sixes',scoreBoards[turn].calcOnesToSixes(dices,6));
         scoreBoards[turn].calcSumOfOnesToSixes();
@@ -153,30 +167,34 @@ $(document).on('click', `tr td`, function(){
         case 'onePair':
         scoreBoards[turn].setPoints('onePair',scoreBoards[turn].calcPair(dices));
         break;
-      case 'threeOfAKind':
+        case 'threeOfAKind':
         scoreBoards[turn].calcXOfAKind(dices, 3);
         break;
-      case 'fourOfAKind':
+        case 'fourOfAKind':
         scoreBoards[turn].calcXOfAKind(dices, 4);
         break;
-      case 'smallStraight':
+        case 'fullHouse':
+        scoreBoards[turn].setPoints('fullHouse',scoreBoards[turn].calcFullHouse(dices,3,2));
+        break;
+        case 'smallStraight':
         scoreBoards[turn].calcSmallStraight(dices);
         break;
-
-      case 'largeStraight':
+        case 'largeStraight':
         scoreBoards[turn].calcLargeStraight(dices);
         break;
-      case 'chance':
+        case 'chance':
         scoreBoards[turn].calcChance(dices);
         break;
-      case 'yatzy':
+        case 'yatzy':
         scoreBoards[turn].calcXOfAKind(dices, 5);
         break;
-      default:
+        default:
         console.log('Default');
+      }
+      numberOfThrows = 0;
+      document.getElementById("throwingButton").disabled = false;
     }
-  }
-});
+  });
 
 
 

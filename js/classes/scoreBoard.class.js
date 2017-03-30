@@ -21,19 +21,14 @@ class ScoreBoard {
 		this.total = 0;
 
 		// Skriver ut kolumn för den akuella spelaren
-		// col-taggen är kanske inte nödvändig, men skadar inte
 		$('table.table').prepend(`<col class="${this.playerName}-board" />`);
 		for(let prop in this){
 			if(prop === 'playerName'){
 				$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);
 			}else{
-				// Skriver ut cell för varje property, men skriver ej ut värdet
-				// eftersom vi vill se det som en tom cell istället för 0
 				$('.' + prop).append(`<td class="${this.playerName} ${prop}-cell"></td>`);
 			}
 		}
-
-		// Kallar på funktionen för att visa -63 redan från start
 		this.calcBonus(0);
 	}
 
@@ -44,13 +39,13 @@ class ScoreBoard {
 
 		if(this.bonus < 50){
 			this.bonus = 0;
-			//console.log('Bonus är: ' + this.bonus)
+			console.log('Bonus är: ' + this.bonus)
 		}
-		//console.log('Summan 1: ' + sum);
+		console.log('Summan 1: ' + sum);
 		sum+=this.bonus;
 		//let sum = 0;
 		//sum = this.onePair;
-		//console.log('Summan 2: ' + sum);
+		console.log('Summan 2: ' + sum);
 		this.setPoints('total', sum);
 
 	}
@@ -65,7 +60,7 @@ class ScoreBoard {
 			  }
 		}
 		return sum;
-		//console.log('Sum of dices: ' + sum);
+		console.log('Sum of dices: ' + sum);
 	}
 
 	calcSumOfOnesToSixes(){
@@ -75,9 +70,6 @@ class ScoreBoard {
 		this.calcBonus(sum);
 	}
 
-	// Sätter bonus till -63 till att börja med,
-	// sen adderar man summan från 1-6-raderna för att visa
-	// hur långt ifrån bonusen man är
 	calcBonus(sum){
 		let bonus = -63;
 		if(sum > 62){
@@ -89,49 +81,23 @@ class ScoreBoard {
 	}
 
 	calcXOfAKind(dices, val){
-		// [[1,x],[2,y]...]
-		// Tvådimensionell array där 1 motsvarar värdet på tärningen
-		// och x hur många tärningar som har värdet 1
-		// Använder man en endimensionell array i stil med
-		// [x,y...]
-		// och man använder indexet för att veta vilket värde på tärningen det är
-		// så finns det risk att man får samma antal på fler än ett ställe
-		// vilket gör att indexOf inte fungerar som det ska.
 		let amountOfUnique = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0]];
 		let sum = 0;
 		let prop = '';
-
-		// Här läggs det på 1 på indexet i arrayen som är ett mindre än värdet
-		// på tärningen. Så slipper vi att det startar på index 1.
-		// Räknaren uppdaterar bara andra platsen i de inre arrayerna
 		for(let dice of dices){
 			amountOfUnique[dice.value - 1][1] += 1;
 		}
 		for(let points of amountOfUnique){
-			// Vi kollar om det är någon plats i arrayen där räknaren gått upp
-			// till minst det värdet vi letar efter (triss, fyrtal, yatzy)
 			if(points[1] >= val){
 				if(val !== 5){
-					// Här är points kanske [1,2] en gång, och [3,2] en annan gång
-					// hade vi haft en endimensionell array så hade vi haft
-					// två index med värdet 2. Ex [0,2,0,2,1]
-					// Eftersom första platsen i den inre arrayen motsvarar
-					// värdet på tärningarna så kan vi multiplicera det med
-					// 3 för triss eller 4 för fyrtal
-					sum = points[0] * val;
+					sum = (amountOfUnique.indexOf(points) + 1) * val;
 				}else if(val === 5){
-					// Om det finns fem tärningar med samma värde har man
-					// fått yatzy, och då får man automatiskt 50 poäng
 					sum = 50;
 				}
 				
 			}
 		}
-		//console.log(amountOfUnique);
-
-		// Vi måste skicka in olika strängar till setPoints beroende
-		// på om man valt triss, fyrtal eller yatzy
-		// Värdet på val motsvarar de olika 
+		console.log(amountOfUnique);
 		switch(val){
 			case 3:
 				prop = 'threeOfAKind';
@@ -143,7 +109,7 @@ class ScoreBoard {
 				prop = 'yatzy'
 				break;
 			default:
-				//console.log('Sorry, something went wrong.')
+				console.log('Sorry, something went wrong.')
 		}
 		this.setPoints(prop, sum);
 	}
@@ -153,7 +119,7 @@ class ScoreBoard {
 		for(let dice of dices){
 			sum += dice.value;
 		}
-		//console.log('Sum of dices: ' + sum);
+		console.log('Sum of dices: ' + sum);
 		this.setPoints('chance', sum);
 	}
 
@@ -212,7 +178,7 @@ class ScoreBoard {
 			sum = 2;
 		}
 		//console.log(count1,'..',count2,'..',count3,'..',count4,'..',count5,'..',count6);
-      //console.log('Sum of pair ' + sum);
+      console.log('Sum of pair ' + sum);
       this.setPoints('onePair', sum);
 	}
 
@@ -228,7 +194,7 @@ class ScoreBoard {
    
    	for(var i = 0; i<twoPairsArray.length; i++){
    		if(twoPairsArray[i]>=2 && twoPairsArray[i]< 4){
-   			//console.log("i", (i+1));
+   			console.log("i", (i+1));
    			sum += (i+1)*2;
    			++count;
 
@@ -282,7 +248,7 @@ class ScoreBoard {
 		else{
 			sum = 0;
 		}
-		//console.log('Summan av lilla stegen ' + sum);
+		console.log('Summan av lilla stegen ' + sum);
 		this.setPoints('smallStraight', sum);
 
 
@@ -356,7 +322,7 @@ class ScoreBoard {
 			}
 			if(count1 === 1 && count2 === 1 && count3 === 1 && count4 === 1 && count5 === 1 && count6 === 0){
 				sum = 20;
-				//console.log('sum of  LargeStraight', sum);
+				console.log('sum of  LargeStraight', sum);
 				
 
 			}

@@ -56,7 +56,7 @@ function start(){
   $('.page-content').append(`<div class="dice-container col-xs-2 col-md-push-2">  <div class="panel panel-primary ">
     <div class="panel-heading">
     <h3 class="panel-title">Roll the dices</h3>
-    </div><div class =testing></div></div></div>`);
+    </div><div class="dice-panel"></div></div></div>`);
 
   // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
@@ -64,7 +64,7 @@ function start(){
   }
   //console.log('dices',dices);
 
-  $('.dice-container').append(displayDices(dices));
+  newRound();
   $('.dice-container').append(displayThrowButton());
 
   // Skapar scoreboards för olika spelare
@@ -74,8 +74,21 @@ function start(){
   scoreBoards[1] = new ScoreBoard('Olle');
   scoreBoards[2] = new ScoreBoard('Pelle');
 }
+function newRound(){
+     for (var i = 0; i < dices.length; i++) {
+      var randthrow = Math.floor( (Math.random() *6) +1 );
+        dices[i].val = randthrow;
+        //console.log(dices[i].value);
+        dices[i].locked = false;
+        dices[i].setClass(dices[i.locked]);
+        $('.diceGroup').remove();
+        $('.dice-panel').append(displayDices(dices));
+        //console.log($(this).text());
 
 
+     }
+     numberOfThrows++;
+}
 $(document).on('click', '.throwButton', function(){
   if(numberOfThrows < 3){
     for (var i = 0; i < dices.length; i++) {
@@ -85,7 +98,7 @@ $(document).on('click', '.throwButton', function(){
         dices[i].setClass(dices[i].locked)
         //console.log(dices[i].value);
         $('.diceGroup').remove();
-        $('.testing').append(displayDices(dices));
+        $('.dice-panel').append(displayDices(dices));
 
         //console.log($(this).text());
       }
@@ -115,12 +128,12 @@ $(document).on('click', '.dice', function(){
     dices[this.id - 1].locked = false;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
-    $('.testing').append(displayDices(dices));
+    $('.dice-panel').append(displayDices(dices));
   }else{
     dices[this.id - 1].locked = true;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
-    $('.testing').append(displayDices(dices));
+    $('.dice-panel').append(displayDices(dices));
   }
 
   $(this).toggleClass('locked');
@@ -168,7 +181,10 @@ $(document).on('click', `tr td`, function(){
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'onePair':
-        scoreBoards[turn].setPoints('onePair',scoreBoards[turn].calcPair(dices));
+        scoreBoards[turn].calcPair(dices);
+        break;  
+        case 'twoPairs': 
+        scoreBoards[turn].setPoints('twoPairs',scoreBoards[turn].calcTwoPairs(dices));
         break;
         case 'threeOfAKind':
         scoreBoards[turn].calcXOfAKind(dices, 3);
@@ -191,11 +207,17 @@ $(document).on('click', `tr td`, function(){
         case 'yatzy':
         scoreBoards[turn].calcXOfAKind(dices, 5);
         break;
-        default:
+      case 'total':
+        scoreBoards[turn].calcTotalPoints();
+  
+        break;
+      default:
         //console.log('Default');
       }
       numberOfThrows = 0;
       document.getElementById("throwingButton").disabled = false;
+      newRound();
+      scoreBoards[turn].calcTotalPoints();
     }
   });
 

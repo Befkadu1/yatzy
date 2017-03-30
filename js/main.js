@@ -48,39 +48,42 @@ $(start);
 
 function start(){
   $('body').prepend(displayNavbar());
+  // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
   $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
+  // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
+  
   $('.page-content').append(`<div class="dice-container col-xs-2 col-md-push-2">  <div class="panel panel-primary ">
     <div class="panel-heading">
     <h3 class="panel-title">Roll the dices</h3>
-    </div><div class = testing></div></div></div>`);
+    </div><div class="dice-panel"></div></div></div>`);
 
-  
+  // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
     dices.push(new Dice(i+1, i+1));
   }
-  console.log('dices',dices);
+  //console.log('dices',dices);
 
   newRound();
   $('.dice-container').append(displayThrowButton());
 
+  // Skapar scoreboards för olika spelare
+  // Senare, om man låter användarna skriva in sitt namn
+  // själv, så kan man skicka in det namnet, eller t.o.m. person-objektet
   scoreBoards[0] = new ScoreBoard('Joel');
   scoreBoards[1] = new ScoreBoard('Olle');
   scoreBoards[2] = new ScoreBoard('Pelle');
-  // scoreBoards[0].setPoints('twos', 4);
-  // scoreBoards[1].setPoints('threes', 6);
-
 }
 function newRound(){
      for (var i = 0; i < dices.length; i++) {
       var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
-        console.log(dices[i].value);
+        //console.log(dices[i].value);
         dices[i].locked = false;
         dices[i].setClass(dices[i.locked]);
         $('.diceGroup').remove();
-        $('.testing').append(displayDices(dices));
-        console.log($(this).text());
+        $('.dice-panel').append(displayDices(dices));
+        //console.log($(this).text());
 
 
      }
@@ -92,24 +95,24 @@ $(document).on('click', '.throwButton', function(){
       if (dices[i].locked == false) {
         var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
-        dices[i].setClass(dices[i.locked]);
-        console.log(dices[i].value);
+        dices[i].setClass(dices[i].locked)
+        //console.log(dices[i].value);
         $('.diceGroup').remove();
-        $('.testing').append(displayDices(dices));
+        $('.dice-panel').append(displayDices(dices));
 
-        console.log($(this).text());
+        //console.log($(this).text());
       }
       else{
-        console.log("This dice is locked!");
+        //console.log("This dice is locked!");
       }
     }
   }
   else{
-    console.log('You have already rolled three times')
+    //console.log('You have already rolled three times')
   }
   if(numberOfThrows < 3){
     numberOfThrows++;
-    console.log(numberOfThrows,'Många kast har du gjort');
+    //console.log(numberOfThrows,'Många kast har du gjort');
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
     }
@@ -125,24 +128,22 @@ $(document).on('click', '.dice', function(){
     dices[this.id - 1].locked = false;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
-    $('.testing').append(displayDices(dices));
+    $('.dice-panel').append(displayDices(dices));
   }else{
     dices[this.id - 1].locked = true;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
-    $('.testing').append(displayDices(dices));
+    $('.dice-panel').append(displayDices(dices));
   }
 
   $(this).toggleClass('locked');
 
 });
 
-
+// Lyssnar på klick i alla celler, kör rätt funktion beroende på rad
 $(document).on('click', `tr td`, function(){
-
-
   var row = $(this).parent().attr('class');
-  console.log(row);
+  //console.log(row);
 
   // Selectorn är ex. '.ones .Joel' och används för att kolla
   // om rätt cell är tom, inte den cellen man klickar på 
@@ -151,6 +152,7 @@ $(document).on('click', `tr td`, function(){
       case 'ones': 
         //scoreBoards[turn].calcOnesToSixes(dices,1);
         scoreBoards[turn].setPoints('ones',scoreBoards[turn].calcOnesToSixes(dices,1));
+        // Räknar ut summan och bonus för 1-6-raderna
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'twos': 
@@ -210,7 +212,7 @@ $(document).on('click', `tr td`, function(){
   
         break;
       default:
-        console.log('Default');
+        //console.log('Default');
       }
       numberOfThrows = 0;
       document.getElementById("throwingButton").disabled = false;

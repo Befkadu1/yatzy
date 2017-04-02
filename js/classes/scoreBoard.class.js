@@ -164,7 +164,7 @@ class ScoreBoard {
 		let count4 = 0;
 		let count5 = 0;
 		let count6 = 0;
-
+        // Går igenom alla tärningar och ökar en counter beroende på vilket värde som står på tärningen
 		for (let  dice of dices) {
 			if (dice.value === 1) {
 				count1++;}
@@ -192,7 +192,8 @@ class ScoreBoard {
 	calcPair(dices){
 		let counts = this.calcForPair(dices);
 		let sum = 0;
-
+       // kollar i turordning ifall det finns minst två av tärningar 
+       //när den hittar första paret så stoppar den och sätter summan därefter
 		if (counts[5] >= 2) {
 			sum = 12;
 		}
@@ -240,7 +241,7 @@ class ScoreBoard {
            totalSum = (i+1)*4;
         }
    	}
-   	return totalSum;
+   	this.setPoints('twoPair', totalSum);
    }
 
 
@@ -322,7 +323,7 @@ class ScoreBoard {
 		}
 		//set the points 0 if there is no full house or the score if you have a fullHouse	
 		//this.setPoints('fullHouse',sum);
-		return sum;
+		this.setPoints('fullHouse', sum);
 	}
 	calcLargeStraight(dices){
 		let count1 = 0;

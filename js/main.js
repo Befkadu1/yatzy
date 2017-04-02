@@ -75,6 +75,8 @@ function start(){
   scoreBoards[2] = new ScoreBoard('Pelle');
 }
 function newRound(){
+  // Denna funktion körs varje gång man startar spelet eller valt poäng och 
+  //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
      for (var i = 0; i < dices.length; i++) {
       var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
@@ -90,6 +92,8 @@ function newRound(){
      numberOfThrows++;
 }
 $(document).on('click', '.throwButton', function(){
+  // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
+  //går den in och kör random på alla tärningar
   if(numberOfThrows < 3){
     for (var i = 0; i < dices.length; i++) {
       if (dices[i].locked == false) {
@@ -109,10 +113,12 @@ $(document).on('click', '.throwButton', function(){
   }
   else{
     //console.log('You have already rolled three times')
-  }
+  }//ifall man inte kastat 3 gånger så ökas numberOfThrows med ett
   if(numberOfThrows < 3){
     numberOfThrows++;
     //console.log(numberOfThrows,'Många kast har du gjort');
+
+    // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
     }
@@ -123,12 +129,14 @@ $(document).on('click', '.throwButton', function(){
 
 
 $(document).on('click', '.dice', function(){
-
+ // lyssnar på klick på tärningarna ifall man klickar på en så låser den sig 
+ //och uppdaterar så den röda färgen syns
   if(dices[this.id - 1].locked){
     dices[this.id - 1].locked = false;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
     $('.dice-panel').append(displayDices(dices));
+//Är tärningen redan låst så låses den upp vid klick och uppdaterar så användaren ser det
   }else{
     dices[this.id - 1].locked = true;
     dices[this.id -1].setClass(dices[this.id -1].locked);
@@ -184,7 +192,7 @@ $(document).on('click', `tr td`, function(){
         scoreBoards[turn].calcPair(dices);
         break;  
         case 'twoPairs': 
-        scoreBoards[turn].setPoints('twoPairs',scoreBoards[turn].calcTwoPairs(dices));
+        scoreBoards[turn].calcTwoPairs(dices);
         break;
         case 'threeOfAKind':
         scoreBoards[turn].calcXOfAKind(dices, 3);
@@ -193,7 +201,7 @@ $(document).on('click', `tr td`, function(){
         scoreBoards[turn].calcXOfAKind(dices, 4);
         break;
         case 'fullHouse':
-        scoreBoards[turn].setPoints('fullHouse',scoreBoards[turn].calcFullHouse(dices,3,2));
+        scoreBoards[turn].calcFullHouse(dices,3,2);
         break;
         case 'smallStraight':
         scoreBoards[turn].calcSmallStraight(dices);
@@ -214,10 +222,13 @@ $(document).on('click', `tr td`, function(){
       default:
         //console.log('Default');
       }
+      //kollar så man inte klickat på total eller sum
+      if(row !== "total" || "sum"){
       numberOfThrows = 0;
       document.getElementById("throwingButton").disabled = false;
       newRound();
       scoreBoards[turn].calcTotalPoints();
+    }
     }
   });
 

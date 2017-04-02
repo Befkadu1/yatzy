@@ -3,6 +3,9 @@
 	border-collapse: collapse;
     width: 40%;
 }
+.sum, .bonus, .total{
+	background-color: #FAFAFA;
+}
 
 td, th {
     border: 1px solid #dddddd;

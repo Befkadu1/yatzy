@@ -47,7 +47,14 @@ var numberOfThrows = 0;
 $(start);
 
 function start(){
-  $('body').prepend(displayNavbar());
+  $('.page-content').append('<div class="input-userName col-xs-6" />');
+    $('.input-userName').append(displayUserInput());
+}
+
+$(document).on('click', '.startGame', function(){
+    var userName = $('#userName').val();
+   $('.input-userName').remove();
+   $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
   $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
@@ -70,10 +77,10 @@ function start(){
   // Skapar scoreboards för olika spelare
   // Senare, om man låter användarna skriva in sitt namn
   // själv, så kan man skicka in det namnet, eller t.o.m. person-objektet
-  scoreBoards[0] = new ScoreBoard('Joel');
-  scoreBoards[1] = new ScoreBoard('Olle');
-  scoreBoards[2] = new ScoreBoard('Pelle');
-}
+  scoreBoards[0] = new ScoreBoard(userName);
+  //scoreBoards[1] = new ScoreBoard('Olle');
+  //scoreBoards[2] = new ScoreBoard('Pelle');
+});
 function newRound(){
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna

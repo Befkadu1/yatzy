@@ -241,7 +241,7 @@ class ScoreBoard {
            totalSum = (i+1)*4;
         }
    	}
-   	this.setPoints('twoPair', totalSum);
+   	this.setPoints('twoPairs', totalSum);
    }
 
 
@@ -323,7 +323,7 @@ class ScoreBoard {
 		}
 		//set the points 0 if there is no full house or the score if you have a fullHouse	
 		//this.setPoints('fullHouse',sum);
-		this.setPoints('fullHouse', sum);
+	this.setPoints('fullHouse', sum);
 	}
 	calcLargeStraight(dices){
 		let count1 = 0;

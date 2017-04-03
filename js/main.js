@@ -215,16 +215,14 @@ $(document).on('click', `tr td`, function(){
         case 'yatzy':
         scoreBoards[turn].calcXOfAKind(dices, 5);
         break;
-      case 'total':
-        scoreBoards[turn].calcTotalPoints();
-  
-        break;
       default:
         //console.log('Default');
       }
       //kollar så man inte klickat på total eller sum
-      if(row !== "total" || "sum"){
-      numberOfThrows = 0;
+      if(row === 'total' || row === 'sum'){
+    }
+    else{
+        numberOfThrows = 0;
       document.getElementById("throwingButton").disabled = false;
       newRound();
       scoreBoards[turn].calcTotalPoints();

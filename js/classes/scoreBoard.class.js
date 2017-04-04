@@ -22,7 +22,7 @@ class ScoreBoard {
 
 		// Skriver ut kolumn för den akuella spelaren
 		// col-taggen är kanske inte nödvändig, men skadar inte
-		$('table.table').prepend(`<col class="${this.playerName}-board" />`);
+		$('colgroup').append(`<col class="${this.playerName}-board" />`);
 		for(let prop in this){
 			if(prop === 'playerName'){
 				$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);

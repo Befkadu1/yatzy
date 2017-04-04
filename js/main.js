@@ -41,13 +41,49 @@ $.ajax({
 
 let dices = [];
 let scoreBoards = [];
-let turn = 0;
 var numberOfThrows = 0;
+let gameCounter = 0; // 15 är max, då har alla rutor fyllts i 
+
+// turn startar på -1 eftersom att vi kallar på
+// newRound() i början för att autokasta,
+// och där ökar vi turn 
+let turn = -1;
 
 $(start);
 
 function start(){
-  $('body').prepend(displayNavbar());
+  $('.start-page').append('<div class="input-userName col-xs-3" />');
+    $('.input-userName').append(displayUserInput());
+      $('.start-page').append(`<div class="user-container">
+    </div><div class="user-panel col-xs-3"></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
+}
+
+function alphaOnly(event) {
+  var key = event.keyCode;
+  return ((key >= 65 && key <= 90) || key == 8);
+};
+
+$(document).on('click', '.addUser', function(){
+  $('.user-panel').append(displayUserInput());
+});
+
+$(document).on('click', '.startGame', function(){
+
+  var checkEmpty = false;
+  var values = $("input[name='pname[]']")
+              .map(function(){return $(this).val();}).get();
+              console.log(values);
+  for (var i = 0; i < values.length; i++) {
+    if(values[i] === ""){
+      checkEmpty = true;
+      alert("Fill all usernames");
+    }
+
+  }
+  console.log(checkEmpty);
+  if(checkEmpty === false){
+  $(".start-page").remove();
+   $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
   $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
@@ -73,11 +109,24 @@ function start(){
   // Skapar scoreboards för olika spelare
   // Senare, om man låter användarna skriva in sitt namn
   // själv, så kan man skicka in det namnet, eller t.o.m. person-objektet
-  scoreBoards[0] = new ScoreBoard('Joel');
-  scoreBoards[1] = new ScoreBoard('Olle');
-  scoreBoards[2] = new ScoreBoard('Pelle');
-}
+
+  // Läser in modalen för high scores
+  $('.page-content').append('<div class="hs-modal" />')
+  $('.hs-modal').html(displayHighScores());
+
+    for (var i = 0; i < values.length; i++) {
+      scoreBoards[i] = new ScoreBoard(values[i]);
+    }
+  }
+});
+
 function newRound(){
+  // Itererar över scoreBoards index för att bestämma vems tur det är
+  if(turn === scoreBoards.length - 1){
+    turn = 0;
+  } else {
+    turn++;
+  }
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
      for (var i = 0; i < dices.length; i++) {
@@ -102,8 +151,23 @@ function newRound(){
 
 }
 
+// En listener för länken "High scores" i navbaren
+$(document).on('click', '#high-scores-link', function(){
+  //$('.high-scores-modal').remove();
+  
+  $('.high-scores-table').html(`
+    <tr">
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Score</th>
+    </tr>`);
 
-
+  // Här kan man loopa igenom en lista som man hämtar från DB och skicka in till
+  // highScoreRow som objekt eller en array om man vill
+  $('.high-scores-table').append(highScoreRow({rank: 1, username: 'Joel', score: 250}));
+  $('.high-scores-table').append(highScoreRow({rank: 2, username: 'Pelle', score: 200}));
+  $('.high-scores-table').append(highScoreRow({rank: 3, username: 'Olle', score: 190}));
+});
 
 $(document).on('click', '.throwButton', function(){
   // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
@@ -174,6 +238,19 @@ $(document).on('click', '.dice', function(){
   $(this).toggleClass('locked');
 
 });
+
+function gameOver(){
+  var winner = "";
+  var bestScore = 0;
+  for (var i = 0; i < scoreBoards.length; i++) {
+    if(scoreBoards[i].total > bestScore) {
+      bestScore = scoreBoards[i].total;
+      winner = scoreBoards[i].playerName;
+     }
+  }
+  let message = "The winner is " + winner + " with a score of " + bestScore + "!";
+   alert(message);
+}
 
 // Lyssnar på klick i alla celler, kör rätt funktion beroende på rad
 $(document).on('click', `tr td`, function(){
@@ -247,13 +324,26 @@ $(document).on('click', `tr td`, function(){
       }
       //kollar så man inte klickat på total eller sum
       if(row === 'total' || row === 'sum'){
-    }
-    else{
+      }
+      else{
         numberOfThrows = 0;
-      document.getElementById("throwingButton").disabled = false;
-      newRound();
-      scoreBoards[turn].calcTotalPoints();
-    }
+        document.getElementById("throwingButton").disabled = false;
+        scoreBoards[turn].calcTotalPoints();
+        
+        // Kollar om det är sista spelarens tur 
+        if(turn === scoreBoards.length - 1){
+          gameCounter++;
+          // Om gamecounter är 15 så är alla rutor ifyllda
+          if(gameCounter >= 15){
+            // Här kan man kalla på en funktion, typ gameOver()
+            gameOver();
+          }else{
+            newRound();
+          }
+        }else{
+          newRound();
+        }
+      }
     }
   });
 

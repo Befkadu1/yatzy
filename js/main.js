@@ -1,12 +1,12 @@
 
-/*$.ajax({
+//creating a result table
+$.ajax({
     type: 'POST',
-    url: '/queries/read-lorem',
-    data: JSON.stringify([1]),
-    contentType: "application/json"
-}).done(function(data){
-  console.log('reading the lorems row with id 1', data);
+    url: '/queries/create-result-table'    
+}).done(function(){
+  //console.log('reading the lorems row with id 1');
 });
+/*
 =======
 $(start);
 >>>>>>> 8b804e511a4e4bfa83b6f75f7c1fa5cc99a250eb

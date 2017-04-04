@@ -314,11 +314,22 @@ $(document).on('click', `tr td`, function(){
           if(gameCounter >= 15){
             // Här kan man kalla på en funktion, typ gameOver()
             gameOver();
+
           }else{
             newRound();
           }
         }else{
           newRound();
+        }
+        let allFilledBonus = 0;
+        for (var i = 0; i < scoreBoards.length; i++) {
+           if (scoreBoards[i].testing === 6){
+            allFilledBonus++;
+           }
+        }
+        console.log(scoreBoards.length);
+        if(allFilledBonus === scoreBoards.length){
+          $( "#bonusChange" ).text( "Bonus" );
         }
       }
     }

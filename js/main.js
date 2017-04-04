@@ -43,6 +43,7 @@ let dices = [];
 let scoreBoards = [];
 let turn = 0;
 var numberOfThrows = 0;
+let gameCounter = 0; // 15 är max, då har alla rutor fyllts i 
 
 $(start);
 
@@ -220,13 +221,25 @@ $(document).on('click', `tr td`, function(){
       }
       //kollar så man inte klickat på total eller sum
       if(row === 'total' || row === 'sum'){
-    }
-    else{
+      }
+      else{
         numberOfThrows = 0;
-      document.getElementById("throwingButton").disabled = false;
-      newRound();
-      scoreBoards[turn].calcTotalPoints();
-    }
+        document.getElementById("throwingButton").disabled = false;
+        scoreBoards[turn].calcTotalPoints();
+        
+        // Kollar om det är sista spelarens tur 
+        if(turn === scoreBoards.length - 1){
+          gameCounter++;
+          // Om gamecounter är 15 så är alla rutor ifyllda
+          if(gameCounter >= 15){
+            alert('Game over. Your score is: ' + scoreBoards[turn].total);
+          }else{
+            newRound();
+          }
+        }else{
+          newRound();
+        }
+      }
     }
   });
 

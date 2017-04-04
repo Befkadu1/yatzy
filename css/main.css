@@ -24,3 +24,12 @@ td, th {
 	flex-direction: row;
 	justify-content: center;
 }
+
+
+.dice-container{
+	width:130px;
+}
+
+.panel-title{
+	text-align: center;
+}

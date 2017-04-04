@@ -156,7 +156,7 @@ $(document).on('click', '#high-scores-link', function(){
   //$('.high-scores-modal').remove();
   
   $('.high-scores-table').html(`
-    <tr">
+    <tr>
       <th>Rank</th>
       <th>Username</th>
       <th>Score</th>

@@ -47,13 +47,21 @@ var numberOfThrows = 0;
 $(start);
 
 function start(){
-  $('.page-content').append('<div class="input-userName col-xs-6" />');
+  $('.start-page').append('<div class="input-userName col-xs-7" />');
     $('.input-userName').append(displayUserInput());
+      $('.start-page').append(`<div class="user-container">
+    </div><div class="user-panel col-xs-7"></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
 }
 
+$(document).on('click', '.addUser', function(){
+  $('.user-panel').append(displayUserInput());
+});
+
 $(document).on('click', '.startGame', function(){
-    var userName = $('#userName').val();
-   $('.input-userName').remove();
+  var values = $("input[name='pname[]']")
+              .map(function(){return $(this).val();}).get();
+              console.log(values);
+  $(".start-page").remove();
    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
   $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
@@ -77,9 +85,9 @@ $(document).on('click', '.startGame', function(){
   // Skapar scoreboards för olika spelare
   // Senare, om man låter användarna skriva in sitt namn
   // själv, så kan man skicka in det namnet, eller t.o.m. person-objektet
-  scoreBoards[0] = new ScoreBoard(userName);
-  //scoreBoards[1] = new ScoreBoard('Olle');
-  //scoreBoards[2] = new ScoreBoard('Pelle');
+    for (var i = 0; i < values.length; i++) {
+      scoreBoards[i] = new ScoreBoard(values[i]);
+    }
 });
 function newRound(){
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 

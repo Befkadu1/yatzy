@@ -1,43 +1,40 @@
 class ScoreBoard {
 	constructor(playerName){
 		this.playerName = playerName;
-		this.ones = '';
-		this.twos = '';
-		this.threes = '';
-		this.fours = '';
-		this.fives = '';
-		this.sixes = '';
-		this.sum = '';
-		this.bonus = '';
-		this.onePair = '';
-		this.twoPairs = '';
-		this.threeOfAKind = '';
-		this.fourOfAKind = '';
-		this.smallStraight = '';
-		this.largeStraight = '';
-		this.fullHouse = '';
-		this.chance = '';
-		this.yatzy = '';
-		this.total = '';
+		this.ones = 0;
+		this.twos = 0;
+		this.threes = 0;
+		this.fours = 0;
+		this.fives = 0;
+		this.sixes = 0;
+		this.sum = 0;
+		this.bonus = 0;
+		this.onePair = 0;
+		this.twoPairs = 0;
+		this.threeOfAKind = 0;
+		this.fourOfAKind = 0;
+		this.smallStraight = 0;
+		this.largeStraight = 0;
+		this.fullHouse = 0;
+		this.chance = 0;
+		this.yatzy = 0;
+		this.total = 0;
 
-		this.displayCol();
-		// Kallar på funktionen för att visa -63 redan från start
-		this.calcBonus(0);
-	}
-
-	displayCol(){
 		// Skriver ut kolumn för den akuella spelaren
 		// col-taggen är kanske inte nödvändig, men skadar inte
-		$('table.table').prepend(`<col class="${this.playerName}-board" />`);
+		$('colgroup').append(`<col class="${this.playerName}-board" />`);
 		for(let prop in this){
 			if(prop === 'playerName'){
 				$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);
 			}else{
 				// Skriver ut cell för varje property, men skriver ej ut värdet
 				// eftersom vi vill se det som en tom cell istället för 0
-				$('.' + prop).append(`<td class="${this.playerName} ${prop}-cell">${this[prop]}</td>`);
+				$('.' + prop).append(`<td class="${this.playerName} ${prop}-cell"></td>`);
 			}
 		}
+
+		// Kallar på funktionen för att visa -63 redan från start
+		this.calcBonus(0);
 	}
 
 	calcTotalPoints(){

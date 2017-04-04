@@ -43,34 +43,17 @@ let dices = [];
 let scoreBoards = [];
 var numberOfThrows = 0;
 let gameCounter = 0; // 15 är max, då har alla rutor fyllts i 
-
-// turn startar på -1 eftersom att vi kallar på
-// newRound() i början för att autokasta,
-// och där ökar vi turn 
-let turn = -1;
+let turn = 0;
 
 $(start);
 
 function start(){
   $('body').prepend(displayNavbar());
-  // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
-  $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
-  // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
-  $('.scoreboard-container').append(displayScoreBoard());
-  
-  $('.page-content').append(`<div class="dice-container col-xs-2 col-md-push-2">  <div class="panel panel-primary ">
-    <div class="panel-heading">
-    <h3 class="panel-title">Roll the dices</h3>
-    </div><div class="dice-panel"></div></div></div>`);
 
   // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
     dices.push(new Dice(i+1, i+1));
   }
-  //console.log('dices',dices);
-
-  newRound();
-  $('.dice-container').append(displayThrowButton());
 
   // Skapar scoreboards för olika spelare
   // Senare, om man låter användarna skriva in sitt namn
@@ -78,7 +61,37 @@ function start(){
   scoreBoards[0] = new ScoreBoard('Joel');
   scoreBoards[1] = new ScoreBoard('Olle');
   scoreBoards[2] = new ScoreBoard('Pelle');
+
+  // turn sätts till -1 eftersom att vi kallar på
+  // newRound() nedan för att autokasta,
+  // och där ökar vi turn, men vi vill inte gå till
+  // nästa spelare än
+  turn = -1;
+  newRound();
+
+  // Flyttat ut det som har med spelrundan att göra
+  // för att kunna navigera mellan high scores och spelet
+  showGame();
 }
+
+function showGame(){
+  // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
+  $('.page-content').html('<div class="scoreboard-container col-xs-6" />');
+  // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
+  $('.scoreboard-container').append(displayScoreBoard());
+  for(let scoreBoard of scoreBoards){
+    scoreBoard.displayCol();
+  }
+  
+  $('.page-content').append(`<div class="dice-container col-xs-2 col-md-push-2">  <div class="panel panel-primary ">
+    <div class="panel-heading">
+    <h3 class="panel-title">Roll the dices</h3>
+    </div><div class="dice-panel"></div></div></div>`);
+  //console.log('dices',dices);
+
+  $('.dice-container').append(displayThrowButton());
+}
+
 function newRound(){
   // Itererar över scoreBoards index för att bestämma vems tur det är
   if(turn === scoreBoards.length - 1){
@@ -102,6 +115,19 @@ function newRound(){
      }
      numberOfThrows++;
 }
+
+$(document).on('click', '#play-link', showGame);
+
+// En listener för länken "High scores" i navbaren
+$(document).on('click', '#high-score-link', function(){
+  $('.page-content').html(displayHighScores());
+  // Här kan man loopa igenom en lista som man hämtar från DB och skicka in till
+  // highScoreRow som objekt eller en array om man vill
+  $('.high-scores-table').append(highScoreRow({rank: 1, username: 'Joel', score: 250}));
+  $('.high-scores-table').append(highScoreRow({rank: 2, username: 'Pelle', score: 200}));
+  $('.high-scores-table').append(highScoreRow({rank: 3, username: 'Olle', score: 190}));
+});
+
 $(document).on('click', '.throwButton', function(){
   // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
   //går den in och kör random på alla tärningar

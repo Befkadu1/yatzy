@@ -41,8 +41,13 @@ $.ajax({
 
 let dices = [];
 let scoreBoards = [];
-let turn = 0;
 var numberOfThrows = 0;
+let gameCounter = 0; // 15 är max, då har alla rutor fyllts i 
+
+// turn startar på -1 eftersom att vi kallar på
+// newRound() i början för att autokasta,
+// och där ökar vi turn 
+let turn = -1;
 
 $(start);
 
@@ -90,6 +95,12 @@ $(document).on('click', '.startGame', function(){
     }
 });
 function newRound(){
+  // Itererar över scoreBoards index för att bestämma vems tur det är
+  if(turn === scoreBoards.length - 1){
+    turn = 0;
+  } else {
+    turn++;
+  }
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
      for (var i = 0; i < dices.length; i++) {
@@ -235,13 +246,26 @@ $(document).on('click', `tr td`, function(){
       }
       //kollar så man inte klickat på total eller sum
       if(row === 'total' || row === 'sum'){
-    }
-    else{
+      }
+      else{
         numberOfThrows = 0;
-      document.getElementById("throwingButton").disabled = false;
-      newRound();
-      scoreBoards[turn].calcTotalPoints();
-    }
+        document.getElementById("throwingButton").disabled = false;
+        scoreBoards[turn].calcTotalPoints();
+        
+        // Kollar om det är sista spelarens tur 
+        if(turn === scoreBoards.length - 1){
+          gameCounter++;
+          // Om gamecounter är 15 så är alla rutor ifyllda
+          if(gameCounter >= 15){
+            // Här kan man kalla på en funktion, typ gameOver()
+            alert('Game over. Your score is: ' + scoreBoards[turn].total);
+          }else{
+            newRound();
+          }
+        }else{
+          newRound();
+        }
+      }
     }
   });
 

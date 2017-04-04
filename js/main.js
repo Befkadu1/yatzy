@@ -53,7 +53,7 @@ function start(){
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
   
-  $('.page-content').append(`<div class="dice-container col-xs-2 col-md-push-2">  <div class="panel panel-primary ">
+  $('.page-content').append(`<div class="dice-container col-xs-6 col-xs-push-2">  <div class="panel panel-primary ">
     <div class="panel-heading">
     <h3 class="panel-title">Roll the dices</h3>
     </div><div class="dice-panel"></div></div></div>`);

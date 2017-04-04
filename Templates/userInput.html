@@ -1,5 +1,5 @@
 function displayUserInput (){ return`
 <div class="input-userName">
-  <input type="text" class="form-control" name="pname[]" placeholder="Username" aria-describedby="basic-addon1">
+  <input type="text" class="form-control" name="pname[]" placeholder="Username" onkeydown="return alphaOnly(event);" aria-describedby="basic-addon1">
 </div>
 `}

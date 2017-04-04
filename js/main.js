@@ -52,20 +52,36 @@ let turn = -1;
 $(start);
 
 function start(){
-  $('.start-page').append('<div class="input-userName col-xs-7" />');
+  $('.start-page').append('<div class="input-userName col-xs-3" />');
     $('.input-userName').append(displayUserInput());
       $('.start-page').append(`<div class="user-container">
-    </div><div class="user-panel col-xs-7"></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
+    </div><div class="user-panel col-xs-3"></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
 }
+
+function alphaOnly(event) {
+  var key = event.keyCode;
+  return ((key >= 65 && key <= 90) || key == 8);
+};
 
 $(document).on('click', '.addUser', function(){
   $('.user-panel').append(displayUserInput());
 });
 
 $(document).on('click', '.startGame', function(){
+
+  var checkEmpty = false;
   var values = $("input[name='pname[]']")
               .map(function(){return $(this).val();}).get();
               console.log(values);
+  for (var i = 0; i < values.length; i++) {
+    if(values[i] === ""){
+      checkEmpty = true;
+      alert("Fill all usernames");
+    }
+
+  }
+  console.log(checkEmpty);
+  if(checkEmpty === false){
   $(".start-page").remove();
    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
@@ -93,6 +109,7 @@ $(document).on('click', '.startGame', function(){
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
     }
+  }
 });
 function newRound(){
   // Itererar över scoreBoards index för att bestämma vems tur det är
@@ -173,6 +190,19 @@ $(document).on('click', '.dice', function(){
   $(this).toggleClass('locked');
 
 });
+
+function gameOver(){
+  var winner = "";
+  var bestScore = 0;
+  for (var i = 0; i < scoreBoards.length; i++) {
+    if(scoreBoards[i].total > bestScore) {
+      bestScore = scoreBoards[i].total;
+      winner = scoreBoards[i].playerName;
+     }
+  }
+  let message = "The winner is " + winner + " with a score of " + bestScore + "!";
+   alert(message);
+}
 
 // Lyssnar på klick i alla celler, kör rätt funktion beroende på rad
 $(document).on('click', `tr td`, function(){
@@ -258,7 +288,7 @@ $(document).on('click', `tr td`, function(){
           // Om gamecounter är 15 så är alla rutor ifyllda
           if(gameCounter >= 15){
             // Här kan man kalla på en funktion, typ gameOver()
-            alert('Game over. Your score is: ' + scoreBoards[turn].total);
+            gameOver();
           }else{
             newRound();
           }

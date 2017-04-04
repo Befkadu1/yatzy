@@ -106,11 +106,17 @@ $(document).on('click', '.startGame', function(){
   // Skapar scoreboards för olika spelare
   // Senare, om man låter användarna skriva in sitt namn
   // själv, så kan man skicka in det namnet, eller t.o.m. person-objektet
+
+  // Läser in modalen för high scores
+  $('.page-content').append('<div class="hs-modal" />')
+  $('.hs-modal').html(displayHighScores());
+
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
     }
   }
 });
+
 function newRound(){
   // Itererar över scoreBoards index för att bestämma vems tur det är
   if(turn === scoreBoards.length - 1){
@@ -134,6 +140,25 @@ function newRound(){
      }
      numberOfThrows++;
 }
+
+// En listener för länken "High scores" i navbaren
+$(document).on('click', '#high-scores-link', function(){
+  //$('.high-scores-modal').remove();
+  
+  $('.high-scores-table').html(`
+    <tr">
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Score</th>
+    </tr>`);
+
+  // Här kan man loopa igenom en lista som man hämtar från DB och skicka in till
+  // highScoreRow som objekt eller en array om man vill
+  $('.high-scores-table').append(highScoreRow({rank: 1, username: 'Joel', score: 250}));
+  $('.high-scores-table').append(highScoreRow({rank: 2, username: 'Pelle', score: 200}));
+  $('.high-scores-table').append(highScoreRow({rank: 3, username: 'Olle', score: 190}));
+});
+
 $(document).on('click', '.throwButton', function(){
   // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
   //går den in och kör random på alla tärningar

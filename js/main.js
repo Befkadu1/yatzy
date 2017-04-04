@@ -243,11 +243,27 @@ function gameOver(){
   var winner = "";
   var bestScore = 0;
   for (var i = 0; i < scoreBoards.length; i++) {
+
+    //To insert the username and the total point to the database
+    $.ajax({
+    type: 'POST',
+    url: '/queries/write-score',
+    data: JSON.stringify({"username": scoreBoards[i].playerName ,"result":scoreBoards[i].total}),
+    dataType:"json",
+    contentType: "application/json",
+    processData: false
+
+
+}).done(function(result){
+ // console.log('reading all the the rows in the result table', result);
+});
+
     if(scoreBoards[i].total > bestScore) {
       bestScore = scoreBoards[i].total;
       winner = scoreBoards[i].playerName;
      }
   }
+
   let message = "The winner is " + winner + " with a score of " + bestScore + "!";
    alert(message);
 }

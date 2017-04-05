@@ -263,8 +263,8 @@ function gameOver(){
 }
 
 // Lyssnar på klick i alla celler, kör rätt funktion beroende på rad
-$(document).on('click', `tr td`, function(){
-  var row = $(this).parent().attr('class');
+$(document).on('click', `.yatzy-table tr`, function(){
+  var row = $(this).attr('class');
   //console.log(row);
 
   // Selectorn är ex. '.ones .Joel' och används för att kolla

@@ -6,18 +6,8 @@ $.ajax({
 }).done(function(){
   //console.log('reading the lorems row with id 1');
 });
+
 /*
-=======
-$(start);
->>>>>>> 8b804e511a4e4bfa83b6f75f7c1fa5cc99a250eb
-
-
-function start(){
-
-$('body').append(displayNavbar());
-$('body').append(displayDices());
-
-<<<<<<< HEAD
 $.ajax({
     type: 'GET',
     url: '/queries/read-lorems'
@@ -154,19 +144,23 @@ function newRound(){
 // En listener för länken "High scores" i navbaren
 $(document).on('click', '#high-scores-link', function(){
   //$('.high-scores-modal').remove();
-  
   $('.high-scores-table').html(`
     <tr>
       <th>Rank</th>
       <th>Username</th>
       <th>Score</th>
     </tr>`);
-
-  // Här kan man loopa igenom en lista som man hämtar från DB och skicka in till
-  // highScoreRow som objekt eller en array om man vill
-  $('.high-scores-table').append(highScoreRow({rank: 1, username: 'Joel', score: 250}));
-  $('.high-scores-table').append(highScoreRow({rank: 2, username: 'Pelle', score: 200}));
-  $('.high-scores-table').append(highScoreRow({rank: 3, username: 'Olle', score: 190}));
+  // get the high score list
+  $.ajax({
+    type: 'GET',
+    url: '/queries/read-high-scores'
+  }).done(function(data){
+    // Här kan man loopa igenom en lista som man hämtar från DB och skicka in till
+    // highScoreRow som objekt eller en array om man vill
+    for(let row of data){
+      $('.high-scores-table').append(highScoreRow({rank: data.indexOf(row) + 1, username: row.username, result: row.result}));
+    }
+  });
 });
 
 $(document).on('click', '.throwButton', function(){

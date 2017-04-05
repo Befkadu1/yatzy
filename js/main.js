@@ -101,8 +101,8 @@ $(document).on('click', '.startGame', function(){
   // själv, så kan man skicka in det namnet, eller t.o.m. person-objektet
 
   // Läser in modalen för high scores
-  $('.page-content').append('<div class="high-score-modal" />')
-  $('.high-score-modal').html(highScoresModal());
+  $('.page-content').append('<div class="high-scores-modal-container" />')
+  $('.high-scores-modal-container').html(highScoresModal());
 
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
@@ -255,8 +255,8 @@ function gameOver(){
   }
 
   let message = "The winner is " + winner + " with a score of " + bestScore + "!";
-  $('.page-content').append('<div class="game-over-modal" />')
-  $('.game-over-modal').html(gameOverModal(message));
+  $('.page-content').append('<div class="game-over-modal-container" />')
+  $('.game-over-modal-container').html(gameOverModal(message));
 
   $(document).ready(function() {
     $('.game-over-modal').modal('show');

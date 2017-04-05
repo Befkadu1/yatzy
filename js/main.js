@@ -101,8 +101,8 @@ $(document).on('click', '.startGame', function(){
   // själv, så kan man skicka in det namnet, eller t.o.m. person-objektet
 
   // Läser in modalen för high scores
-  $('.page-content').append('<div class="hs-modal" />')
-  $('.hs-modal').html(displayHighScores());
+  $('.page-content').append('<div class="high-score-modal" />')
+  $('.high-score-modal').html(highScoresModal());
 
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
@@ -143,7 +143,6 @@ function newRound(){
 
 // En listener för länken "High scores" i navbaren
 $(document).on('click', '#high-scores-link', function(){
-  //$('.high-scores-modal').remove();
   $('.high-scores-table').html(`
     <tr>
       <th>Rank</th>
@@ -240,26 +239,30 @@ function gameOver(){
 
     //To insert the username and the total point to the database
     $.ajax({
-    type: 'POST',
-    url: '/queries/write-score',
-    data: JSON.stringify({"username": scoreBoards[i].playerName ,"result":scoreBoards[i].total}),
-    dataType:"json",
-    contentType: "application/json",
-    processData: false
-
-
-}).done(function(result){
- // console.log('reading all the the rows in the result table', result);
-});
-
+      type: 'POST',
+      url: '/queries/write-score',
+      data: JSON.stringify({"username": scoreBoards[i].playerName ,"result":scoreBoards[i].total}),
+      dataType:"json",
+      contentType: "application/json",
+      processData: false
+    }).done(function(result){
+      // console.log('reading all the the rows in the result table', result);
+    });
     if(scoreBoards[i].total > bestScore) {
       bestScore = scoreBoards[i].total;
       winner = scoreBoards[i].playerName;
-     }
+    }
   }
 
   let message = "The winner is " + winner + " with a score of " + bestScore + "!";
-   alert(message);
+  $('.page-content').append('<div class="game-over-modal" />')
+  $('.game-over-modal').html(gameOverModal(message));
+
+  $(document).ready(function() {
+    $('.game-over-modal').modal('show');
+  });
+
+   //alert(message);
 }
 
 // Lyssnar på klick i alla celler, kör rätt funktion beroende på rad

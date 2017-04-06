@@ -38,6 +38,7 @@ let gameCounter = 0; // 15 är max, då har alla rutor fyllts i
 // newRound() i början för att autokasta,
 // och där ökar vi turn 
 let turn = -1;
+  var first = false
 
 $(start);
 
@@ -46,6 +47,7 @@ function start(){
     $('.input-userName').append(displayUserInput());
       $('.start-page').append(`<div class="user-container">
     </div><div class="user-panel col-xs-3"></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
+
 }
 
 function alphaOnly(event) {
@@ -83,7 +85,7 @@ $(document).on('click', '.startGame', function(){
     <div class="panel-heading">
     <h3 class="panel-title">Roll the dices</h3>
     </div><div class="dice-panel"></div>
-    <div class="kast1 stylekast"></div><div class="kast2 stylekast"></div><div class="kast3 stylekast"></div></div></div>`);
+    </div>`);
 
   // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
@@ -127,17 +129,14 @@ function newRound(){
         dices[i].setClass(dices[i.locked]);
         $('.diceGroup').remove();
         $('.dice-panel').append(displayDices(dices));
-
         //console.log($(this).text());
 
 
      }
 
      numberOfThrows++;
+     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
      console.log("Du har kastat: " + numberOfThrows);
-
-      $('.kast1').append("Kast " + numberOfThrows + " av 3.");
-
 
 }
 
@@ -192,19 +191,16 @@ $(document).on('click', '.throwButton', function(){
   
   if(numberOfThrows < 3){
     numberOfThrows++;
+     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
  
 
-    console.log(numberOfThrows,'Många kast har du gjort');
-     $('.kast1').remove();
-     $('.kast2').append("Kast " + numberOfThrows + " av 3.");
    
     
 
     // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
-       $('.kast2').remove();
-       $('.kast3').append("Kast " + numberOfThrows + " av 3.");
+       document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
     }
   }
 
@@ -347,14 +343,16 @@ $(document).on('click', `tr td`, function(){
           if(gameCounter >= 15){
             // Här kan man kalla på en funktion, typ gameOver()
             gameOver();
+
           }else{
             newRound();
           }
         }else{
           newRound();
         }
+
+        }
       }
-    }
   });
 
 

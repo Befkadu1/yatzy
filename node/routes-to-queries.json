@@ -7,5 +7,14 @@
   "write-ipsum": "INSERT INTO ipsums SET ?",
   "create-result-table": "CREATE TABLE IF NOT EXISTS results (result_id int(11) NOT NULL AUTO_INCREMENT,username CHAR(30),result int(11),PRIMARY KEY (result_id))",
   "write-score": "INSERT INTO results SET ? ",
-  "read-high-scores": "SELECT  username, result FROM results ORDER BY result DESC"
+  "read-high-scores": "SELECT  username, result FROM results ORDER BY result DESC",
+  "create-current-game-table": "CREATE TABLE IF NOT EXISTS current_game (username varchar(45) NOT NULL DEFAULT '', row varchar(45) NOT NULL DEFAULT '', score int(11) DEFAULT NULL, PRIMARY KEY (username,row))",
+  "clear-current-game": "TRUNCATE current_game",
+  "insert-game-row": "INSERT INTO current_game VALUES (?, ?, ?)",
+  "update-score": "UPDATE current_game SET score = ? WHERE username = ? AND row = ?",
+  "create-turn-table": "CREATE TABLE IF NOT EXISTS turn(player_index INT(6) PRIMARY KEY)",
+  "clear-turn-table": "TRUNCATE turn",
+  "insert-turn-row": "INSERT INTO turn (player_index) VALUES (0)",
+  "update-turn": "UPDATE turn SET player_index = ?",
+  "read-turn": "SELECT * FROM turn"
 }

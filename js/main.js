@@ -7,6 +7,40 @@ $.ajax({
   //console.log('reading the lorems row with id 1');
 });
 
+$.ajax({
+    type: 'POST',
+    url: '/queries/create-current-game-table'    
+}).done(function(){
+  $.ajax({
+    type: 'POST',
+    url: '/queries/clear-current-game'    
+  }).done(function(){
+    //console.log('reading the lorems row with id 1');
+  });
+});
+
+$.ajax({
+    type: 'POST',
+    url: '/queries/create-turn-table'    
+}).done(function(){
+  $.ajax({
+    type: 'POST',
+    url: '/queries/clear-turn-table'    
+  }).done(function(){
+    $.ajax({
+      type: 'POST',
+      url: '/queries/insert-turn-row'    
+    }).done(function(){
+      $.ajax({
+        type: 'GET',
+        url: '/queries/read-turn'
+      }).done(function(data){
+        console.log('Turn: Player ' + data[0].player_index);
+      });
+    });
+  });
+});
+
 /*
 $.ajax({
     type: 'GET',

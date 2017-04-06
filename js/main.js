@@ -242,11 +242,23 @@ $(document).on('click', '#high-scores-link', function(){
   });
 });
 
+
+
 $(document).on('click', '.throwButton', function(){
   // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
   //går den in och kör random på alla tärningar
   
   if(numberOfThrows < 3){
+     //Creating sound when "Throw" button clicked
+     var obj = document.createElement("audio");
+        obj.src="https://kahimyang.com/resources/sound/click.mp3";
+        obj.volume=0.20;
+        obj.autoPlay=false;
+        obj.preLoad=true;       
+ 
+       // $(".playSound").click(function() {
+            obj.play();
+        
 
     for (var i = 0; i < dices.length; i++) {
       if (dices[i].locked == false) {

@@ -14,7 +14,7 @@
   "update-score": "UPDATE current_game SET score = ? WHERE username = ? AND row = ?",
   "create-turn-table": "CREATE TABLE IF NOT EXISTS turn(player_index INT(6) PRIMARY KEY)",
   "clear-turn-table": "TRUNCATE turn",
-  "insert-turn-row": "INSERT INTO turn (player_index) VALUES (0)",
+  "insert-turn-row": "INSERT INTO turn (player_index) VALUES (?)",
   "update-turn": "UPDATE turn SET player_index = ?",
   "read-turn": "SELECT * FROM turn"
 }

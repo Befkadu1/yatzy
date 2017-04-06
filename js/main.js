@@ -19,28 +19,6 @@ $.ajax({
   });
 });
 
-$.ajax({
-    type: 'POST',
-    url: '/queries/create-turn-table'    
-}).done(function(){
-  $.ajax({
-    type: 'POST',
-    url: '/queries/clear-turn-table'    
-  }).done(function(){
-    $.ajax({
-      type: 'POST',
-      url: '/queries/insert-turn-row'    
-    }).done(function(){
-      $.ajax({
-        type: 'GET',
-        url: '/queries/read-turn'
-      }).done(function(data){
-        console.log('Turn: Player ' + data[0].player_index);
-      });
-    });
-  });
-});
-
 /*
 $.ajax({
     type: 'GET',
@@ -62,7 +40,7 @@ $.ajax({
 }).done(function(data){
   console.log('reading all the the lorems-ipsums left joins', data);
 });*/
-
+var first = false
 let dices = [];
 let scoreBoards = [];
 var numberOfThrows = 0;
@@ -72,7 +50,34 @@ let gameCounter = 0; // 15 är max, då har alla rutor fyllts i
 // newRound() i början för att autokasta,
 // och där ökar vi turn 
 let turn = -1;
-  var first = false
+  
+
+// Skapar en turn-tabell, och skriver till databasen
+$.ajax({
+    type: 'POST',
+    url: '/queries/create-turn-table'    
+}).done(function(){
+  $.ajax({
+    type: 'POST',
+    url: '/queries/clear-turn-table'    
+  }).done(function(){
+    $.ajax({
+      type: 'POST',
+      url: '/queries/insert-turn-row',
+      data: JSON.stringify([turn]),
+      dataType:"json",
+      contentType: "application/json",
+      processData: false    
+    }).done(function(){
+      $.ajax({
+        type: 'GET',
+        url: '/queries/read-turn'
+      }).done(function(data){
+        console.log('Turn: Player ' + data[0].player_index);
+      });
+    });
+  });
+});
 
 $(start);
 
@@ -142,6 +147,23 @@ $(document).on('click', '.startGame', function(){
 
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
+
+      // Skriver scoreboard till current-game i db
+      for(let prop in scoreBoards[i]){
+        console.log('prop', prop);
+        if(prop !== 'playerName'){
+          $.ajax({
+            type: 'POST',
+            url: '/queries/insert-game-row',
+            data: JSON.stringify([scoreBoards[i].playerName, prop, scoreBoards[i][prop]]),
+            dataType:"json",
+            contentType: "application/json",
+            processData: false    
+          }).done(function(){
+            console.log('Done writing a scoreboard to db');
+          });
+        }
+      }
     }
   }
 });
@@ -153,6 +175,18 @@ function newRound(){
   } else {
     turn++;
   }
+
+  // Skriver den uppdaterade turn till DB
+  $.ajax({
+    type: 'POST',
+    url: '/queries/update-turn',
+    data: JSON.stringify([turn]),
+    dataType:"json",
+    contentType: "application/json",
+    processData: false    
+  });
+
+
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
      for (var i = 0; i < dices.length; i++) {

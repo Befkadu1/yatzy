@@ -1,12 +1,12 @@
 
-/*$.ajax({
+//creating a result table
+$.ajax({
     type: 'POST',
-    url: '/queries/read-lorem',
-    data: JSON.stringify([1]),
-    contentType: "application/json"
-}).done(function(data){
-  console.log('reading the lorems row with id 1', data);
+    url: '/queries/create-result-table'    
+}).done(function(){
+  //console.log('reading the lorems row with id 1');
 });
+/*
 =======
 $(start);
 >>>>>>> 8b804e511a4e4bfa83b6f75f7c1fa5cc99a250eb
@@ -90,10 +90,11 @@ $(document).on('click', '.startGame', function(){
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
   
-  $('.page-content').append(`<div class="dice-container col-xs-2 col-md-push-2">  <div class="panel panel-primary ">
+  $('.page-content').append(`<div class="dice-container col-xs-6 col-xs-push-2">  <div class="panel panel-primary ">
     <div class="panel-heading">
     <h3 class="panel-title">Roll the dices</h3>
-    </div><div class="dice-panel"></div></div></div>`);
+    </div><div class="dice-panel"></div>
+    <div class="kast1 stylekast"></div><div class="kast2 stylekast"></div><div class="kast3 stylekast"></div></div></div>`);
 
   // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
@@ -102,7 +103,9 @@ $(document).on('click', '.startGame', function(){
   //console.log('dices',dices);
 
   newRound();
+  console.log("NUMMER: " + numberOfThrows);
   $('.dice-container').append(displayThrowButton());
+
 
   // Skapar scoreboards för olika spelare
   // Senare, om man låter användarna skriva in sitt namn
@@ -135,11 +138,18 @@ function newRound(){
         dices[i].setClass(dices[i.locked]);
         $('.diceGroup').remove();
         $('.dice-panel').append(displayDices(dices));
+
         //console.log($(this).text());
 
 
      }
+
      numberOfThrows++;
+     console.log("Du har kastat: " + numberOfThrows);
+
+      $('.kast1').append("Kast " + numberOfThrows + " av 3.");
+
+
 }
 
 // En listener för länken "High scores" i navbaren
@@ -147,7 +157,7 @@ $(document).on('click', '#high-scores-link', function(){
   //$('.high-scores-modal').remove();
   
   $('.high-scores-table').html(`
-    <tr">
+    <tr>
       <th>Rank</th>
       <th>Username</th>
       <th>Score</th>
@@ -163,7 +173,9 @@ $(document).on('click', '#high-scores-link', function(){
 $(document).on('click', '.throwButton', function(){
   // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
   //går den in och kör random på alla tärningar
+  
   if(numberOfThrows < 3){
+
     for (var i = 0; i < dices.length; i++) {
       if (dices[i].locked == false) {
         var randthrow = Math.floor( (Math.random() *6) +1 );
@@ -172,6 +184,7 @@ $(document).on('click', '.throwButton', function(){
         //console.log(dices[i].value);
         $('.diceGroup').remove();
         $('.dice-panel').append(displayDices(dices));
+        
 
         //console.log($(this).text());
       }
@@ -183,13 +196,22 @@ $(document).on('click', '.throwButton', function(){
   else{
     //console.log('You have already rolled three times')
   }//ifall man inte kastat 3 gånger så ökas numberOfThrows med ett
+  
   if(numberOfThrows < 3){
     numberOfThrows++;
-    //console.log(numberOfThrows,'Många kast har du gjort');
+ 
+
+    console.log(numberOfThrows,'Många kast har du gjort');
+     $('.kast1').remove();
+     $('.kast2').append("Kast " + numberOfThrows + " av 3.");
+   
+    
 
     // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
+       $('.kast2').remove();
+       $('.kast3').append("Kast " + numberOfThrows + " av 3.");
     }
   }
 
@@ -210,6 +232,7 @@ $(document).on('click', '.dice', function(){
     dices[this.id - 1].locked = true;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
+    console.log("Antal kast: " + numberOfThrows);
     $('.dice-panel').append(displayDices(dices));
   }
 
@@ -221,11 +244,27 @@ function gameOver(){
   var winner = "";
   var bestScore = 0;
   for (var i = 0; i < scoreBoards.length; i++) {
+
+    //To insert the username and the total point to the database
+    $.ajax({
+    type: 'POST',
+    url: '/queries/write-score',
+    data: JSON.stringify({"username": scoreBoards[i].playerName ,"result":scoreBoards[i].total}),
+    dataType:"json",
+    contentType: "application/json",
+    processData: false
+
+
+}).done(function(result){
+ // console.log('reading all the the rows in the result table', result);
+});
+
     if(scoreBoards[i].total > bestScore) {
       bestScore = scoreBoards[i].total;
       winner = scoreBoards[i].playerName;
      }
   }
+
   let message = "The winner is " + winner + " with a score of " + bestScore + "!";
    alert(message);
 }

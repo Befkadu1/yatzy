@@ -6,18 +6,8 @@ $.ajax({
 }).done(function(){
   //console.log('reading the lorems row with id 1');
 });
+
 /*
-=======
-$(start);
->>>>>>> 8b804e511a4e4bfa83b6f75f7c1fa5cc99a250eb
-
-
-function start(){
-
-$('body').append(displayNavbar());
-$('body').append(displayDices());
-
-<<<<<<< HEAD
 $.ajax({
     type: 'GET',
     url: '/queries/read-lorems'
@@ -48,6 +38,7 @@ let gameCounter = 0; // 15 är max, då har alla rutor fyllts i
 // newRound() i början för att autokasta,
 // och där ökar vi turn 
 let turn = -1;
+  var first = false
 
 $(start);
 
@@ -94,7 +85,7 @@ $(document).on('click', '.startGame', function(){
     <div class="panel-heading">
     <h3 class="panel-title">Roll the dices</h3>
     </div><div class="dice-panel"></div>
-    <div class="kast1 stylekast"></div><div class="kast2 stylekast"></div><div class="kast3 stylekast"></div></div></div>`);
+    </div>`);
 
   // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
@@ -113,8 +104,8 @@ $(document).on('click', '.startGame', function(){
   // själv, så kan man skicka in det namnet, eller t.o.m. person-objektet
 
   // Läser in modalen för high scores
-  $('.page-content').append('<div class="hs-modal" />')
-  $('.hs-modal').html(displayHighScores());
+  $('.page-content').append('<div class="high-scores-modal-container" />')
+  $('.high-scores-modal-container').html(highScoresModal());
 
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
@@ -154,35 +145,35 @@ function newRound(){
         dices[i].setClass(dices[i.locked]);
         $('.diceGroup').remove();
         $('.dice-panel').append(displayDices(dices));
-
         //console.log($(this).text());
 
 
      }
 
      numberOfThrows++;
+     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
      console.log("Du har kastat: " + numberOfThrows);
-      $('.kast1').append("Kast " + numberOfThrows + " av 3.");
-
-
 }
 
 // En listener för länken "High scores" i navbaren
 $(document).on('click', '#high-scores-link', function(){
-  //$('.high-scores-modal').remove();
-  
   $('.high-scores-table').html(`
     <tr>
       <th>Rank</th>
       <th>Username</th>
       <th>Score</th>
     </tr>`);
-
-  // Här kan man loopa igenom en lista som man hämtar från DB och skicka in till
-  // highScoreRow som objekt eller en array om man vill
-  $('.high-scores-table').append(highScoreRow({rank: 1, username: 'Joel', score: 250}));
-  $('.high-scores-table').append(highScoreRow({rank: 2, username: 'Pelle', score: 200}));
-  $('.high-scores-table').append(highScoreRow({rank: 3, username: 'Olle', score: 190}));
+  // get the high score list
+  $.ajax({
+    type: 'GET',
+    url: '/queries/read-high-scores'
+  }).done(function(data){
+    // Här kan man loopa igenom en lista som man hämtar från DB och skicka in till
+    // highScoreRow som objekt eller en array om man vill
+    for(let row of data){
+      $('.high-scores-table').append(highScoreRow({rank: data.indexOf(row) + 1, username: row.username, result: row.result}));
+    }
+  });
 });
 
 $(document).on('click', '.throwButton', function(){
@@ -214,19 +205,16 @@ $(document).on('click', '.throwButton', function(){
   
   if(numberOfThrows < 3){
     numberOfThrows++;
+     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
  
 
-    console.log(numberOfThrows,'Många kast har du gjort');
-     $('.kast1').remove();
-     $('.kast2').append("Kast " + numberOfThrows + " av 3.");
    
     
 
     // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
-       $('.kast2').remove();
-       $('.kast3').append("Kast " + numberOfThrows + " av 3.");
+       document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
     }
   }
 
@@ -262,31 +250,39 @@ function gameOver(){
 
     //To insert the username and the total point to the database
     $.ajax({
-    type: 'POST',
-    url: '/queries/write-score',
-    data: JSON.stringify({"username": scoreBoards[i].playerName ,"result":scoreBoards[i].total}),
-    dataType:"json",
-    contentType: "application/json",
-    processData: false
-
-
-}).done(function(result){
- // console.log('reading all the the rows in the result table', result);
-});
-
+      type: 'POST',
+      url: '/queries/write-score',
+      data: JSON.stringify({"username": scoreBoards[i].playerName ,"result":scoreBoards[i].total}),
+      dataType:"json",
+      contentType: "application/json",
+      processData: false
+    }).done(function(result){
+      // console.log('reading all the the rows in the result table', result);
+    });
     if(scoreBoards[i].total > bestScore) {
       bestScore = scoreBoards[i].total;
       winner = scoreBoards[i].playerName;
-     }
+    }
   }
 
+  $(document).on('click', `.play-again-button`, function(){
+    location.reload();
+  });
+
   let message = "The winner is " + winner + " with a score of " + bestScore + "!";
-   alert(message);
+  $('.page-content').append('<div class="game-over-modal-container" />')
+  $('.game-over-modal-container').html(gameOverModal(message));
+
+  $(document).ready(function() {
+    $('.game-over-modal').modal('show');
+  });
+
+   //alert(message);
 }
 
 // Lyssnar på klick i alla celler, kör rätt funktion beroende på rad
-$(document).on('click', `tr td`, function(){
-  var row = $(this).parent().attr('class');
+$(document).on('click', `.yatzy-table tr`, function(){
+  var row = $(this).attr('class');
   //console.log(row);
   console.log($(this).children().attr('class'));
   // Selectorn är ex. '.ones .Joel' och används för att kolla

@@ -110,7 +110,7 @@ $(document).on('click', '.startGame', function(){
       alert("Fill all usernames");
     }
 
-  }
+  } 
   console.log(checkEmpty);
   if(checkEmpty === false){
   $(".start-page").remove();
@@ -131,8 +131,9 @@ $(document).on('click', '.startGame', function(){
     dices.push(new Dice(i+1, i+1));
   }
   //console.log('dices',dices);
+ 
+  
 
-  newRound();
   console.log("NUMMER: " + numberOfThrows);
   $('.dice-container').append(displayThrowButton());
 
@@ -165,15 +166,29 @@ $(document).on('click', '.startGame', function(){
         }
       }
     }
+
+    newRound();
   }
+
+//highlighting the column of the current player
+  $( '.'+ scoreBoards[0].playerName +'-board').addClass( "toBeselected" );
 });
 
 function newRound(){
   // Itererar över scoreBoards index för att bestämma vems tur det är
-  if(turn === scoreBoards.length - 1){
+  if(turn === scoreBoards.length - 1){ console.log(scoreBoards);
     turn = 0;
+    //highlighting the column of the current player
+    $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" ); 
+    $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );   
+   
   } else {
-    turn++;
+    ++turn;
+    //highlighting the column of the current player
+     $('.'+ scoreBoards[turn].playerName +'-board').prevAll().removeClass("toBeselected" );
+      $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" );
+      $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
+
   }
 
   // Skriver den uppdaterade turn till DB
@@ -185,7 +200,6 @@ function newRound(){
     contentType: "application/json",
     processData: false    
   });
-
 
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
@@ -205,7 +219,6 @@ function newRound(){
      numberOfThrows++;
      document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
      console.log("Du har kastat: " + numberOfThrows);
-
 }
 
 // En listener för länken "High scores" i navbaren
@@ -337,7 +350,7 @@ function gameOver(){
 $(document).on('click', `.yatzy-table tr`, function(){
   var row = $(this).attr('class');
   //console.log(row);
-
+  console.log($(this).children().attr('class'));
   // Selectorn är ex. '.ones .Joel' och används för att kolla
   // om rätt cell är tom, inte den cellen man klickar på 
   if($('.' + row + ' .' + scoreBoards[turn].playerName).text() == ''){

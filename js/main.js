@@ -56,6 +56,7 @@ function start(){
     $('.input-userName').append(displayUserInput());
       $('.start-page').append(`<div class="user-container">
     </div><div class="user-panel col-xs-3"></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
+
 }
 
 function alphaOnly(event) {
@@ -314,14 +315,16 @@ $(document).on('click', `tr td`, function(){
           if(gameCounter >= 15){
             // Här kan man kalla på en funktion, typ gameOver()
             gameOver();
+
           }else{
             newRound();
           }
         }else{
           newRound();
         }
+
+        }
       }
-    }
   });
 
 

@@ -1,4 +1,6 @@
 class ScoreBoard {
+
+
 	constructor(playerName){
 		this.playerName = playerName;
 		this.ones = 0;
@@ -19,6 +21,7 @@ class ScoreBoard {
 		this.chance = 0;
 		this.yatzy = 0;
 		this.total = 0;
+		this.testing = 0;
 
 		// Skriver ut kolumn för den akuella spelaren
 		// col-taggen är kanske inte nödvändig, men skadar inte
@@ -73,6 +76,8 @@ class ScoreBoard {
 		sum = this.ones + this.twos + this.threes + this.fours + this.fives + this.sixes;
 		this.setPoints('sum', sum);
 		this.calcBonus(sum);
+		console.log(this.testing);
+		this.testing++;
 	}
 
 	// Sätter bonus till -63 till att börja med,
@@ -82,7 +87,11 @@ class ScoreBoard {
 		let bonus = -63;
 		if(sum > 62){
 			bonus = 50;
-		}else{
+		}
+			else if(this.testing === 5){
+				bonus = 0;
+			}
+		else{
 			bonus += sum;
 		}
 		this.setPoints('bonus', bonus);

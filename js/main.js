@@ -53,19 +53,38 @@ $(start);
 
 function start(){
   $('.start-page').append('<div class="input-userName col-xs-3" />');
-    $('.input-userName').append(displayUserInput());
-      $('.start-page').append(`<div class="user-container">
-    </div><div class="user-panel col-xs-3"></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
+    $('.input-userName').append(displayStartPage());
+      $('.start-page').append(`<div class="input-userName">
+    </div><div class="user-panel col-xs-3"></div>`);
 
+      (function() {
+  $(function() {
+    $(".login--container").removeClass("preload");
+    this.timer = window.setTimeout((function(_this) {
+      return function() {
+        return $(".login--container").toggleClass("login--active");
+      };
+    })(this), 3000);
+    return $(".js-toggle-login").click((function(_this) {
+      return function() {
+        window.clearTimeout(_this.timer);
+        $(".login--container").toggleClass("login--active");
+        return $(".login--username-container input").focus();
+      };
+    })(this));
+  });
+
+}).call(this);
 }
-
+ //Only allows letters in username
 function alphaOnly(event) {
   var key = event.keyCode;
   return ((key >= 65 && key <= 90) || key == 8);
 };
 
 $(document).on('click', '.addUser', function(){
-  $('.user-panel').append(displayUserInput());
+  $(".theButtons").before($(".user-panel"));
+  $('.user-panel').append(displayUserPage());
 });
 
 $(document).on('click', '.startGame', function(){
@@ -83,7 +102,7 @@ $(document).on('click', '.startGame', function(){
   }
   console.log(checkEmpty);
   if(checkEmpty === false){
-  $(".start-page").remove();
+  $(".overlay").remove();
    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
   $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
@@ -325,6 +344,7 @@ $(document).on('click', `tr td`, function(){
 
         }
       }
+    
   });
 
 

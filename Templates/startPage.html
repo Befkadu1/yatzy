@@ -1,0 +1,23 @@
+function displayStartPage (){ return`
+
+<div class='preload login--container'>
+  <div class='login--form'>
+    <div class='login--username-container'>
+      <label>Username</label>
+      <input placeholder='Username' class="form-control" name="pname[]" onkeydown="return alphaOnly(event);" type='text'>
+      <div class ='theButtons'>
+      <button class='addUser'>Add User</button>
+      <button class='startGame'>Start Game</button>
+      </div>
+    </div>
+  </div>
+  <div class='login--toggle-container'>
+    <small>Hey you,</small>
+    <div class='js-toggle-login'>play Yatzy</div>
+    <small>already</small>
+  </div>
+</div>
+
+`
+}
+

@@ -2,8 +2,14 @@ function gameOverModal (message){ return `
 <div class="modal fade game-over-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content col-xs-12">
-      <h3>Game over!</h3>
-	  <p>${message}</p>
+    	<div class="modal-body">
+    		<h3>Game over!</h3>
+	  		<p>${message}</p>
+    	</div>
+	  <div class="modal-footer">
+	    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	    <button type="button" class="btn btn-primary play-again-button">Play again</button>
+	  </div>
     </div>
   </div>
 </div>

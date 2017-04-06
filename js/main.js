@@ -254,6 +254,10 @@ function gameOver(){
     }
   }
 
+  $(document).on('click', `.play-again-button`, function(){
+    location.reload();
+  });
+
   let message = "The winner is " + winner + " with a score of " + bestScore + "!";
   $('.page-content').append('<div class="game-over-modal-container" />')
   $('.game-over-modal-container').html(gameOverModal(message));

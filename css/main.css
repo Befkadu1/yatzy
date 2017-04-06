@@ -24,3 +24,7 @@ td, th {
 	flex-direction: row;
 	justify-content: center;
 }
+
+  .toBeselected {
+    border: 2px solid #ccccb3;
+  }

@@ -196,10 +196,10 @@ function newRound(){
         dices[i].setClass(dices[i.locked]);
         $('.diceGroup').remove();
         $('.dice-panel').append(displayDices(dices));
-        //console.log($(this).text());
-
-
      }
+
+     // När tärningarna slumpats så vill vi visa hintar
+     scoreBoards[turn].calcHints(dices);
 
      numberOfThrows++;
      document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
@@ -263,14 +263,13 @@ $(document).on('click', '.throwButton', function(){
         //console.log(dices[i].value);
         $('.diceGroup').remove();
         $('.dice-panel').append(displayDices(dices));
-        
-
-        //console.log($(this).text());
       }
       else{
         //console.log("This dice is locked!");
       }
     }
+    // När tärningarna slumpats vill vi visa hintar
+    scoreBoards[turn].calcHints(dices);
   }
   else{
     //console.log('You have already rolled three times')
@@ -363,41 +362,45 @@ function gameOver(){
 // Lyssnar på klick i alla celler, kör rätt funktion beroende på rad
 $(document).on('click', `.yatzy-table tr`, function(){
   var row = $(this).attr('class');
-  //console.log(row);
-  console.log($(this).children().attr('class'));
+
   // Selectorn är ex. '.ones .Joel' och används för att kolla
-  // om rätt cell är tom, inte den cellen man klickar på 
-  if($('.' + row + ' .' + scoreBoards[turn].playerName).text() == ''){
+  // om rätt cell är tom eller har classen .hint
+  let cell = '.' + row + ' .' + scoreBoards[turn].playerName;
+  if($(cell).text() == '' || $(cell).hasClass('hint')){
+    //$(cell).removeClass('hint');
+    $('.hint').html('');
+    $('.' + scoreBoards[turn].playerName).removeClass('hint');
+
     switch(row){
       case 'ones': 
         //scoreBoards[turn].calcOnesToSixes(dices,1);
-        scoreBoards[turn].setPoints('ones',scoreBoards[turn].calcOnesToSixes(dices,1));
+        scoreBoards[turn].calcOnesToSixes(dices,1);
         // Räknar ut summan och bonus för 1-6-raderna
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'twos': 
         //scoreBoards[turn].calcOnesToSixes(dices,2);
-        scoreBoards[turn].setPoints('twos',scoreBoards[turn].calcOnesToSixes(dices,2));
+        scoreBoards[turn].calcOnesToSixes(dices,2);
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'threes': 
         //scoreBoards[turn].calcOnesToSixes(dices,3);
-        scoreBoards[turn].setPoints('threes',scoreBoards[turn].calcOnesToSixes(dices,3));
+        scoreBoards[turn].calcOnesToSixes(dices,3);
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'fours': 
         //scoreBoards[turn].calcOnesToSixes(dices,4);
-        scoreBoards[turn].setPoints('fours',scoreBoards[turn].calcOnesToSixes(dices,4));
+        scoreBoards[turn].calcOnesToSixes(dices,4);
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;      
         case 'fives': 
         //scoreBoards[turn].calcOnesToSixes(dices,5);
-        scoreBoards[turn].setPoints('fives',scoreBoards[turn].calcOnesToSixes(dices,5));
+        scoreBoards[turn].calcOnesToSixes(dices,5);
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'sixes': 
         //scoreBoards[turn].calcOnesToSixes(dices,6);
-        scoreBoards[turn].setPoints('sixes',scoreBoards[turn].calcOnesToSixes(dices,6));
+        scoreBoards[turn].calcOnesToSixes(dices,6);
         scoreBoards[turn].calcSumOfOnesToSixes();
         break;
         case 'onePair':

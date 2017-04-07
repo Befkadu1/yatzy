@@ -40,6 +40,73 @@ class ScoreBoard {
 		this.calcBonus(0);
 	}
 
+	calcHints(dices){
+		let cell = '';
+		for(let prop in this){
+			if(prop !== 'playerName' || prop !== 'sum' || prop !== 'bonus' || prop !== 'total' || prop !== 'testing'){
+				// Classen för den cellen vi vill skriva ut en hint i
+				cell = `.${this.playerName}.${prop}-cell`;
+			}
+			// Om cellen är tom, eller om den redan har en annan hint
+			// så vill vi köra rätt funktion
+			// true betyder att det är en hint och ska därför inte
+			// uppdatera poängen. Det kollas i varje funktion
+			if($(cell).text().length < 1 || $(cell).hasClass('hint')){
+				switch(prop){
+			      	case 'ones': 
+				        this.calcOnesToSixes(dices,1,true);
+			        	break;
+			        case 'twos': 
+			        	this.calcOnesToSixes(dices,2,true);
+			        	break;
+			        case 'threes': 
+				        this.calcOnesToSixes(dices,3,true);
+			        	break;
+			        case 'fours': 
+			        	this.calcOnesToSixes(dices,4,true);
+			        	break;  
+			        case 'fives': 
+			        	this.calcOnesToSixes(dices,5,true);
+			        	break;
+			        case 'sixes': 
+				        this.calcOnesToSixes(dices,6,true);
+			        	break;
+			        case 'onePair':
+			        	this.calcPair(dices, true);
+			        	break;  
+			        case 'twoPairs': 
+			        	this.calcTwoPairs(dices, true);
+			        	break;
+			        case 'threeOfAKind':
+			        	this.calcXOfAKind(dices, 3, true);
+			        	break;
+			        case 'fourOfAKind':
+			        	this.calcXOfAKind(dices, 4, true);
+			        	break;
+			        case 'fullHouse':
+			        	this.calcFullHouse(dices,3,2, true);
+			        	break;
+			        case 'smallStraight':
+			        	this.calcSmallStraight(dices, true);
+			        	break;
+			        case 'largeStraight':
+			        	this.calcLargeStraight(dices, true);
+			        	break;
+			        case 'chance':
+			        	this.calcChance(dices, true);
+			        	break;
+			        case 'yatzy':
+				        this.calcXOfAKind(dices, 5, true);
+				        break;
+			      	default:
+			        	//console.log('Default');
+      			}
+			}
+			
+		}	
+	}
+
+
 	calcTotalPoints(){
 
 		
@@ -59,7 +126,8 @@ class ScoreBoard {
 	}
 
 
-	calcOnesToSixes(dices, number){
+	calcOnesToSixes(dices, number, isHint){
+		let prop = '';
 		let sum = 0;
 		for(let dice of dices){
 			if(dice.value === number)
@@ -67,7 +135,36 @@ class ScoreBoard {
 			  	sum += dice.value;
 			  }
 		}
-		return sum;
+
+		switch(number){
+			case 1:
+				prop = 'ones';
+				break;
+			case 2:
+				prop = 'twos';
+				break;
+			case 3:
+				prop = 'threes';
+				break;
+			case 4: 
+				prop = 'fours';
+				break;
+			case 5:
+				prop = 'fives';
+				break;
+			case 6:
+				prop = 'sixes';
+				break;
+			default:
+				console.log('Something went wrong..');
+		}
+
+		// Är det en hint eller ej?
+		if(isHint){
+			this.showHint(prop, sum);
+		}else{
+			this.setPoints(prop, sum);
+		}
 		//console.log('Sum of dices: ' + sum);
 	}
 
@@ -97,7 +194,7 @@ class ScoreBoard {
 		this.setPoints('bonus', bonus);
 	}
 
-	calcXOfAKind(dices, val){
+	calcXOfAKind(dices, val, isHint){
 		// [[1,x],[2,y]...]
 		// Tvådimensionell array där 1 motsvarar värdet på tärningen
 		// och x hur många tärningar som har värdet 1
@@ -154,16 +251,23 @@ class ScoreBoard {
 			default:
 				//console.log('Sorry, something went wrong.')
 		}
-		this.setPoints(prop, sum);
+		if(isHint){
+			this.showHint(prop, sum);
+		}else{
+			this.setPoints(prop, sum);
+		}
 	}
 
-	calcChance(dices){
+	calcChance(dices, isHint){
 		let sum = 0;
 		for(let dice of dices){
 			sum += dice.value;
 		}
-		//console.log('Sum of dices: ' + sum);
-		this.setPoints('chance', sum);
+		if(isHint){
+			this.showHint('chance', sum);
+		}else{
+			this.setPoints('chance', sum);
+		}
 	}
 
 	calcForPair(dices){
@@ -198,7 +302,7 @@ class ScoreBoard {
 		return [count1, count2, count3, count4, count5, count6];
 	}
 
-	calcPair(dices){
+	calcPair(dices, isHint){
 		let counts = this.calcForPair(dices);
 		let sum = 0;
        // kollar i turordning ifall det finns minst två av tärningar 
@@ -223,11 +327,15 @@ class ScoreBoard {
 		}
 		//console.log(count1,'..',count2,'..',count3,'..',count4,'..',count5,'..',count6);
       //console.log('Sum of pair ' + sum);
-      this.setPoints('onePair', sum);
+      if(isHint){
+		this.showHint('onePair', sum);
+	  }else{
+    	this.setPoints('onePair', sum);
+	  }
 	}
 
 	//A 2 pair function
-   calcTwoPairs(dices){
+   calcTwoPairs(dices, isHint){
    	var sum = 0;
    	var count = 0;
 
@@ -250,11 +358,15 @@ class ScoreBoard {
            totalSum = (i+1)*4;
         }
    	}
-   	this.setPoints('twoPairs', totalSum);
+   	if(isHint){
+		this.showHint('twoPairs', sum);
+	}else{
+   		this.setPoints('twoPairs', totalSum);
+   	}
    }
 
 
-	calcSmallStraight(dices){
+	calcSmallStraight(dices, isHint){
 		let count1 = 0;
 		let count2 = 0;
 		let count3 = 0;
@@ -293,12 +405,15 @@ class ScoreBoard {
 			sum = 0;
 		}
 		//console.log('Summan av lilla stegen ' + sum);
-		this.setPoints('smallStraight', sum);
-
+		if(isHint){
+			this.showHint('smallStraight', sum);
+		}else{
+			this.setPoints('smallStraight', sum);
+		}
 
 	}
 
-	calcFullHouse(dices,valOne,valTwo){
+	calcFullHouse(dices,valOne,valTwo, isHint){
 
 		let amountOfUniques = [[1,0],[2,0],[3,0],[4,0],[5,0],[6,0]];
 		var sumOne = 0;
@@ -332,9 +447,13 @@ class ScoreBoard {
 		}
 		//set the points 0 if there is no full house or the score if you have a fullHouse	
 		//this.setPoints('fullHouse',sum);
-	this.setPoints('fullHouse', sum);
+		if(isHint){
+			this.showHint('fullHouse', sum);
+		}else{
+			this.setPoints('fullHouse', sum);
+		}
 	}
-	calcLargeStraight(dices){
+	calcLargeStraight(dices, isHint){
 		let count1 = 0;
 		let count2 = 0;
 		let count3 = 0;
@@ -373,8 +492,11 @@ class ScoreBoard {
 			else{
 				sum = 0;
 			}
-			this.setPoints('largeStraight', sum);
-
+			if(isHint){
+				this.showHint('largeStraight', sum);
+			}else{
+				this.setPoints('largeStraight', sum);
+			}
 	}
 
 
@@ -385,6 +507,12 @@ class ScoreBoard {
 		for(let prop in this){
 			$(`.${this.playerName}.${prop}-cell`).html(this[prop]);
 		}
+	}
+
+	// Skriver ut en hint och lägger på classen hint
+	showHint(prop, val){
+		$(`.${this.playerName}.${prop}-cell`).html(val);
+		$(`.${this.playerName}.${prop}-cell`).addClass('hint');
 	}
 
 	// Tar in värdet och propertyn som ska uppdateras

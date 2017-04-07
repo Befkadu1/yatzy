@@ -28,3 +28,7 @@ td, th {
   .toBeselected {
     border: 2px solid #ccccb3;
   }
+
+.hint{
+	color: lightgrey;
+}

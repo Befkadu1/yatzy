@@ -83,14 +83,14 @@ $(start);
 
 function start(){
   $('.start-page').append('<div class="input-userName col-xs-3" />');
-    $('.input-userName').append(displayUserInput());
-      $('.start-page').append(`<div class="user-container">
-    </div><div class="user-panel col-xs-3"></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
+  $('.input-userName').append(displayUserInput());
+  $('.start-page').append(`<div class="user-container">
+    </div><div class="user-panel col-xs-3 "></div><div class="startButton"><button type="button" class="btn btn-default startGame">Start Game</button><button type="button" class="btn btn-default addUser">Add user</button> </div></div>`);
 
 }
 
 function alphaOnly(event) {
-  var key = event.keyCode;
+  var key = event.keyCode;  
   return ((key >= 65 && key <= 90) || key == 8);
 };
 
@@ -116,11 +116,11 @@ $(document).on('click', '.startGame', function(){
   $(".start-page").remove();
    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
-  $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
+  $('.page-content').append('<div class="scoreboard-container col-xs-4" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
   
-  $('.page-content').append(`<div class="dice-container col-xs-6 col-xs-push-2">  <div class="panel panel-primary ">
+  $('.page-content').append(`<div class="dice-container col-xs-4 col-xs-push-2">  <div class="panel panel-primary ">
     <div class="panel-heading">
     <h3 class="panel-title">Roll the dices</h3>
     </div><div class="dice-panel"></div>

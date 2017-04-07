@@ -392,6 +392,16 @@ class ScoreBoard {
 	setPoints(prop, val){
 		this[prop] = val;		
 		$(`.${this.playerName}.${prop}-cell`).html(this[prop]);
+		$.ajax({
+             type: 'POST',
+             url: '/queries/update-score',
+             data: JSON.stringify([val, this.playerName, prop]),
+             dataType:"json",
+             contentType: "application/json",
+             processData: false              
+          }).done(function(){
+            console.log('Updated towards db');
+          });
 	}
 
 

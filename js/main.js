@@ -200,6 +200,7 @@ function newRound(){
     contentType: "application/json",
     processData: false    
   });
+ 
 
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna

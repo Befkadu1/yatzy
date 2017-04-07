@@ -238,6 +238,9 @@ function playSound(type){
     case 'throw':
       sound.src="https://kahimyang.com/resources/sound/click.mp3";
       break;
+    case 'game-over':
+      sound.src="../sounds/game-over.wav";
+      break;
     default:
       console.log('No sound for that');
   }
@@ -320,6 +323,7 @@ $(document).on('click', '.dice', function(){
 });
 
 function gameOver(){
+  playSound('game-over');
   var winner = "";
   var bestScore = 0;
   for (var i = 0; i < scoreBoards.length; i++) {

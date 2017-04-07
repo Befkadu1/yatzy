@@ -187,6 +187,7 @@ function newRound(){
 
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
+      playSound('throw');
      for (var i = 0; i < dices.length; i++) {
       var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
@@ -227,21 +228,28 @@ $(document).on('click', '#high-scores-link', function(){
 });
 
 
+function playSound(type){
+  var sound = document.createElement("audio");
+  sound.volume=0.20;
+  sound.autoPlay=false;
+  sound.preLoad=true;  
+  // Man kan lägga till flera olika ljud i switchen
+  switch(type){
+    case 'throw':
+      sound.src="https://kahimyang.com/resources/sound/click.mp3";
+      break;
+    default:
+      console.log('No sound for that');
+  }
+  sound.play();
+}
 
 $(document).on('click', '.throwButton', function(){
   // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
   //går den in och kör random på alla tärningar
   
   if(numberOfThrows < 3){
-     //Creating sound when "Throw" button clicked
-     var obj = document.createElement("audio");
-        obj.src="https://kahimyang.com/resources/sound/click.mp3";
-        obj.volume=0.20;
-        obj.autoPlay=false;
-        obj.preLoad=true;       
- 
-       // $(".playSound").click(function() {
-            obj.play();
+     playSound('throw');
         
 
     for (var i = 0; i < dices.length; i++) {

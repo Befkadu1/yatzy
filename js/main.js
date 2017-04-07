@@ -148,23 +148,6 @@ $(document).on('click', '.startGame', function(){
 
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
-
-      // Skriver scoreboard till current-game i db
-      for(let prop in scoreBoards[i]){
-        console.log('prop', prop, scoreBoards[i][prop]);
-        if(prop !== 'playerName'){
-          $.ajax({
-            type: 'POST',
-            url: '/queries/insert-game-row',
-            data: JSON.stringify([scoreBoards[i].playerName, prop, scoreBoards[i][prop]]),
-            dataType:"json",
-            contentType: "application/json",
-            processData: false    
-          }).done(function(){
-            console.log('Done writing a scoreboard to db');
-          });
-        }
-      }
     }
 
     newRound();

@@ -392,23 +392,35 @@ class ScoreBoard {
 	setPoints(prop, val){
 		this[prop] = val;		
 		$(`.${this.playerName}.${prop}-cell`).html(this[prop]);
-		$.ajax({
-             type: 'POST',
-             url: '/queries/update-score',
-             data: JSON.stringify([val, this.playerName, prop]),
-             dataType:"json",
-             contentType: "application/json",
-             processData: false              
-          }).done(function(){
-            console.log('Updated towards db');
-          });
+		
+		// Bonus, sum och total kommer uppdateras flera gånger under spelet,
+		// men eftersom de inte finns första gången (förutom bonus) så kan vi inte
+		// använda update, så vi tar bort raderna istället och skriver in dem igen
+      if(prop === 'bonus' || prop === 'sum' || prop === 'total'){
+      	$.ajax({
+        type: 'POST',
+        url: '/queries/delete-game-row',
+        data: JSON.stringify([this.playerName, prop]),
+        dataType:"json",
+        contentType: "application/json",
+        processData: false    
+        }).done(function(){
+          console.log('Deleted a row in db');
+        });
+      }
+
+      // Skriver en ny rad till current_game, med username, row och score
+      $.ajax({
+        type: 'POST',
+        url: '/queries/insert-game-row',
+        data: JSON.stringify([this.playerName, prop, val]),
+        dataType:"json",
+        contentType: "application/json",
+        processData: false    
+      }).done(function(){
+        console.log('Done writing a row to db');
+      });
 	}
-
-
-
-
-
-
 }
 
 

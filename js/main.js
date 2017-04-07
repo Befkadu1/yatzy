@@ -151,7 +151,7 @@ $(document).on('click', '.startGame', function(){
 
       // Skriver scoreboard till current-game i db
       for(let prop in scoreBoards[i]){
-        console.log('prop', prop);
+        console.log('prop', prop, scoreBoards[i][prop]);
         if(prop !== 'playerName'){
           $.ajax({
             type: 'POST',
@@ -176,7 +176,7 @@ $(document).on('click', '.startGame', function(){
 
 function newRound(){
   // Itererar över scoreBoards index för att bestämma vems tur det är
-  if(turn === scoreBoards.length - 1){ console.log(scoreBoards);
+  if(turn === scoreBoards.length - 1){ 
     turn = 0;
     //highlighting the column of the current player
     $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" ); 
@@ -302,12 +302,16 @@ $(document).on('click', '.throwButton', function(){
 
 $(document).on('click', '.dice', function(){
  // lyssnar på klick på tärningarna ifall man klickar på en så låser den sig 
- //och uppdaterar så den röda färgen syns
+ //och uppdaterar så den röda färgen syns 
+ console.log("id ", dices[this.id-1]);
   if(dices[this.id - 1].locked){
     dices[this.id - 1].locked = false;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
     $('.dice-panel').append(displayDices(dices));
+
+    //To show the number of throws left 
+    document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
 //Är tärningen redan låst så låses den upp vid klick och uppdaterar så användaren ser det
   }else{
     dices[this.id - 1].locked = true;
@@ -315,6 +319,8 @@ $(document).on('click', '.dice', function(){
     $('.diceGroup').remove();
     console.log("Antal kast: " + numberOfThrows);
     $('.dice-panel').append(displayDices(dices));
+    //To show the number of throws left
+    document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
   }
 
   $(this).toggleClass('locked');

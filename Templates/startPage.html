@@ -4,7 +4,7 @@ function displayStartPage (){ return`
   <div class='login--form'>
     <div class='login--username-container'>
       <label>Username</label>
-      <input placeholder='Username' class="form-control" name="pname[]" onkeydown="return alphaOnly(event);" type='text'>
+      <input placeholder='Username' class="form-control" name="pname[]" maxlength="8" onkeydown="return alphaOnly(event);" type='text'>
       <div class ='theButtons'>
       <button class='addUser'>Add User</button>
       <button class="removeUser">Remove User</button>

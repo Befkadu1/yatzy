@@ -53,10 +53,11 @@ $(start);
 
 function start(){
   $('.start-page').append('<div class="input-userName col-xs-3" />');
-    $('.input-userName').append(displayStartPage());
+
+if(window.innerWidth > 378){
+  $('.input-userName').append(displayStartPage());
       $('.start-page').append(`<div class="input-userName">
     </div><div class="user-panel col-xs-3"></div>`);
-
       (function() {
   $(function() {
     $(".login--container").removeClass("preload");
@@ -64,7 +65,7 @@ function start(){
       return function() {
         return $(".login--container").toggleClass("login--active");
       };
-    })(this), 3000);
+    })(this), 2000);
     return $(".js-toggle-login").click((function(_this) {
       return function() {
         window.clearTimeout(_this.timer);
@@ -75,6 +76,17 @@ function start(){
   });
 
 }).call(this);
+    }
+    else{
+      $('.input-userName').append(`<label>Username</label>
+      <input placeholder='Username' class="form-control" name="pname[]" onkeydown="return alphaOnly(event);" type='text'>
+      <div class ='theButtons'>
+      <button class='addUser'>Add User</button>
+      <button class="removeUser">Remove User</button>
+      <button class='startGame'>Start Game</button>`);
+      $('.start-page').append(`<div class="input-userName">
+    </div><div class="user-panel col-xs-3"></div>`);
+    }
 }
  //Only allows letters in username
 function alphaOnly(event) {
@@ -85,6 +97,10 @@ function alphaOnly(event) {
 $(document).on('click', '.addUser', function(){
   $(".theButtons").before($(".user-panel"));
   $('.user-panel').append(displayUserPage());
+});
+
+$(document).on('click', '.removeUser', function(){
+$('.user-panel .newUser:last').remove()
 });
 
 $(document).on('click', '.startGame', function(){

@@ -74,7 +74,7 @@ $.ajax({
         type: 'GET',
         url: '/queries/read-turn'
       }).done(function(data){
-        console.log('Turn: Player ' + data[0].player_index);
+        //console.log('Turn: Player ' + data[0].player_index);
       });
     });
   });
@@ -128,7 +128,7 @@ $(document).on('click', '.startGame', function(){
   // Läser in från alla input fält
   var values = $("input[name='pname[]']")
               .map(function(){return $(this).val();}).get();
-              console.log(values);
+              //console.log(values);
      
 
      //Kollar efter dubbla användarnamn         
@@ -138,7 +138,6 @@ $(document).on('click', '.startGame', function(){
         var value = values[i];
         if (value in valuesSoFar) {
             duplicate = true;
-            console.log("Duplicate!")
             alert("You got duplicate usernames!")
         }
         valuesSoFar[value] = true;
@@ -151,7 +150,7 @@ $(document).on('click', '.startGame', function(){
     }
 
   } 
-  console.log(checkEmpty);
+  //console.log(checkEmpty);
   if(checkEmpty === false && duplicate === false){
   $(".overlay").remove();
    $('body').prepend(displayNavbar());
@@ -173,7 +172,7 @@ $(document).on('click', '.startGame', function(){
  
   
 
-  console.log("NUMMER: " + numberOfThrows);
+  //console.log("NUMMER: " + numberOfThrows);
   $('.dice-container').append(displayThrowButton());
 
 
@@ -206,7 +205,6 @@ function newRound(){
     $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
     var name = scoreBoards[turn].playerName;
     $(".player-name").empty();
-    console.log("test******", name);
     $(".player-name").append(name);
    
   } else {
@@ -217,7 +215,6 @@ function newRound(){
      $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
     var name = scoreBoards[turn].playerName;
     $(".player-name").empty();
-    console.log("test******", name);
     $(".player-name").append(name);
   }
 
@@ -250,7 +247,6 @@ function newRound(){
 
      numberOfThrows++;
      document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
-     console.log("Du har kastat: " + numberOfThrows);
 }
 
 // En listener för länken "High scores" i navbaren
@@ -275,7 +271,6 @@ $(document).on('click', '#high-scores-link', function(){
 });
 
 $(document).on('click', '#rules-link', function(){
-  console.log("hej");
   
 
   });
@@ -294,7 +289,7 @@ function playSound(type){
       sound.src="../sounds/game-over.wav";
       break;
     default:
-      console.log('No sound for that');
+      //console.log('No sound for that');
   }
   sound.play();
 }
@@ -349,7 +344,7 @@ $(document).on('click', '.throwButton', function(){
 $(document).on('click', '.dice', function(){
  // lyssnar på klick på tärningarna ifall man klickar på en så låser den sig 
  //och uppdaterar så den röda färgen syns 
- console.log("id ", dices[this.id-1]);
+ //console.log("id ", dices[this.id-1]);
   if(dices[this.id - 1].locked){
     dices[this.id - 1].locked = false;
     dices[this.id -1].setClass(dices[this.id -1].locked);
@@ -363,7 +358,7 @@ $(document).on('click', '.dice', function(){
     dices[this.id - 1].locked = true;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
-    console.log("Antal kast: " + numberOfThrows);
+    //console.log("Antal kast: " + numberOfThrows);
     $('.dice-panel').append(displayDices(dices));
     //To show the number of throws left
     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";

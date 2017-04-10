@@ -83,11 +83,12 @@ $(start);
 
 function start(){
   $('.start-page').append('<div class="input-userName col-xs-3" />');
-
-if(window.innerWidth > 378){
   $('.input-userName').append(displayStartPage());
       $('.start-page').append(`<div class="input-userName">
     </div><div class="user-panel col-xs-3"></div>`);
+
+
+
       (function() {
   $(function() {
     $(".login--container").removeClass("preload");
@@ -104,19 +105,7 @@ if(window.innerWidth > 378){
       };
     })(this));
   });
-
 }).call(this);
-    }
-    else{
-      $('.input-userName').append(`<label>Username</label>
-      <input placeholder='Username' class="form-control" name="pname[]" onkeydown="return alphaOnly(event);" type='text'>
-      <div class ='theButtons'>
-      <button class='addUser'>Add User</button>
-      <button class="removeUser">Remove User</button>
-      <button class='startGame'>Start Game</button>`);
-      $('.start-page').append(`<div class="input-userName">
-    </div><div class="user-panel col-xs-3"></div>`);
-    }
 }
  //Only allows letters in username
 function alphaOnly(event) {

@@ -115,14 +115,14 @@ var userCounter = 0;
 $(document).on('click', '.addUser', function(){
  
   
-  if(userCounter< 4){
+  if(userCounter< 3){
     userCounter++;
      $(".theButtons").before($(".user-panel"));
      $('.user-panel').append(displayUserPage());
   }
   else{console.log(userCounter);
     alert("The Maxmum number of players is 4");
-     $('.newUser').last().remove()
+     //$('.newUser').last().remove()
   }
 });
 

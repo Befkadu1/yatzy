@@ -213,16 +213,17 @@ function newRound(){
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
       playSound('throw');
+      spinDices(dices);
      for (var i = 0; i < dices.length; i++) {
       var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
         //console.log(dices[i].value);
         dices[i].locked = false;
         dices[i].setClass(dices[i.locked]);
-        $('.diceGroup').remove();
-        $('.dice-panel').append(displayDices(dices));
      }
-
+     $('.diceGroup').remove();
+     $('.dice-panel').append(displayDices(dices));  
+     
      // När tärningarna slumpats så vill vi visa hintar
      scoreBoards[turn].calcHints(dices);
 
@@ -256,6 +257,7 @@ $(document).on('click', '#high-scores-link', function(){
 function playSound(type){
   var sound = document.createElement("audio");
   sound.volume=0.20;
+  sound.currentTime = 0;
   sound.autoPlay=false;
   sound.preLoad=true;  
   // Man kan lägga till flera olika ljud i switchen
@@ -279,20 +281,21 @@ $(document).on('click', '.throwButton', function(){
   if(numberOfThrows < 3){
      playSound('throw');
         
-
+     let dicesToBeSpinned = [];
     for (var i = 0; i < dices.length; i++) {
       if (dices[i].locked == false) {
         var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
         dices[i].setClass(dices[i].locked)
+        dicesToBeSpinned.push(dices[i]);
         //console.log(dices[i].value);
-        $('.diceGroup').remove();
-        $('.dice-panel').append(displayDices(dices));
       }
       else{
         //console.log("This dice is locked!");
       }
     }
+    spinDices(dicesToBeSpinned);
+    
     // När tärningarna slumpats vill vi visa hintar
     scoreBoards[turn].calcHints(dices);
   }
@@ -317,6 +320,23 @@ $(document).on('click', '.throwButton', function(){
 
 });
 
+function spinDices(dicesToBeSpinned){
+  let lastDice = '';
+  for(let dice of dicesToBeSpinned){
+    $(`#${dice.id}`).html('&#127922;');
+    $(`#${dice.id}`).addClass('spin');
+    lastDice = $(`#${dice.id}`);
+  }
+
+  $('.spin').on("transitionend MSTransitionEnd webkitTransitionEnd oTransitionEnd",
+    function() {
+        $(this).removeClass("spin");  // Transition has ended.
+        if($(this).attr('id') === lastDice.attr('id')){
+          $('.diceGroup').remove();
+          $('.dice-panel').append(displayDices(dices));
+        }
+    });
+}
 
 
 $(document).on('click', '.dice', function(){

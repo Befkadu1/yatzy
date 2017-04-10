@@ -151,3 +151,15 @@ small {
    width:316px;
    clear:both;
 }
+
+.spin{
+  transform: rotate(720deg);
+  /* Firefox */
+  -moz-transition: all 1s ease;
+  /* WebKit */
+  -webkit-transition: all 1s ease;
+  /* Opera */
+  -o-transition: all 1s ease;
+  /* Standard */
+  transition: all 1s ease;
+}

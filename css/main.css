@@ -13,11 +13,6 @@ td, th {
     padding: 8px;
 }
 
-.locked,.thisLocked{
-	background: red;
-}
-
-
 .dice{
 	font-size: 72px;
 	display: flex;
@@ -31,4 +26,128 @@ td, th {
 
 .hint{
 	color: lightgrey;
+}
+.locked,.thisLocked{
+  background: red;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.overlay{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:1000;
+}
+.start-page, .overlay {
+  height: 100%;
+  background-color: #1b0049;
+  font-family: "Roboto Slab", serif;
+  color: white;
+}
+
+.preload * {
+  transition: none !important;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  font-size: small;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  margin-bottom: 0.35em;
+}
+
+input[type="text"] {
+  width: 100%;
+  border: none;
+  padding: 0.5em;
+  border-radius: 2px;
+  margin-bottom: 0.5em;
+  color: #333;
+}
+input[type="text"]:focus{
+  outline: none;
+  box-shadow: inset -1px -1px 3px rgba(0, 0, 0, 0.3);
+}
+
+button {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  margin-top: 2px;
+  border: none;
+  border-radius: 2px;
+  background-color: #bf3a01;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  color: white;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+small {
+  font-size: 1em;
+}
+
+.login--login-submit {
+  float: right;
+}
+.login--container{
+  width: 600px;
+  margin: 0 auto;
+  position: relative;
+  top: 25%;
+}
+
+.login--toggle-container {
+  position: absolute;
+  background-color: #1b0049;
+  right: 0;
+  line-height: 2.5em;
+  width: 50%;
+  height: 120px;
+  text-align: right;
+  cursor: pointer;
+  transform: perspective(1000px) translateZ(1px);
+  transform-origin: 0% 0%;
+  transition: all 1s cubic-bezier(0.06, 0.63, 0, 1);
+  backface-visibility: hidden;
+}
+.login--toggle-container .js-toggle-login {
+  font-size: 4em;
+  text-decoration: underline;
+}
+.login--active .login--toggle-container {
+  transform: perspective(1000px) rotateY(180deg);
+  background-color: #1b0049;
+}
+
+.login--username-container{
+  float: left;
+  background-color: #1b0049;
+  width: 50%;
+  height: 120px;
+  padding: 0.5em;
+}
+
+.login--username-container {
+  transform-origin: 100% 0%;
+  transform: perspective(1000px) rotateY(180deg);
+  transition: all 1s cubic-bezier(0.06, 0.63, 0, 1);
+  background-color: #1b0049;
+  backface-visibility: hidden;
+}
+.login--active .login--username-container {
+  transform: perspective(1000px) rotateY(0deg);
+  background-color: #1b0049;
+}
+.user-panel{
+   float:left; 
+   width:316px;
+   clear:both;
 }

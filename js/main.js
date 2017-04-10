@@ -121,6 +121,7 @@ $(document).on('click', '.addUser', function(){
      $('.user-panel').append(displayUserPage());
   }
   else{console.log(userCounter);
+    // Här borde man lägga en well eller något istället
     alert("The Maxmum number of players is 4");
      //$('.newUser').last().remove()
   }
@@ -148,6 +149,7 @@ $(document).on('click', '.startGame', function(){
         var value = values[i];
         if (value in valuesSoFar) {
             duplicate = true;
+            // Lägg well istället
             alert("You got duplicate usernames!")
         }
         valuesSoFar[value] = true;
@@ -156,6 +158,7 @@ $(document).on('click', '.startGame', function(){
   for (var i = 0; i < values.length; i++) {
     if(values[i] === ""){
       checkEmpty = true;
+      // Lägg well istället
       alert("Fill all usernames");
     }
 

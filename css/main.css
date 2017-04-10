@@ -146,6 +146,13 @@ small {
   transform: perspective(1000px) rotateY(0deg);
   background-color: #1b0049;
 }
+@media(max-width: 376px){
+
+  .login--toggle-container {
+  position: relative;
+}
+
+}
 .user-panel{
    float:left; 
    width:316px;

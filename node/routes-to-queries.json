@@ -5,10 +5,9 @@
   "read-lorems-ipsums": "SELECT lorems.*, ipsums.blabla AS ipsum FROM lorems LEFT JOIN ipsums ON ipsums.lorem = lorems.id",
   "read-lorem-ipsums": "SELECT lorems.*, ipsums.blabla AS ipsum FROM lorems JOIN ipsums ON ipsums.lorem = lorems.id AND lorems.id = ?",
   "write-ipsum": "INSERT INTO ipsums SET ?",
-<<<<<<< Updated upstream
   "create-result-table": "CREATE TABLE IF NOT EXISTS results (result_id int(11) NOT NULL AUTO_INCREMENT,username CHAR(30),result int(11),PRIMARY KEY (result_id))",
   "write-score": "INSERT INTO results SET ? ",
-  "read-high-scores": "SELECT  username, result FROM results ORDER BY result DESC",
+  "read-high-scores": "SELECT  username, result FROM results ORDER BY result DESC LIMIT 10",
   "create-current-game-table": "CREATE TABLE IF NOT EXISTS current_game (username varchar(45) NOT NULL DEFAULT '', row varchar(45) NOT NULL DEFAULT '', score int(11) DEFAULT NULL, PRIMARY KEY (username,row))",
   "clear-current-game": "TRUNCATE current_game",
   "insert-game-row": "INSERT INTO current_game VALUES (?, ?, ?)",
@@ -18,8 +17,6 @@
   "insert-turn-row": "INSERT INTO turn (player_index) VALUES (?)",
   "update-turn": "UPDATE turn SET player_index = ?",
   "read-turn": "SELECT * FROM turn",
-  "delete-game-row": "DELETE FROM current_game WHERE username = ? AND row = ?"
-=======
+  "delete-game-row": "DELETE FROM current_game WHERE username = ? AND row = ?",
   "create-results-table": "CREATE TABLE IF NOT EXISTS results (result_id int(11) NOT NULL AUTO_INCREMENT)"
->>>>>>> Stashed changes
 }

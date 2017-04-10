@@ -183,6 +183,7 @@ small {
 }
 .user-panel{
    float:left; 
-   width:316px;
+   width:300px;
    clear:both;
+   padding-left: 0px;
 }

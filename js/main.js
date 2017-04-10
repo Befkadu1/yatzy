@@ -156,15 +156,14 @@ $(document).on('click', '.startGame', function(){
   $(".overlay").remove();
    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
-  $('.page-content').append('<div class="scoreboard-container col-xs-4" />');
+  $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
-  
-  $('.page-content').append(`<div class="dice-container col-xs-4 col-xs-push-2">  <div class="panel panel-primary ">
-    <div class="panel-heading">
-    <h3 class="panel-title">Roll the dices</h3>
-    </div><div class="dice-panel"></div>
-    </div>`);
+  $('.page-content').append(`<div class="dice-container col-xs-4 col-xs-push-2"> <div><h4 class="player-name "></h4></div>
+   <div class="panel panel-primary ">
+    <div class="dice-panel"></div>
+    </div>
+    `);
 
   // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
@@ -204,15 +203,22 @@ function newRound(){
     turn = 0;
     //highlighting the column of the current player
     $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" ); 
-    $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );   
+    $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
+    var name = scoreBoards[turn].playerName;
+    $(".player-name").empty();
+    console.log("test******", name);
+    $(".player-name").append(name);
    
   } else {
     ++turn;
     //highlighting the column of the current player
      $('.'+ scoreBoards[turn].playerName +'-board').prevAll().removeClass("toBeselected" );
-      $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" );
-      $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
-
+     $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" );
+     $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
+    var name = scoreBoards[turn].playerName;
+    $(".player-name").empty();
+    console.log("test******", name);
+    $(".player-name").append(name);
   }
 
   // Skriver den uppdaterade turn till DB
@@ -421,7 +427,6 @@ $(document).on('click', `.yatzy-table tr`, function(){
     //$(cell).removeClass('hint');
     $('.hint').html('');
     $('.' + scoreBoards[turn].playerName).removeClass('hint');
-
     switch(row){
       case 'ones': 
         //scoreBoards[turn].calcOnesToSixes(dices,1);

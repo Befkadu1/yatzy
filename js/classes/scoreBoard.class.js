@@ -28,7 +28,7 @@ class ScoreBoard {
 		$('colgroup').append(`<col class="${this.playerName}-board" />`);
 		for(let prop in this){
 			if(prop === 'playerName'){
-				$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);
+				//$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);
 			}else{
 				// Skriver ut cell för varje property, men skriver ej ut värdet
 				// eftersom vi vill se det som en tom cell istället för 0

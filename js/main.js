@@ -171,6 +171,10 @@ $(document).on('click', '.startGame', function(){
   $('.page-content').append('<div class="high-scores-modal-container" />')
   $('.high-scores-modal-container').html(highScoresModal());
 
+  // Läser in modalen för rules
+  $('.page-content').append('<div class="rules-modal-container" />')
+  $('.rules-modal-container').html(rulesModal());
+
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
     }

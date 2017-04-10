@@ -1,4 +1,3 @@
-
 //creating a result table
 $.ajax({
     type: 'POST',
@@ -6,6 +5,7 @@ $.ajax({
 }).done(function(){
   //console.log('reading the lorems row with id 1');
 });
+
 
 $.ajax({
     type: 'POST',
@@ -18,6 +18,7 @@ $.ajax({
     //console.log('reading the lorems row with id 1');
   });
 });
+
 
 /*
 $.ajax({
@@ -260,7 +261,7 @@ function playSound(type){
   // Man kan lägga till flera olika ljud i switchen
   switch(type){
     case 'throw':
-      sound.src="https://kahimyang.com/resources/sound/click.mp3";
+      sound.src="../sounds/roll-dices.wav";
       break;
     case 'game-over':
       sound.src="../sounds/game-over.wav";

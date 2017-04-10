@@ -237,7 +237,7 @@ function playSound(type){
   // Man kan lägga till flera olika ljud i switchen
   switch(type){
     case 'throw':
-      sound.src="../sounds/roll-dices.mp3";
+      sound.src="../sounds/roll-dices.wav";
       break;
     case 'game-over':
       sound.src="../sounds/game-over.wav";

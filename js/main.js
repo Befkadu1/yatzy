@@ -252,6 +252,11 @@ $(document).on('click', '#high-scores-link', function(){
   });
 });
 
+$(document).on('click', '#rules-link', function(){
+  console.log("hej");
+  
+
+  });
 
 function playSound(type){
   var sound = document.createElement("audio");

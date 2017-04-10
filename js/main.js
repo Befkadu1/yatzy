@@ -88,8 +88,6 @@ function start(){
       $('.start-page').append(`<div class="input-userName">
     </div><div class="user-panel col-xs-3"></div>`);
 
-
-
       (function() {
   $(function() {
     $(".login--container").removeClass("preload");
@@ -111,7 +109,7 @@ function start(){
  //Only allows letters in username
 function alphaOnly(event) {
   var key = event.keyCode;  
-  return ((key >= 65 && key <= 90) || key == 8);
+  return ((key >= 65 && key <= 90) || key == 8 || key == 192 || key == 222 || key == 221);
 };
 
 $(document).on('click', '.addUser', function(){
@@ -125,10 +123,27 @@ $('.user-panel .newUser:last').remove()
 
 $(document).on('click', '.startGame', function(){
 
+
   var checkEmpty = false;
+  // Läser in från alla input fält
   var values = $("input[name='pname[]']")
               .map(function(){return $(this).val();}).get();
               console.log(values);
+     
+
+     //Kollar efter dubbla användarnamn         
+    var valuesSoFar = Object.create(null);
+    var duplicate = false;
+    for (var i = 0; i < values.length; ++i) {
+        var value = values[i];
+        if (value in valuesSoFar) {
+            duplicate = true;
+            console.log("Duplicate!")
+            alert("You got duplicate usernames!")
+        }
+        valuesSoFar[value] = true;
+    }
+    //Kollar så alla input fält är ifyllda
   for (var i = 0; i < values.length; i++) {
     if(values[i] === ""){
       checkEmpty = true;
@@ -137,7 +152,7 @@ $(document).on('click', '.startGame', function(){
 
   } 
   console.log(checkEmpty);
-  if(checkEmpty === false){
+  if(checkEmpty === false && duplicate === false){
   $(".overlay").remove();
    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
@@ -176,10 +191,11 @@ $(document).on('click', '.startGame', function(){
     }
 
     newRound();
-  }
+  
 
 //highlighting the column of the current player
   $( '.'+ scoreBoards[0].playerName +'-board').addClass( "toBeselected" );
+}
 });
 
 function newRound(){
@@ -377,11 +393,16 @@ function gameOver(){
   $(document).on('click', `.play-again-button`, function(){
     location.reload();
   });
-
+  if (scoreBoards.length < 2) {
+      let message =  winner + " you got a score of " + bestScore + "!";
+  $('.page-content').append('<div class="game-over-modal-container" />')
+  $('.game-over-modal-container').html(gameOverModal(message));
+  }
+  else{
   let message = "The winner is " + winner + " with a score of " + bestScore + "!";
   $('.page-content').append('<div class="game-over-modal-container" />')
   $('.game-over-modal-container').html(gameOverModal(message));
-
+}
   $(document).ready(function() {
     $('.game-over-modal').modal('show');
   });

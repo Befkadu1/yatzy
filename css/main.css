@@ -5,13 +5,14 @@ background-position: center;
  background-size: cover;
 }
 
-img{
- 
-
-}
-
 div{
 	text-align: center;
+}
+.playerNameBox{
+	background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.4);
+    
 }
 .textFormat{
 	font-family: 'Kavoon';
@@ -45,10 +46,12 @@ div{
 	background-color: #ccccb3;
 }
 .player-name{
+	font-family: 'Kavoon';
+	font-size: 14px;
 	width: auto;
 	height:  auto;
-    background-color: white;
-    border-radius: 2px;
+    
+    
   }
 td, th {
 
@@ -114,9 +117,8 @@ td, th {
 }
 .start-page, .overlay {
   height: 100%;
- 
+  font-family: 'Kavoon';
   background-image: url(http://i.imgur.com/I73OWYX.jpg);
-  font-family: "Roboto Slab", serif;
   color: white;
 }
 
@@ -238,7 +240,7 @@ small {
 .table>tbody>tr>td {
     padding: 7px;
 }
-#kastCounter{
+#throwCounter{
 	padding-top: 10px;
 	font-size:xx-small; 
 	text-align: center;
@@ -261,3 +263,16 @@ small {
    clear:both;
    padding-left: 0px;
 }
+
+.spin{
+  transform: rotate(720deg);
+  /* Firefox */
+  -moz-transition: all 1s ease;
+  /* WebKit */
+  -webkit-transition: all 1s ease;
+  /* Opera */
+  -o-transition: all 1s ease;
+  /* Standard */
+  transition: all 1s ease;
+}
+

@@ -1,15 +1,15 @@
 //creating a result table
 $.ajax({
-    type: 'POST',
-    url: '/queries/create-result-table'    
+  type: 'POST',
+  url: '/queries/create-result-table'    
 }).done(function(){
   //console.log('reading the lorems row with id 1');
 });
 
 
 $.ajax({
-    type: 'POST',
-    url: '/queries/create-current-game-table'    
+  type: 'POST',
+  url: '/queries/create-current-game-table'    
 }).done(function(){
   $.ajax({
     type: 'POST',
@@ -51,12 +51,12 @@ let gameCounter = 0; // 15 är max, då har alla rutor fyllts i
 // newRound() i början för att autokasta,
 // och där ökar vi turn 
 let turn = -1;
-  
+
 
 // Skapar en turn-tabell, och skriver till databasen
 $.ajax({
-    type: 'POST',
-    url: '/queries/create-turn-table'    
+  type: 'POST',
+  url: '/queries/create-turn-table'    
 }).done(function(){
   $.ajax({
     type: 'POST',
@@ -85,51 +85,53 @@ $(start);
 function start(){
   $('.start-page').append('<div class="input-userName col-xs-3" />');
   $('.input-userName').append(displayStartPage());
-      $('.start-page').append(`<div class="input-userName">
+  $('.start-page').append(`<div class="input-userName">
     </div><div class="user-panel col-xs-3"></div>`);
-
-      (function() {
-  $(function() {
-    $(".login--container").removeClass("preload");
-    this.timer = window.setTimeout((function(_this) {
-      return function() {
-        return $(".login--container").toggleClass("login--active");
-      };
-    })(this), 2000);
-    return $(".js-toggle-login").click((function(_this) {
-      return function() {
-        window.clearTimeout(_this.timer);
-        $(".login--container").toggleClass("login--active");
-        return $(".login--username-container input").focus();
-      };
-    })(this));
-  });
-}).call(this);
+  // Bootstrap size tool
+  $('body').append(bootstrapSizeTool());
+  
+  (function() {
+    $(function() {
+      $(".login--container").removeClass("preload");
+      this.timer = window.setTimeout((function(_this) {
+        return function() {
+          return $(".login--container").toggleClass("login--active");
+        };
+      })(this), 2000);
+      return $(".js-toggle-login").click((function(_this) {
+        return function() {
+          window.clearTimeout(_this.timer);
+          $(".login--container").toggleClass("login--active");
+          return $(".login--username-container input").focus();
+        };
+      })(this));
+    });
+  }).call(this);
 }
  //Only allows letters in username
-function alphaOnly(event) {
+ function alphaOnly(event) {
   var key = event.keyCode;  
   return ((key >= 65 && key <= 90) || key == 8 || key == 192 || key == 222 || key == 221);
 };
 var userCounter = 0;
 $(document).on('click', '.addUser', function(){
- 
-  
+
+
   if(userCounter< 3){
     userCounter++;
-     $(".theButtons").before($(".user-panel"));
-     $('.user-panel').append(displayUserPage());
+    $(".theButtons").before($(".user-panel"));
+    $('.user-panel').append(displayUserPage());
   }
   else{console.log(userCounter);
     // Här borde man lägga en well eller något istället
     alert("The Maxmum number of players is 4");
      //$('.newUser').last().remove()
-  }
-});
+   }
+ });
 
 $(document).on('click', '.removeUser', function(){
   --userCounter  ;
-$('.user-panel .newUser:last').remove();
+  $('.user-panel .newUser:last').remove();
 });
 
 $(document).on('click', '.startGame', function(){
@@ -138,26 +140,26 @@ $(document).on('click', '.startGame', function(){
   var checkEmpty = false;
   // Läser in från alla input fält
   var values = $("input[name='pname[]']")
-              .map(function(){return $(this).val();}).get();
+  .map(function(){return $(this).val();}).get();
               //console.log(values);
-     
+
 
      //Kollar efter dubbla användarnamn         
-    var valuesSoFar = Object.create(null);
-    var duplicate = false;
-    for (var i = 0; i < values.length; ++i) {
-        var value = values[i];
-        if (value in valuesSoFar) {
-            duplicate = true;
+     var valuesSoFar = Object.create(null);
+     var duplicate = false;
+     for (var i = 0; i < values.length; ++i) {
+      var value = values[i];
+      if (value in valuesSoFar) {
+        duplicate = true;
             // Lägg well istället
             alert("You got duplicate usernames!")
+          }
+          valuesSoFar[value] = true;
         }
-        valuesSoFar[value] = true;
-    }
     //Kollar så alla input fält är ifyllda
-  for (var i = 0; i < values.length; i++) {
-    if(values[i] === ""){
-      checkEmpty = true;
+    for (var i = 0; i < values.length; i++) {
+      if(values[i] === ""){
+        checkEmpty = true;
       // Lägg well istället
       alert("Fill all usernames");
     }
@@ -165,17 +167,17 @@ $(document).on('click', '.startGame', function(){
   } 
   //console.log(checkEmpty);
   if(checkEmpty === false && duplicate === false){
-  $(".overlay").remove();
-   $('body').prepend(displayNavbar());
+    $(".overlay").remove();
+    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
   $('.page-content').append('<div class="scoreboard-container col-xs-8 col-sm-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
   $('.page-content').append(`<div class="dice-container col-xs-4 col-sm-push-2"> <div class="soft-container"><h4 class="player-name "></h4></div>
    <div class="panel panel-primary ">
-    <div class="dice-panel"></div>
-    </div>
-    `);
+   <div class="dice-panel"></div>
+   </div>
+   `);
 
   // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
@@ -184,7 +186,7 @@ $(document).on('click', '.startGame', function(){
 
   $('.dice-panel').append(displayDices(dices));
   //console.log('dices',dices);
- 
+
   
 
   //console.log("NUMMER: " + numberOfThrows);
@@ -203,15 +205,15 @@ $(document).on('click', '.startGame', function(){
   $('.page-content').append('<div class="rules-modal-container" />')
   $('.rules-modal-container').html(rulesModal());
 
-    for (var i = 0; i < values.length; i++) {
-      scoreBoards[i] = new ScoreBoard(values[i]);
-    }
+  for (var i = 0; i < values.length; i++) {
+    scoreBoards[i] = new ScoreBoard(values[i]);
+  }
 
-    newRound();
+  newRound();
   
 
 //highlighting the column of the current player
-  $( '.'+ scoreBoards[0].playerName +'-board').addClass( "toBeselected" );
+$( '.'+ scoreBoards[0].playerName +'-board').addClass( "toBeselected" );
 }
 });
 
@@ -225,13 +227,13 @@ function newRound(){
     var name = scoreBoards[turn].playerName;
     $(".player-name").empty();
     $(".player-name").append(name);
-   
+
   } else {
     ++turn;
     //highlighting the column of the current player
-     $('.'+ scoreBoards[turn].playerName +'-board').prevAll().removeClass("toBeselected" );
-     $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" );
-     $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
+    $('.'+ scoreBoards[turn].playerName +'-board').prevAll().removeClass("toBeselected" );
+    $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" );
+    $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
     var name = scoreBoards[turn].playerName;
     $(".player-name").empty();
     $(".player-name").append(name);
@@ -246,7 +248,7 @@ function newRound(){
     contentType: "application/json",
     processData: false    
   });
- 
+
 
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
@@ -263,9 +265,9 @@ function newRound(){
 $(document).on('click', '#high-scores-link', function(){
   $('.high-scores-table').html(`
     <tr>
-      <th>Rank</th>
-      <th>Username</th>
-      <th>Score</th>
+    <th>Rank</th>
+    <th>Username</th>
+    <th>Score</th>
     </tr>`);
   // get the high score list
   $.ajax({
@@ -281,9 +283,9 @@ $(document).on('click', '#high-scores-link', function(){
 });
 
 $(document).on('click', '#rules-link', function(){
-  
 
-  });
+
+});
 
 function playSound(type){
   var sound = document.createElement("audio");
@@ -294,32 +296,32 @@ function playSound(type){
   // Man kan lägga till flera olika ljud i switchen
   switch(type){
     case 'throw':
-      sound.src="../sounds/roll-dices.wav";
-      break;
+    sound.src="../sounds/roll-dices.wav";
+    break;
     case 'game-over':
-      sound.src="../sounds/game-over.wav";
-      break;
+    sound.src="../sounds/game-over.wav";
+    break;
     default:
       //console.log('No sound for that');
+    }
+    sound.play();
   }
-  sound.play();
-}
 
-$(document).on('click', '.throwButton', throwDices);
+  $(document).on('click', '.throwButton', throwDices);
 
-function throwDices(){
+  function throwDices(){
   // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
   //går den in och kör random på alla tärningar
   if(numberOfThrows < 3){
-     playSound('throw');
+   playSound('throw');
 
-    let dicesToBeSpinned = [];
-    for (var i = 0; i < dices.length; i++) {
-      if (dices[i].locked == false) {
-        var randthrow = Math.floor( (Math.random() *6) +1 );
-        dices[i].val = randthrow;
-        dices[i].setClass(dices[i].locked)
-        dicesToBeSpinned.push(dices[i]);
+   let dicesToBeSpinned = [];
+   for (var i = 0; i < dices.length; i++) {
+    if (dices[i].locked == false) {
+      var randthrow = Math.floor( (Math.random() *6) +1 );
+      dices[i].val = randthrow;
+      dices[i].setClass(dices[i].locked)
+      dicesToBeSpinned.push(dices[i]);
         //console.log(dices[i].value);
       }
       else{
@@ -341,10 +343,10 @@ function throwDices(){
   
   if(numberOfThrows < 3){
     numberOfThrows++;
-      document.getElementById("throwImg").src ="http://i1091.photobucket.com/albums/i385/lordprutt95/second%20throw_zpsgbq5mxzd.jpg?t=1491823146" ;
- 
+    document.getElementById("throwImg").src ="http://i1091.photobucket.com/albums/i385/lordprutt95/second%20throw_zpsgbq5mxzd.jpg?t=1491823146" ;
 
-   
+
+
     
 
     // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
@@ -373,28 +375,28 @@ function spinDices(dicesToBeSpinned){
         console.log('HEJHEJHEJ');
         $('.diceGroup').remove();
         $('.dice-panel').append(displayDices(dices));
-    });
+      });
 }
 
 $(document).on('click', '.dice', function(){
  // lyssnar på klick på tärningarna ifall man klickar på en så låser den sig 
  //och uppdaterar så den röda färgen syns 
  //console.log("id ", dices[this.id-1]);
-  if(dices[this.id - 1].locked){
-    dices[this.id - 1].locked = false;
-    dices[this.id -1].setClass(dices[this.id -1].locked);
-    $('.diceGroup').remove();
-    $('.dice-panel').append(displayDices(dices));
+ if(dices[this.id - 1].locked){
+  dices[this.id - 1].locked = false;
+  dices[this.id -1].setClass(dices[this.id -1].locked);
+  $('.diceGroup').remove();
+  $('.dice-panel').append(displayDices(dices));
 
 //Är tärningen redan låst så låses den upp vid klick och uppdaterar så användaren ser det
-  }else{
-    dices[this.id - 1].locked = true;
-    dices[this.id -1].setClass(dices[this.id -1].locked);
-    $('.diceGroup').remove();
-    $('.dice-panel').append(displayDices(dices));
-  }
+}else{
+  dices[this.id - 1].locked = true;
+  dices[this.id -1].setClass(dices[this.id -1].locked);
+  $('.diceGroup').remove();
+  $('.dice-panel').append(displayDices(dices));
+}
 
-  $(this).toggleClass('locked');
+$(this).toggleClass('locked');
 
 });
 
@@ -425,21 +427,21 @@ function gameOver(){
     location.reload();
   });
   if (scoreBoards.length < 2) {
-      let message =  winner + " you got a score of " + bestScore + "!";
-  $('.page-content').append('<div class="game-over-modal-container" />')
-  $('.game-over-modal-container').html(gameOverModal(message));
+    let message =  winner + " you got a score of " + bestScore + "!";
+    $('.page-content').append('<div class="game-over-modal-container" />')
+    $('.game-over-modal-container').html(gameOverModal(message));
   }
   else{
-  let message = "The winner is " + winner + " with a score of " + bestScore + "!";
-  $('.page-content').append('<div class="game-over-modal-container" />')
-  $('.game-over-modal-container').html(gameOverModal(message));
-}
+    let message = "The winner is " + winner + " with a score of " + bestScore + "!";
+    $('.page-content').append('<div class="game-over-modal-container" />')
+    $('.game-over-modal-container').html(gameOverModal(message));
+  }
   $(document).ready(function() {
     $('.game-over-modal').modal('show');
   });
 
    //alert(message);
-}
+ }
 
 // Lyssnar på klick i alla celler, kör rätt funktion beroende på rad
 $(document).on('click', `.yatzy-table tr`, function(){
@@ -511,7 +513,7 @@ $(document).on('click', `.yatzy-table tr`, function(){
         case 'yatzy':
         scoreBoards[turn].calcXOfAKind(dices, 5);
         break;
-      default:
+        default:
         //console.log('Default');
       }
       //kollar så man inte klickat på total eller sum
@@ -537,8 +539,8 @@ $(document).on('click', `.yatzy-table tr`, function(){
           newRound();
         }
 
-        }
       }
+    }
     
   });
 

@@ -76,6 +76,7 @@ td, th {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+  line-height: 1.2em;
 }
 #throwingButton{
 	font-family: 'Kavoon';
@@ -243,7 +244,7 @@ small {
   transform: perspective(1000px) rotateY(0deg);
   
 }
-@media(max-width: 376px){
+@media(max-width: 767px){
 
   .login--toggle-container {
   position: relative;

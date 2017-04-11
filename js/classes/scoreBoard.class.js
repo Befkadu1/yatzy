@@ -25,7 +25,7 @@ class ScoreBoard {
 
 		// Skriver ut kolumn för den akuella spelaren
 		// col-taggen är kanske inte nödvändig, men skadar inte
-		$('colgroup').append(`<col class="${this.playerName}-board" />`);
+		$('colgroup').append(`<col class="${this.playerName}-board col-xs-1" />`);
 		for(let prop in this){
 			if(prop === 'playerName'){
 				//$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);
@@ -359,7 +359,7 @@ class ScoreBoard {
         }
    	}
    	if(isHint){
-		this.showHint('twoPairs', sum);
+		this.showHint('twoPairs', totalSum);
 	}else{
    		this.setPoints('twoPairs', totalSum);
    	}

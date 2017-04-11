@@ -16,7 +16,7 @@ class Dice {
 
 	setClass(locked){
 		if(this.locked){
-           this.lockedClass = 'thisLocked';
+           this.lockedClass = 'locked';
 		}
 		else
 			this.lockedClass = '';

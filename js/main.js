@@ -266,8 +266,7 @@ function newRound(){
      scoreBoards[turn].calcHints(dices);
 
      numberOfThrows++;
-     document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
-     console.log("Du har kastat: " + numberOfThrows);
+     document.getElementById("throwImg").src ="http://i1091.photobucket.com/albums/i385/lordprutt95/first%20throw_zpsg4p2609y.jpg?t=1491823142" ;
 }
 
 // En listener för länken "High scores" i navbaren
@@ -347,7 +346,7 @@ $(document).on('click', '.throwButton', function(){
   
   if(numberOfThrows < 3){
     numberOfThrows++;
-     document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
+      document.getElementById("throwImg").src ="http://i1091.photobucket.com/albums/i385/lordprutt95/second%20throw_zpsgbq5mxzd.jpg?t=1491823146" ;
  
 
    
@@ -356,7 +355,7 @@ $(document).on('click', '.throwButton', function(){
     // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
-       document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
+      document.getElementById("throwImg").src ="http://i1091.photobucket.com/albums/i385/lordprutt95/third%20throw_zpsapucbret.jpg?t=1491823146" ;
     }
   }
 

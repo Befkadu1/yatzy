@@ -1,6 +1,15 @@
 body{
-	background-image: url(https://newevolutiondesigns.com/images/freebies/texture-wallpaper-18.jpg);
+	background-image: url(http://i.imgur.com/I73OWYX.jpg);
+  background-repeat: no-repeat;
+background-position: center;
+ background-size: cover;
 }
+
+img{
+ 
+
+}
+
 div{
 	text-align: center;
 }
@@ -70,7 +79,7 @@ td, th {
 
 }
 .modal-content{
-	background-image: url(https://newevolutiondesigns.com/images/freebies/texture-wallpaper-18.jpg);
+	background-image: url(http://i.imgur.com/I73OWYX.jpg);
 	border: 1px solid white;
 }
 
@@ -105,7 +114,8 @@ td, th {
 }
 .start-page, .overlay {
   height: 100%;
-  background-color: #1b0049;
+ 
+  background-image: url(http://i.imgur.com/I73OWYX.jpg);
   font-family: "Roboto Slab", serif;
   color: white;
 }
@@ -166,7 +176,7 @@ small {
 
 .login--toggle-container {
   position: absolute;
-  background-color: #1b0049;
+  
   right: 0;
   line-height: 2.5em;
   width: 50%;
@@ -184,12 +194,12 @@ small {
 }
 .login--active .login--toggle-container {
   transform: perspective(1000px) rotateY(180deg);
-  background-color: #1b0049;
+  
 }
 
 .login--username-container{
   float: left;
-  background-color: #1b0049;
+  
   width: 50%;
   height: 120px;
   padding: 0.5em;
@@ -199,12 +209,12 @@ small {
   transform-origin: 100% 0%;
   transform: perspective(1000px) rotateY(180deg);
   transition: all 1s cubic-bezier(0.06, 0.63, 0, 1);
-  background-color: #1b0049;
+  
   backface-visibility: hidden;
 }
 .login--active .login--username-container {
   transform: perspective(1000px) rotateY(0deg);
-  background-color: #1b0049;
+  
 }
 @media(max-width: 376px){
 

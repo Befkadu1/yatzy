@@ -28,7 +28,7 @@ class ScoreBoard {
 		$('colgroup').append(`<col class="${this.playerName}-board" />`);
 		for(let prop in this){
 			if(prop === 'playerName'){
-				$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);
+				//$('.titles').append(`<th class="${this.playerName} ${prop}-cell">${this[prop]}</th>`);
 			}else{
 				// Skriver ut cell för varje property, men skriver ej ut värdet
 				// eftersom vi vill se det som en tom cell istället för 0
@@ -173,7 +173,7 @@ class ScoreBoard {
 		sum = this.ones + this.twos + this.threes + this.fours + this.fives + this.sixes;
 		this.setPoints('sum', sum);
 		this.calcBonus(sum);
-		console.log(this.testing);
+		//console.log(this.testing);
 		this.testing++;
 	}
 
@@ -533,7 +533,7 @@ class ScoreBoard {
         contentType: "application/json",
         processData: false    
         }).done(function(){
-          console.log('Deleted a row in db');
+          //console.log('Deleted a row in db');
         });
       }
 
@@ -546,7 +546,7 @@ class ScoreBoard {
         contentType: "application/json",
         processData: false    
       }).done(function(){
-        console.log('Done writing a row to db');
+        //console.log('Done writing a row to db');
       });
 	}
 }

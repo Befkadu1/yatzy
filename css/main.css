@@ -10,7 +10,7 @@
 td, th {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 6px;
 }
 
 .dice{
@@ -27,6 +27,12 @@ td, th {
 .hint{
 	color: lightgrey;
 }
+
+
+  .panel-primary {
+  	max-width: 250px;
+  }
+
 .locked,.thisLocked{
   background: red;
 }
@@ -146,10 +152,40 @@ small {
   transform: perspective(1000px) rotateY(0deg);
   background-color: #1b0049;
 }
+@media(max-width: 376px){
+
+  .login--toggle-container {
+  position: relative;
+}
+
+  .yatzy-table {
+    font-size: xx-small;
+  }
+
+  .player-name{
+    padding-top: 0px;
+    margin-top: 0px;
+  }
+  .dice{
+	max-height: 70px;
+}
+
+.table>tbody>tr>td {
+    padding: 7px;
+}
+#kastCounter{
+	padding-top: 10px;
+	font-size:xx-small; 
+	text-align: center;
+}
+
+
+}
 .user-panel{
    float:left; 
-   width:316px;
+   width:300px;
    clear:both;
+   padding-left: 0px;
 }
 
 .spin{
@@ -163,3 +199,4 @@ small {
   /* Standard */
   transition: all 1s ease;
 }
+

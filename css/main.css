@@ -166,6 +166,26 @@ small {
   font-size: 1em;
 }
 
+.rules{
+  background-color: white;
+  box-shadow: inset 0px 0px 20px 5px rgba(0,0,0,0.4);
+  border-radius: 10px;
+  padding: 10px;
+  font-family: 'Kavoon';
+
+}
+
+.modal-body h2, p{
+  font-family: 'Kavoon';
+   color: white;
+
+}
+
+.rules h3{
+   font-family: 'Kavoon';
+}
+
+
 .login--login-submit {
   float: right;
 }

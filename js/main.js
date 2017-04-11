@@ -115,14 +115,15 @@ var userCounter = 0;
 $(document).on('click', '.addUser', function(){
  
   
-  if(userCounter< 4){
+  if(userCounter< 3){
     userCounter++;
      $(".theButtons").before($(".user-panel"));
      $('.user-panel').append(displayUserPage());
   }
   else{console.log(userCounter);
+    // Här borde man lägga en well eller något istället
     alert("The Maxmum number of players is 4");
-     $('.newUser').last().remove()
+     //$('.newUser').last().remove()
   }
 });
 
@@ -148,6 +149,7 @@ $(document).on('click', '.startGame', function(){
         var value = values[i];
         if (value in valuesSoFar) {
             duplicate = true;
+            // Lägg well istället
             alert("You got duplicate usernames!")
         }
         valuesSoFar[value] = true;
@@ -156,6 +158,7 @@ $(document).on('click', '.startGame', function(){
   for (var i = 0; i < values.length; i++) {
     if(values[i] === ""){
       checkEmpty = true;
+      // Lägg well istället
       alert("Fill all usernames");
     }
 
@@ -165,7 +168,7 @@ $(document).on('click', '.startGame', function(){
   $(".overlay").remove();
    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
-  $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
+  $('.page-content').append('<div class="scoreboard-container col-xs-8 col-sm-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
   $('.page-content').append(`<div class="dice-container col-xs-4 col-xs-push-2"> <div class="playerNameBox"><h4 class="player-name "></h4></div>
@@ -178,6 +181,8 @@ $(document).on('click', '.startGame', function(){
   for(let i = 0; i < 5; i++){
     dices.push(new Dice(i+1, i+1));
   }
+
+  $('.dice-panel').append(displayDices(dices));
   //console.log('dices',dices);
  
   
@@ -193,6 +198,10 @@ $(document).on('click', '.startGame', function(){
   // Läser in modalen för high scores
   $('.page-content').append('<div class="high-scores-modal-container" />')
   $('.high-scores-modal-container').html(highScoresModal());
+
+  // Läser in modalen för rules
+  $('.page-content').append('<div class="rules-modal-container" />')
+  $('.rules-modal-container').html(rulesModal());
 
     for (var i = 0; i < values.length; i++) {
       scoreBoards[i] = new ScoreBoard(values[i]);
@@ -247,16 +256,18 @@ function newRound(){
         dices[i].val = randthrow;
         //console.log(dices[i].value);
         dices[i].locked = false;
-        dices[i].setClass(dices[i.locked]);
-        $('.diceGroup').remove();
-        $('.dice-panel').append(displayDices(dices));
+        dices[i].setClass(dices[i].locked);
      }
-
+     autoSpinDices(dices);
+     $('.diceGroup').remove();
+     $('.dice-panel').append(displayDices(dices));  
+     
      // När tärningarna slumpats så vill vi visa hintar
      scoreBoards[turn].calcHints(dices);
 
      numberOfThrows++;
-     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+     document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
+     console.log("Du har kastat: " + numberOfThrows);
 }
 
 // En listener för länken "High scores" i navbaren
@@ -288,6 +299,7 @@ $(document).on('click', '#rules-link', function(){
 function playSound(type){
   var sound = document.createElement("audio");
   sound.volume=0.20;
+  sound.currentTime = 0;
   sound.autoPlay=false;
   sound.preLoad=true;  
   // Man kan lägga till flera olika ljud i switchen
@@ -311,20 +323,21 @@ $(document).on('click', '.throwButton', function(){
   if(numberOfThrows < 3){
      playSound('throw');
         
-
+     let dicesToBeSpinned = [];
     for (var i = 0; i < dices.length; i++) {
       if (dices[i].locked == false) {
         var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
         dices[i].setClass(dices[i].locked)
+        dicesToBeSpinned.push(dices[i]);
         //console.log(dices[i].value);
-        $('.diceGroup').remove();
-        $('.dice-panel').append(displayDices(dices));
       }
       else{
         //console.log("This dice is locked!");
       }
     }
+    spinDices(dicesToBeSpinned);
+    
     // När tärningarna slumpats vill vi visa hintar
     scoreBoards[turn].calcHints(dices);
   }
@@ -334,7 +347,7 @@ $(document).on('click', '.throwButton', function(){
   
   if(numberOfThrows < 3){
     numberOfThrows++;
-     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+     document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
  
 
    
@@ -343,13 +356,44 @@ $(document).on('click', '.throwButton', function(){
     // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
-       document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+       document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
     }
   }
 
 });
 
+function spinDices(dicesToBeSpinned){
+  let lastDice = '';
+  for(let dice of dicesToBeSpinned){
+    $(`#${dice.id}`).removeClass('locked');
+    $(`#${dice.id}`).html('&#127922;');
+    $(`#${dice.id}`).addClass('spin');
+    lastDice = $(`#${dice.id}`);
+  }
 
+  $('.spin').on("transitionend MSTransitionEnd webkitTransitionEnd oTransitionEnd",
+    function() {
+        $(this).removeClass("spin");  // Transition has ended.
+        if($(this).attr('id') === lastDice.attr('id')){
+          $('.diceGroup').remove();
+          $('.dice-panel').append(displayDices(dices));
+        }
+    });
+}
+
+function autoSpinDices(dicesToBeSpinned){
+  let lastDice = '';
+  for(let dice of dicesToBeSpinned){
+    $(`#${dice.id}`).html('&#127922;');
+    $(`#${dice.id}`).addClass('spin');
+    lastDice = $(`#${dice.id}`);
+  }
+
+  $('.spin').on("transitionend MSTransitionEnd webkitTransitionEnd oTransitionEnd",
+    function() {
+        $(this).removeClass("spin");  // Transition has ended.
+    });
+}
 
 $(document).on('click', '.dice', function(){
  // lyssnar på klick på tärningarna ifall man klickar på en så låser den sig 
@@ -362,7 +406,7 @@ $(document).on('click', '.dice', function(){
     $('.dice-panel').append(displayDices(dices));
 
     //To show the number of throws left 
-    document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+    document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
 //Är tärningen redan låst så låses den upp vid klick och uppdaterar så användaren ser det
   }else{
     dices[this.id - 1].locked = true;
@@ -371,7 +415,7 @@ $(document).on('click', '.dice', function(){
     //console.log("Antal kast: " + numberOfThrows);
     $('.dice-panel').append(displayDices(dices));
     //To show the number of throws left
-    document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+    document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
   }
 
   $(this).toggleClass('locked');

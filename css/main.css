@@ -70,8 +70,6 @@ td, th {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-
-
 }
 #throwingButton{
 	font-family: 'Kavoon';
@@ -99,7 +97,7 @@ td, th {
   }
 
 .locked,.thisLocked{
-  background: red;
+  background: #ccccb3;
 }
 * {
   margin: 0;
@@ -231,9 +229,7 @@ small {
     padding-top: 0px;
     margin-top: 0px;
   }
-  .dice{
-	max-height: 70px;
-}
+
 .dice-container{
 	width: 30%;
 }
@@ -241,13 +237,20 @@ small {
 .table>tbody>tr>td {
     padding: 7px;
 }
-#kastCounter{
+#throwCounter{
 	padding-top: 10px;
 	font-size:xx-small; 
 	text-align: center;
 }
 .container{
 	margin-left: 5%;
+}
+
+.diceGroup{
+  padding: 0px;
+}
+.dice{
+  font-size: 65px;
 }
 
 }
@@ -257,3 +260,16 @@ small {
    clear:both;
    padding-left: 0px;
 }
+
+.spin{
+  transform: rotate(720deg);
+  /* Firefox */
+  -moz-transition: all 1s ease;
+  /* WebKit */
+  -webkit-transition: all 1s ease;
+  /* Opera */
+  -o-transition: all 1s ease;
+  /* Standard */
+  transition: all 1s ease;
+}
+

@@ -145,9 +145,7 @@ $(document).on('click', '.startGame', function(){
   $('.scoreboard-container').append(displayScoreBoard());
   
   $('.page-content').append(`<div class="dice-container col-xs-4 col-xs-push-2">  <div class="panel panel-primary ">
-    <div class="panel-heading">
-    <h3 class="panel-title">Roll the dices</h3>
-    </div><div class="dice-panel"></div>
+    <div class="dice-panel"></div>
     </div>`);
 
   // Skapar nya tärningar som läggs in i dices-arrayen

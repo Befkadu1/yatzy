@@ -1,4 +1,3 @@
-
 //creating a result table
 $.ajax({
     type: 'POST',
@@ -6,6 +5,7 @@ $.ajax({
 }).done(function(){
   //console.log('reading the lorems row with id 1');
 });
+
 
 $.ajax({
     type: 'POST',
@@ -18,6 +18,7 @@ $.ajax({
     //console.log('reading the lorems row with id 1');
   });
 });
+
 
 /*
 $.ajax({
@@ -73,7 +74,7 @@ $.ajax({
         type: 'GET',
         url: '/queries/read-turn'
       }).done(function(data){
-        console.log('Turn: Player ' + data[0].player_index);
+        //console.log('Turn: Player ' + data[0].player_index);
       });
     });
   });
@@ -86,8 +87,6 @@ function start(){
   $('.input-userName').append(displayStartPage());
       $('.start-page').append(`<div class="input-userName">
     </div><div class="user-panel col-xs-3"></div>`);
-
-
 
       (function() {
   $(function() {
@@ -110,24 +109,50 @@ function start(){
  //Only allows letters in username
 function alphaOnly(event) {
   var key = event.keyCode;  
-  return ((key >= 65 && key <= 90) || key == 8);
+  return ((key >= 65 && key <= 90) || key == 8 || key == 192 || key == 222 || key == 221);
 };
-
+var userCounter = 0;
 $(document).on('click', '.addUser', function(){
-  $(".theButtons").before($(".user-panel"));
-  $('.user-panel').append(displayUserPage());
+ 
+  
+  if(userCounter< 4){
+    userCounter++;
+     $(".theButtons").before($(".user-panel"));
+     $('.user-panel').append(displayUserPage());
+  }
+  else{console.log(userCounter);
+    alert("The Maxmum number of players is 4");
+     $('.newUser').last().remove()
+  }
 });
 
 $(document).on('click', '.removeUser', function(){
-$('.user-panel .newUser:last').remove()
+  --userCounter  ;
+$('.user-panel .newUser:last').remove();
 });
 
 $(document).on('click', '.startGame', function(){
 
+
   var checkEmpty = false;
+  // Läser in från alla input fält
   var values = $("input[name='pname[]']")
               .map(function(){return $(this).val();}).get();
-              console.log(values);
+              //console.log(values);
+     
+
+     //Kollar efter dubbla användarnamn         
+    var valuesSoFar = Object.create(null);
+    var duplicate = false;
+    for (var i = 0; i < values.length; ++i) {
+        var value = values[i];
+        if (value in valuesSoFar) {
+            duplicate = true;
+            alert("You got duplicate usernames!")
+        }
+        valuesSoFar[value] = true;
+    }
+    //Kollar så alla input fält är ifyllda
   for (var i = 0; i < values.length; i++) {
     if(values[i] === ""){
       checkEmpty = true;
@@ -135,18 +160,19 @@ $(document).on('click', '.startGame', function(){
     }
 
   } 
-  console.log(checkEmpty);
-  if(checkEmpty === false){
+  //console.log(checkEmpty);
+  if(checkEmpty === false && duplicate === false){
   $(".overlay").remove();
    $('body').prepend(displayNavbar());
   // Skriver ut en container för att hålla scoreboarden, tar upp halva page-content
-  $('.page-content').append('<div class="scoreboard-container col-xs-4" />');
+  $('.page-content').append('<div class="scoreboard-container col-xs-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
-  
-  $('.page-content').append(`<div class="dice-container col-xs-4 col-xs-push-2">  <div class="panel panel-primary ">
+  $('.page-content').append(`<div class="dice-container col-xs-4 col-xs-push-2"> <div><h4 class="player-name "></h4></div>
+   <div class="panel panel-primary ">
     <div class="dice-panel"></div>
-    </div>`);
+    </div>
+    `);
 
   // Skapar nya tärningar som läggs in i dices-arrayen
   for(let i = 0; i < 5; i++){
@@ -156,7 +182,7 @@ $(document).on('click', '.startGame', function(){
  
   
 
-  console.log("NUMMER: " + numberOfThrows);
+  //console.log("NUMMER: " + numberOfThrows);
   $('.dice-container').append(displayThrowButton());
 
 
@@ -173,10 +199,11 @@ $(document).on('click', '.startGame', function(){
     }
 
     newRound();
-  }
+  
 
 //highlighting the column of the current player
   $( '.'+ scoreBoards[0].playerName +'-board').addClass( "toBeselected" );
+}
 });
 
 function newRound(){
@@ -185,15 +212,20 @@ function newRound(){
     turn = 0;
     //highlighting the column of the current player
     $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" ); 
-    $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );   
+    $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
+    var name = scoreBoards[turn].playerName;
+    $(".player-name").empty();
+    $(".player-name").append(name);
    
   } else {
     ++turn;
     //highlighting the column of the current player
      $('.'+ scoreBoards[turn].playerName +'-board').prevAll().removeClass("toBeselected" );
-      $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" );
-      $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
-
+     $( '.'+ scoreBoards[turn].playerName +'-board').addClass( "toBeselected" );
+     $('.'+ scoreBoards[turn].playerName +'-board').nextAll().removeClass("toBeselected" );
+    var name = scoreBoards[turn].playerName;
+    $(".player-name").empty();
+    $(".player-name").append(name);
   }
 
   // Skriver den uppdaterade turn till DB
@@ -225,7 +257,6 @@ function newRound(){
 
      numberOfThrows++;
      document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
-     console.log("Du har kastat: " + numberOfThrows);
 }
 
 // En listener för länken "High scores" i navbaren
@@ -249,6 +280,10 @@ $(document).on('click', '#high-scores-link', function(){
   });
 });
 
+$(document).on('click', '#rules-link', function(){
+  
+
+  });
 
 function playSound(type){
   var sound = document.createElement("audio");
@@ -258,13 +293,13 @@ function playSound(type){
   // Man kan lägga till flera olika ljud i switchen
   switch(type){
     case 'throw':
-      sound.src="https://kahimyang.com/resources/sound/click.mp3";
+      sound.src="../sounds/roll-dices.wav";
       break;
     case 'game-over':
       sound.src="../sounds/game-over.wav";
       break;
     default:
-      console.log('No sound for that');
+      //console.log('No sound for that');
   }
   sound.play();
 }
@@ -319,7 +354,7 @@ $(document).on('click', '.throwButton', function(){
 $(document).on('click', '.dice', function(){
  // lyssnar på klick på tärningarna ifall man klickar på en så låser den sig 
  //och uppdaterar så den röda färgen syns 
- console.log("id ", dices[this.id-1]);
+ //console.log("id ", dices[this.id-1]);
   if(dices[this.id - 1].locked){
     dices[this.id - 1].locked = false;
     dices[this.id -1].setClass(dices[this.id -1].locked);
@@ -333,7 +368,7 @@ $(document).on('click', '.dice', function(){
     dices[this.id - 1].locked = true;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
-    console.log("Antal kast: " + numberOfThrows);
+    //console.log("Antal kast: " + numberOfThrows);
     $('.dice-panel').append(displayDices(dices));
     //To show the number of throws left
     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
@@ -369,11 +404,16 @@ function gameOver(){
   $(document).on('click', `.play-again-button`, function(){
     location.reload();
   });
-
+  if (scoreBoards.length < 2) {
+      let message =  winner + " you got a score of " + bestScore + "!";
+  $('.page-content').append('<div class="game-over-modal-container" />')
+  $('.game-over-modal-container').html(gameOverModal(message));
+  }
+  else{
   let message = "The winner is " + winner + " with a score of " + bestScore + "!";
   $('.page-content').append('<div class="game-over-modal-container" />')
   $('.game-over-modal-container').html(gameOverModal(message));
-
+}
   $(document).ready(function() {
     $('.game-over-modal').modal('show');
   });
@@ -392,7 +432,6 @@ $(document).on('click', `.yatzy-table tr`, function(){
     //$(cell).removeClass('hint');
     $('.hint').html('');
     $('.' + scoreBoards[turn].playerName).removeClass('hint');
-
     switch(row){
       case 'ones': 
         //scoreBoards[turn].calcOnesToSixes(dices,1);

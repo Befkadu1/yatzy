@@ -171,7 +171,7 @@ $(document).on('click', '.startGame', function(){
   $('.page-content').append('<div class="scoreboard-container col-xs-8 col-sm-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
-  $('.page-content').append(`<div class="dice-container col-xs-4 col-xs-push-2"> <div class="playerNameBox"><h4 class="player-name "></h4></div>
+  $('.page-content').append(`<div class="dice-container col-xs-4 col-sm-push-2"> <div class="playerNameBox"><h4 class="player-name "></h4></div>
    <div class="panel panel-primary ">
     <div class="dice-panel"></div>
     </div>

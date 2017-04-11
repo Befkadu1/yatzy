@@ -5,7 +5,6 @@
   "read-lorems-ipsums": "SELECT lorems.*, ipsums.blabla AS ipsum FROM lorems LEFT JOIN ipsums ON ipsums.lorem = lorems.id",
   "read-lorem-ipsums": "SELECT lorems.*, ipsums.blabla AS ipsum FROM lorems JOIN ipsums ON ipsums.lorem = lorems.id AND lorems.id = ?",
   "write-ipsum": "INSERT INTO ipsums SET ?",
-<<<<<<< Updated upstream
   "create-result-table": "CREATE TABLE IF NOT EXISTS results (result_id int(11) NOT NULL AUTO_INCREMENT,username CHAR(30),result int(11),PRIMARY KEY (result_id))",
   "write-score": "INSERT INTO results SET ? ",
   "read-high-scores": "SELECT  username, result FROM results ORDER BY result DESC",
@@ -19,7 +18,4 @@
   "update-turn": "UPDATE turn SET player_index = ?",
   "read-turn": "SELECT * FROM turn",
   "delete-game-row": "DELETE FROM current_game WHERE username = ? AND row = ?"
-=======
-  "create-results-table": "CREATE TABLE IF NOT EXISTS results (result_id int(11) NOT NULL AUTO_INCREMENT)"
->>>>>>> Stashed changes
 }

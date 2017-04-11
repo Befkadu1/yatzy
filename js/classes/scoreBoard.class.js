@@ -359,7 +359,7 @@ class ScoreBoard {
         }
    	}
    	if(isHint){
-		this.showHint('twoPairs', sum);
+		this.showHint('twoPairs', totalSum);
 	}else{
    		this.setPoints('twoPairs', totalSum);
    	}

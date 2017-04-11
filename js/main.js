@@ -155,6 +155,8 @@ $(document).on('click', '.startGame', function(){
   for(let i = 0; i < 5; i++){
     dices.push(new Dice(i+1, i+1));
   }
+
+  $('.dice-panel').append(displayDices(dices));
   //console.log('dices',dices);
  
   
@@ -213,14 +215,14 @@ function newRound(){
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
       playSound('throw');
-      spinDices(dices);
      for (var i = 0; i < dices.length; i++) {
       var randthrow = Math.floor( (Math.random() *6) +1 );
         dices[i].val = randthrow;
         //console.log(dices[i].value);
         dices[i].locked = false;
-        dices[i].setClass(dices[i.locked]);
+        dices[i].setClass(dices[i].locked);
      }
+     autoSpinDices(dices);
      $('.diceGroup').remove();
      $('.dice-panel').append(displayDices(dices));  
      
@@ -228,7 +230,7 @@ function newRound(){
      scoreBoards[turn].calcHints(dices);
 
      numberOfThrows++;
-     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+     document.getElementById("kastCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
      console.log("Du har kastat: " + numberOfThrows);
 }
 
@@ -323,6 +325,7 @@ $(document).on('click', '.throwButton', function(){
 function spinDices(dicesToBeSpinned){
   let lastDice = '';
   for(let dice of dicesToBeSpinned){
+    $(`#${dice.id}`).removeClass('locked');
     $(`#${dice.id}`).html('&#127922;');
     $(`#${dice.id}`).addClass('spin');
     lastDice = $(`#${dice.id}`);
@@ -338,6 +341,19 @@ function spinDices(dicesToBeSpinned){
     });
 }
 
+function autoSpinDices(dicesToBeSpinned){
+  let lastDice = '';
+  for(let dice of dicesToBeSpinned){
+    $(`#${dice.id}`).html('&#127922;');
+    $(`#${dice.id}`).addClass('spin');
+    lastDice = $(`#${dice.id}`);
+  }
+
+  $('.spin').on("transitionend MSTransitionEnd webkitTransitionEnd oTransitionEnd",
+    function() {
+        $(this).removeClass("spin");  // Transition has ended.
+    });
+}
 
 $(document).on('click', '.dice', function(){
  // lyssnar på klick på tärningarna ifall man klickar på en så låser den sig 

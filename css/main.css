@@ -316,5 +316,7 @@ small {
     width:50%; /* you can use % */
     height: auto;
 }
-
+}
+.rules-text{
+  color: black;
 }

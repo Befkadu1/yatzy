@@ -111,14 +111,24 @@ function alphaOnly(event) {
   var key = event.keyCode;  
   return ((key >= 65 && key <= 90) || key == 8 || key == 192 || key == 222 || key == 221);
 };
-
+var userCounter = 0;
 $(document).on('click', '.addUser', function(){
-  $(".theButtons").before($(".user-panel"));
-  $('.user-panel').append(displayUserPage());
+ 
+  
+  if(userCounter< 4){
+    userCounter++;
+     $(".theButtons").before($(".user-panel"));
+     $('.user-panel').append(displayUserPage());
+  }
+  else{console.log(userCounter);
+    alert("The Maxmum number of players is 4");
+     $('.newUser').last().remove()
+  }
 });
 
 $(document).on('click', '.removeUser', function(){
-$('.user-panel .newUser:last').remove()
+  --userCounter  ;
+$('.user-panel .newUser:last').remove();
 });
 
 $(document).on('click', '.startGame', function(){

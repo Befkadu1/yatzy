@@ -1,23 +1,79 @@
+body{
+	background-image: url(https://newevolutiondesigns.com/images/freebies/texture-wallpaper-18.jpg);
+}
+div{
+	text-align: center;
+}
+.textFormat{
+	font-family: 'Kavoon';
+	color: white;
+}
+.container{
+	margin-left: 30%;
+}
+.navbar{
+	font-family: 'Kavoon';
+	box-shadow: 0px 10px 5px #000, rgba(0,0,0,0.4) 2px 2px 10px inset;
+	
+}
+.navbar-brand{
+	font-size: 26px;
+	
+}
+.nav{
+	font-size: 20px;
+
+}
 .table {
 	border: 1px solid black;
 	border-collapse: collapse;
     width: 100%;
+    background-color: white;
+    box-shadow: 10px 10px 5px black;
+
 }
 .sum, .bonus, .total{
 	background-color: #ccccb3;
 }
-
+.player-name{
+	width: auto;
+	height:  auto;
+    background-color: white;
+    border-radius: 2px;
+  }
 td, th {
+
     border: 1px solid #dddddd;
     text-align: left;
     padding: 6px;
+    font-family: 'Gloria Hallelujah', cursive;
 }
+.dice-container{
+	width: 20%;
+	
 
+}
+.diceGroup{
+	box-shadow: inset 0px 0px 20px 5px rgba(0,0,0,0.4);
+}
 .dice{
 	font-size: 72px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+
+
+}
+#throwingButton{
+	font-family: 'Kavoon';
+	font-size: 20px;
+	background-color: 	#24751f;
+	box-shadow: 10px 10px 5px black;
+
+}
+.modal-content{
+	background-image: url(https://newevolutiondesigns.com/images/freebies/texture-wallpaper-18.jpg);
+	border: 1px solid white;
 }
 
   .toBeselected {
@@ -169,6 +225,9 @@ small {
   .dice{
 	max-height: 70px;
 }
+.dice-container{
+	width: 30%;
+}
 
 .table>tbody>tr>td {
     padding: 7px;
@@ -178,11 +237,14 @@ small {
 	font-size:xx-small; 
 	text-align: center;
 }
-
+.container{
+	margin-left: 5%;
+}
 
 }
 .user-panel{
    float:left; 
-   width:316px;
+   width:300px;
    clear:both;
+   padding-left: 0px;
 }

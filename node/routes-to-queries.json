@@ -17,6 +17,5 @@
   "insert-turn-row": "INSERT INTO turn (player_index) VALUES (?)",
   "update-turn": "UPDATE turn SET player_index = ?",
   "read-turn": "SELECT * FROM turn",
-  "delete-game-row": "DELETE FROM current_game WHERE username = ? AND row = ?",
-  "create-results-table": "CREATE TABLE IF NOT EXISTS results (result_id int(11) NOT NULL AUTO_INCREMENT)"
+  "delete-game-row": "DELETE FROM current_game WHERE username = ? AND row = ?"
 }

@@ -266,7 +266,7 @@ function newRound(){
      scoreBoards[turn].calcHints(dices);
 
      numberOfThrows++;
-     document.getElementById("kastCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
+     document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
      console.log("Du har kastat: " + numberOfThrows);
 }
 
@@ -347,7 +347,7 @@ $(document).on('click', '.throwButton', function(){
   
   if(numberOfThrows < 3){
     numberOfThrows++;
-     document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+     document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
  
 
    
@@ -356,7 +356,7 @@ $(document).on('click', '.throwButton', function(){
     // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
-       document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+       document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
     }
   }
 
@@ -406,7 +406,7 @@ $(document).on('click', '.dice', function(){
     $('.dice-panel').append(displayDices(dices));
 
     //To show the number of throws left 
-    document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+    document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
 //Är tärningen redan låst så låses den upp vid klick och uppdaterar så användaren ser det
   }else{
     dices[this.id - 1].locked = true;
@@ -415,7 +415,7 @@ $(document).on('click', '.dice', function(){
     //console.log("Antal kast: " + numberOfThrows);
     $('.dice-panel').append(displayDices(dices));
     //To show the number of throws left
-    document.getElementById("kastCounter").innerHTML = "Kast "+ numberOfThrows +" av 3";
+    document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
   }
 
   $(this).toggleClass('locked');

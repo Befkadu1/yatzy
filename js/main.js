@@ -171,7 +171,7 @@ $(document).on('click', '.startGame', function(){
   $('.page-content').append('<div class="scoreboard-container col-xs-8 col-sm-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
-  $('.page-content').append(`<div class="dice-container col-xs-4 col-sm-push-2"> <div><h4 class="player-name "></h4></div>
+  $('.page-content').append(`<div class="dice-container col-xs-4 col-sm-push-2"> <div class="playerNameBox"><h4 class="player-name "></h4></div>
    <div class="panel panel-primary ">
     <div class="dice-panel"></div>
     </div>
@@ -250,13 +250,13 @@ function newRound(){
 
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
-
   for (var i = 0; i < dices.length; i++) {
     dices[i].locked = false;
     dices[i].setClass(dices[i].locked);
   }
 
   $('.throwButton').click();
+  document.getElementById("throwImg").src ="http://i1091.photobucket.com/albums/i385/lordprutt95/first%20throw_zpsg4p2609y.jpg?t=1491823142" ;
 }
 
 // En listener för länken "High scores" i navbaren
@@ -341,7 +341,7 @@ function throwDices(){
   
   if(numberOfThrows < 3){
     numberOfThrows++;
-     document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
+      document.getElementById("throwImg").src ="http://i1091.photobucket.com/albums/i385/lordprutt95/second%20throw_zpsgbq5mxzd.jpg?t=1491823146" ;
  
 
    
@@ -350,7 +350,7 @@ function throwDices(){
     // har man kastat exakt tre gånger så låser sig knappen och blir oklickbar
     if (numberOfThrows === 3){
       document.getElementById("throwingButton").disabled = true;
-       document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
+      document.getElementById("throwImg").src ="http://i1091.photobucket.com/albums/i385/lordprutt95/third%20throw_zpsapucbret.jpg?t=1491823146" ;
     }
   }
 
@@ -373,20 +373,6 @@ function spinDices(dicesToBeSpinned){
         console.log('HEJHEJHEJ');
         $('.diceGroup').remove();
         $('.dice-panel').append(displayDices(dices));
-    });
-}
-
-function autoSpinDices(dicesToBeSpinned){
-  let lastDice = '';
-  for(let dice of dicesToBeSpinned){
-    $(`#${dice.id}`).html('&#127922;');
-    $(`#${dice.id}`).addClass('spin');
-    lastDice = $(`#${dice.id}`);
-  }
-
-  $('.spin').on("transitionend MSTransitionEnd webkitTransitionEnd oTransitionEnd",
-    function() {
-        $(this).removeClass("spin");  // Transition has ended.
     });
 }
 

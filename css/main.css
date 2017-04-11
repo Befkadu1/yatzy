@@ -1,8 +1,18 @@
 body{
-	background-image: url(https://newevolutiondesigns.com/images/freebies/texture-wallpaper-18.jpg);
+	background-image: url(http://i.imgur.com/I73OWYX.jpg);
+  background-repeat: no-repeat;
+background-position: center;
+ background-size: auto;
 }
+
 div{
 	text-align: center;
+}
+.playerNameBox{
+	background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.4);
+    
 }
 .textFormat{
 	font-family: 'Kavoon';
@@ -18,7 +28,9 @@ div{
 }
 .navbar-brand{
 	font-size: 26px;
-	
+	/* bef stressad push*/
+
+
 }
 .nav{
 	font-size: 20px;
@@ -36,10 +48,14 @@ div{
 	background-color: #ccccb3;
 }
 .player-name{
+	font-family: 'Kavoon';
+	font-size: 14px;
 	width: auto;
 	height:  auto;
-    background-color: white;
-    border-radius: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+    
+    
   }
 td, th {
 
@@ -67,10 +83,12 @@ td, th {
 	font-size: 20px;
 	background-color: 	#24751f;
 	box-shadow: 10px 10px 5px black;
+  border-radius: 10px;
+  margin-top: 0px;
 
 }
 .modal-content{
-	background-image: url(https://newevolutiondesigns.com/images/freebies/texture-wallpaper-18.jpg);
+	background-image: url(http://i.imgur.com/I73OWYX.jpg);
 	border: 1px solid white;
 }
 
@@ -105,8 +123,8 @@ td, th {
 }
 .start-page, .overlay {
   height: 100%;
-  background-color: #1b0049;
-  font-family: "Roboto Slab", serif;
+  font-family: 'Kavoon';
+  background-image: url(http://i.imgur.com/I73OWYX.jpg);
   color: white;
 }
 
@@ -154,6 +172,26 @@ small {
   font-size: 1em;
 }
 
+.rules{
+  background-color: white;
+  box-shadow: inset 0px 0px 20px 5px rgba(0,0,0,0.4);
+  border-radius: 10px;
+  padding: 10px;
+  font-family: 'Kavoon';
+
+}
+
+.modal-body h2, p{
+  font-family: 'Kavoon';
+   color: white;
+
+}
+
+.rules h3{
+   font-family: 'Kavoon';
+}
+
+
 .login--login-submit {
   float: right;
 }
@@ -166,7 +204,7 @@ small {
 
 .login--toggle-container {
   position: absolute;
-  background-color: #1b0049;
+  
   right: 0;
   line-height: 2.5em;
   width: 50%;
@@ -184,12 +222,12 @@ small {
 }
 .login--active .login--toggle-container {
   transform: perspective(1000px) rotateY(180deg);
-  background-color: #1b0049;
+  
 }
 
 .login--username-container{
   float: left;
-  background-color: #1b0049;
+  
   width: 50%;
   height: 120px;
   padding: 0.5em;
@@ -199,12 +237,12 @@ small {
   transform-origin: 100% 0%;
   transform: perspective(1000px) rotateY(180deg);
   transition: all 1s cubic-bezier(0.06, 0.63, 0, 1);
-  background-color: #1b0049;
+  
   backface-visibility: hidden;
 }
 .login--active .login--username-container {
   transform: perspective(1000px) rotateY(0deg);
-  background-color: #1b0049;
+  
 }
 @media(max-width: 376px){
 
@@ -217,7 +255,7 @@ small {
   }
 
   .player-name{
-    padding-top: 0px;
+   
     margin-top: 0px;
   }
 
@@ -227,6 +265,7 @@ small {
 
 .table>tbody>tr>td {
     padding: 7px;
+    font-size: 10px;
 }
 #throwCounter{
 	padding-top: 10px;
@@ -234,7 +273,9 @@ small {
 	text-align: center;
 }
 .container{
-	margin-left: 5%;
+
+
+	margin-left: 2%;
 }
 
 .diceGroup{
@@ -264,3 +305,18 @@ small {
   transition: all 1s ease;
 }
 
+
+#throwImg{
+    width:30%; /* you can use % */
+    height: auto;
+}
+
+@media (max-width: 426px){
+  #throwImg{
+    width:50%; /* you can use % */
+    height: auto;
+}
+}
+.rules-text{
+  color: black;
+}

@@ -28,7 +28,9 @@ div{
 }
 .navbar-brand{
 	font-size: 26px;
-	
+	/* bef stressad push*/
+
+
 }
 .nav{
 	font-size: 20px;
@@ -296,3 +298,16 @@ small {
   transition: all 1s ease;
 }
 
+
+#throwImg{
+    width:30%; /* you can use % */
+    height: auto;
+}
+
+@media (max-width: 426px){
+  #throwImg{
+    width:50%; /* you can use % */
+    height: auto;
+}
+
+}

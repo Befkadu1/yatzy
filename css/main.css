@@ -248,3 +248,15 @@ small {
    clear:both;
    padding-left: 0px;
 }
+#throwImg{
+    width:30%; /* you can use % */
+    height: auto;
+}
+
+@media (max-width: 426px){
+  #throwImg{
+    width:50%; /* you can use % */
+    height: auto;
+}
+
+}

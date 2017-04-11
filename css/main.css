@@ -61,8 +61,6 @@ td, th {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-
-
 }
 #throwingButton{
 	font-family: 'Kavoon';
@@ -90,7 +88,7 @@ td, th {
   }
 
 .locked,.thisLocked{
-  background: red;
+  background: #ccccb3;
 }
 * {
   margin: 0;
@@ -222,9 +220,7 @@ small {
     padding-top: 0px;
     margin-top: 0px;
   }
-  .dice{
-	max-height: 70px;
-}
+
 .dice-container{
 	width: 30%;
 }
@@ -239,6 +235,13 @@ small {
 }
 .container{
 	margin-left: 5%;
+}
+
+.diceGroup{
+  padding: 0px;
+}
+.dice{
+  font-size: 65px;
 }
 
 }

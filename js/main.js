@@ -171,7 +171,7 @@ $(document).on('click', '.startGame', function(){
   $('.page-content').append('<div class="scoreboard-container col-xs-8 col-sm-6" />');
   // Skriver ut grund-protokollet, alltså utan spelar-kolumnerna
   $('.scoreboard-container').append(displayScoreBoard());
-  $('.page-content').append(`<div class="dice-container col-xs-4 col-sm-push-2"> <div class="playerNameBox"><h4 class="player-name "></h4></div>
+  $('.page-content').append(`<div class="dice-container col-xs-4 col-sm-push-2"> <div class="soft-container"><h4 class="player-name "></h4></div>
    <div class="panel panel-primary ">
     <div class="dice-panel"></div>
     </div>
@@ -287,7 +287,7 @@ $(document).on('click', '#rules-link', function(){
 
 function playSound(type){
   var sound = document.createElement("audio");
-  sound.volume=0.20;
+  sound.volume=0.9;
   sound.currentTime = 0;
   sound.autoPlay=false;
   sound.preLoad=true;  
@@ -386,17 +386,12 @@ $(document).on('click', '.dice', function(){
     $('.diceGroup').remove();
     $('.dice-panel').append(displayDices(dices));
 
-    //To show the number of throws left 
-    document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
 //Är tärningen redan låst så låses den upp vid klick och uppdaterar så användaren ser det
   }else{
     dices[this.id - 1].locked = true;
     dices[this.id -1].setClass(dices[this.id -1].locked);
     $('.diceGroup').remove();
-    //console.log("Antal kast: " + numberOfThrows);
     $('.dice-panel').append(displayDices(dices));
-    //To show the number of throws left
-    document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
   }
 
   $(this).toggleClass('locked');

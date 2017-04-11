@@ -2,7 +2,7 @@ body{
 	background-image: url(http://i.imgur.com/I73OWYX.jpg);
   background-repeat: no-repeat;
 background-position: center;
- background-size: cover;
+ background-size: auto;
 }
 
 div{

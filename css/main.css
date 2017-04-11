@@ -35,7 +35,12 @@ div{
 .sum, .bonus, .total{
 	background-color: #ccccb3;
 }
-
+.player-name{
+	width: auto;
+	height:  auto;
+    background-color: white;
+    border-radius: 2px;
+  }
 td, th {
 
     border: 1px solid #dddddd;
@@ -220,6 +225,9 @@ small {
   .dice{
 	max-height: 70px;
 }
+.dice-container{
+	width: 30%;
+}
 
 .table>tbody>tr>td {
     padding: 7px;
@@ -229,7 +237,9 @@ small {
 	font-size:xx-small; 
 	text-align: center;
 }
-
+.container{
+	margin-left: 5%;
+}
 
 }
 .user-panel{

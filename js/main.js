@@ -250,24 +250,13 @@ function newRound(){
 
   // Denna funktion körs varje gång man startar spelet eller valt poäng och 
   //kastar då tärningarna en gång direkt så man inte kan använda dem gamla tärningarna
-      playSound('throw');
-     for (var i = 0; i < dices.length; i++) {
-      var randthrow = Math.floor( (Math.random() *6) +1 );
-        dices[i].val = randthrow;
-        //console.log(dices[i].value);
-        dices[i].locked = false;
-        dices[i].setClass(dices[i].locked);
-     }
-     autoSpinDices(dices);
-     $('.diceGroup').remove();
-     $('.dice-panel').append(displayDices(dices));  
-     
-     // När tärningarna slumpats så vill vi visa hintar
-     scoreBoards[turn].calcHints(dices);
 
-     numberOfThrows++;
-     document.getElementById("throwCounter").innerHTML = "Throw "+ numberOfThrows +" of 3";
-     console.log("Du har kastat: " + numberOfThrows);
+  for (var i = 0; i < dices.length; i++) {
+    dices[i].locked = false;
+    dices[i].setClass(dices[i].locked);
+  }
+
+  $('.throwButton').click();
 }
 
 // En listener för länken "High scores" i navbaren
@@ -316,14 +305,15 @@ function playSound(type){
   sound.play();
 }
 
-$(document).on('click', '.throwButton', function(){
+$(document).on('click', '.throwButton', throwDices);
+
+function throwDices(){
   // kollar så man inte kastat 3 gånger redan har man inte gjort det så 
   //går den in och kör random på alla tärningar
-  
   if(numberOfThrows < 3){
      playSound('throw');
-        
-     let dicesToBeSpinned = [];
+
+    let dicesToBeSpinned = [];
     for (var i = 0; i < dices.length; i++) {
       if (dices[i].locked == false) {
         var randthrow = Math.floor( (Math.random() *6) +1 );
@@ -336,10 +326,14 @@ $(document).on('click', '.throwButton', function(){
         //console.log("This dice is locked!");
       }
     }
+
+    // Om det är en ny runda så ska vi snurra alla tärningarna,
+    // annars bara de som inte är låsta
     spinDices(dicesToBeSpinned);
     
     // När tärningarna slumpats vill vi visa hintar
     scoreBoards[turn].calcHints(dices);
+    
   }
   else{
     //console.log('You have already rolled three times')
@@ -360,24 +354,25 @@ $(document).on('click', '.throwButton', function(){
     }
   }
 
-});
+}
 
 function spinDices(dicesToBeSpinned){
   let lastDice = '';
   for(let dice of dicesToBeSpinned){
     $(`#${dice.id}`).removeClass('locked');
     $(`#${dice.id}`).html('&#127922;');
-    $(`#${dice.id}`).addClass('spin');
+    setTimeout(function(){
+      $(`#${dice.id}`).addClass('spin');
+    }, 100);
     lastDice = $(`#${dice.id}`);
   }
 
-  $('.spin').on("transitionend MSTransitionEnd webkitTransitionEnd oTransitionEnd",
+  $(document).on("transitionend MSTransitionEnd webkitTransitionEnd oTransitionEnd", '.spin',
     function() {
         $(this).removeClass("spin");  // Transition has ended.
-        if($(this).attr('id') === lastDice.attr('id')){
-          $('.diceGroup').remove();
-          $('.dice-panel').append(displayDices(dices));
-        }
+        console.log('HEJHEJHEJ');
+        $('.diceGroup').remove();
+        $('.dice-panel').append(displayDices(dices));
     });
 }
 
